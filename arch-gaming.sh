@@ -1,8 +1,5 @@
 #!/bin/bash
 
-# Standard Setup
-xfce_install="false" # Work in Progress
-
 # Graphic Driver Install
 nvidia_install="true"
 amd_install="true"
