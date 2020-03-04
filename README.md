@@ -1,1 +1,1 @@
-# linux-gaming
+# Gaming Setup Scripts for Linux Distributions
