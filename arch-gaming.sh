@@ -66,6 +66,7 @@ fi
 # if you dont want this - just delete the file general/btrfs-tuning.sh
 workdir="`dirname $0`"
 if [ -d "${workdir}/general" ] && [ -f "${workdir}/general/btrfs-tuning.sh" ] ; then
+	echo "### optimizing btrfs, if needed"
 	${workdir}/general/btrfs-tuning.sh
 	echo "### if you see one error (per user) regarding to an steam folder, this can be ignored"
 fi
@@ -90,7 +91,7 @@ else
 fi
 
 # if wine is installed, remove it to avoid conflict with wine-staging
-if [ "`pacman -Q wine | wc -l`" = "1" ] ; then
+if [[ "`pacman -Q wine | wc -l`" = "1" && "`pacman -Q wine | grep wine-staging | wc -l`" = "0" ]] ; then
 	echo "### detected that wine is installed, we need to remove the wine package to install wine-staging"
 	echo "### sadly we also need to remove packages depending on wine to avoid conflicts later on"
 	pacman -Rc wine
