@@ -11,6 +11,7 @@ steam_install="true"
 winetricks_install="true"
 teamspeak_install="true"
 mumble_install="true"
+discord_install="true"
 
 if [ "`whoami`" != "root" ] ; then
 	echo "### Error: you have to run this script as root or via sudo"
@@ -57,6 +58,9 @@ if [ "${teamspeak_install}" = "true" ] ; then
 fi
 if [ "${mumble_install}" = "true" ] ; then
 	pkg_additional_install="${pkg_additional_install}mumble "
+fi
+if [ "${discord_install}" = "true" ] ; then
+	pkg_additional_install="${pkg_additional_install}discord "
 fi
 
 # btrfs tuning if possible
