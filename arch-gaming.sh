@@ -22,7 +22,7 @@ fi
 # setting graphic drivers to install
 # More Info Driver Installation: https://github.com/lutris/lutris/wiki/Installing-drivers
 pkg_graphics_install=""
-if [ "${nvidia_install}" = "true" ] || [ "${amd_install}" = "true" ] || [ "${intel_install}" = "true" ] ; then
+if [[ "${nvidia_install}" = "true" || "${amd_install}" = "true" || "${intel_install}" = "true" ]] ; then
 	pkg_graphics_install="${pkg_graphics_install}vulkan-icd-loader lib32-vulkan-icd-loader "
 	if [ "${nvidia_install}" = "true" ] ; then
 		pkg_graphics_install="${pkg_graphics_install}nvidia nvidia-utils lib32-nvidia-utils lib32-vulkan-driver "
@@ -31,7 +31,7 @@ if [ "${nvidia_install}" = "true" ] || [ "${amd_install}" = "true" ] || [ "${int
 			pkg_graphics_install="${pkg_graphics_install}nvidia-settings "
 		fi
 	fi
-	if [ "${amd_install}" = "true" ] || [ "${intel_install}" = "true" ] ; then
+	if [[ "${amd_install}" = "true" || "${intel_install}" = "true" ]] ; then
 		pkg_graphics_install="${pkg_graphics_install}lib32-mesa vulkan-mesa-layer "
 	fi
 	if [ "${amd_install}" = "true" ] ; then
