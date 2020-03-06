@@ -6,6 +6,7 @@ gechecksum="affc68e5956e84d679c9e801011448fe6a228cd08bc19dd5e9d7ae6e2d24d5cd"
 if [ "`whoami`" = "root" ] ; then
 	echo "this script should NOT be run as root or via sudo"
 	echo "please use this with your user account"
+	exit
 fi
 
 if [ ! -d ~/.steam/root/compatibilitytools.d ] ; then
