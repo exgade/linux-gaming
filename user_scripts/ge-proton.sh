@@ -9,6 +9,11 @@ if [ "`whoami`" = "root" ] ; then
 	exit
 fi
 
+if [ "`whereis wget | grep \/bin | wc -l`" = "0" ] ; then
+	echo "Error: please install wget first"
+	exit
+fi
+
 if [ ! -d ~/.steam/root/compatibilitytools.d ] ; then
 	mkdir -p ~/.steam/root/compatibilitytools.d
 fi
