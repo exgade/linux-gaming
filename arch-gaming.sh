@@ -12,7 +12,8 @@ winetricks_install="true"
 teamspeak_install="true"
 mumble_install="true"
 discord_install="true"
-
+optimus_manager_install="true"
+optimus_manager_gui_install="true"
 if [ "`whoami`" != "root" ] ; then
 	echo "### Error: you have to run this script as root or via sudo"
 	echo "Installation canceled"
@@ -61,6 +62,12 @@ if [ "${mumble_install}" = "true" ] ; then
 fi
 if [ "${discord_install}" = "true" ] ; then
 	pkg_additional_install="${pkg_additional_install}discord "
+fi
+if [ "${optimus_manager_install}" = "true" ] ; then
+	pkg_additional_install="${pkg_additional_install}optimus-manager "
+fi
+if [ "${optimus_manager_gui_install}" = "true" ] ; then
+	pkg_additional_install="${pkg_additional_install}optimus-manager-qt "
 fi
 
 # btrfs tuning if possible
