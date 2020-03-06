@@ -118,5 +118,4 @@ if [ "`cat /etc/os-release | grep 'ID=manjaro' | wc -l`" = "1" ] ; then
 	echo "### if you see old drivers there, you have to remove old drivers/ configurations and then auto install proprietary drivers afterwards"
 fi
 
-# TODO: Figure out if we can install xboxdrv easily, for instance warframe seems to run better with iti. there is a package in the AUR, but it would be better to avoid it, since this would be the only package depending on the AUR.
 
