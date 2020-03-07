@@ -1,9 +1,10 @@
 #!/bin/bash
 
 # Graphic Driver Install
-nvidia_install="true"
-amd_install="true"
-intel_install="true"
+nvidia_install="false"
+amd_install="false"
+intel_install="false"
+autodetect_graphics="true"
 
 # Gaming Tools Installer
 lutris_install="true"
@@ -17,6 +18,19 @@ if [ "`whoami`" != "root" ] ; then
 	echo "### Error: you have to run this script as root or via sudo"
 	echo "Installation canceled"
 	exit
+fi
+
+# autodetect graphic cards
+if [ "${autodetect_graphics}" = "true" ] ; then
+	if [ "`lspci -v | grep -i nvidia | grep VGA`" != "0" ] ; then
+		nvidia_install="true"
+	fi
+	if [ "`lspci -v | grep -i amd | grep VGA`" != "0" ] ; then
+		amd_install="true"
+	fi
+	if [ "`lspci -v | grep -i intel`" != "0" ] ; then
+		intel_install="true"
+	fi
 fi
 
 # setting graphic drivers to install
