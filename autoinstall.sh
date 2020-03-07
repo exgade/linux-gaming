@@ -14,6 +14,6 @@ if [ "${distrodetect}" = "" ] ; then
 	echo "No Distribution detected"
 else
 	echo "Detected Distribution ${distrodetect}, using installer ${distroinstaller}-gaming.sh"
-	${workdir}/${distroinstaller}-gaming.sh
+	cd "${workdir}" && ./${distroinstaller}-gaming.sh
 fi
 
