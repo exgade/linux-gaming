@@ -28,7 +28,7 @@ if [ "${autodetect_graphics}" = "true" ] ; then
 	if [ "`lspci -v | grep -i amd | grep VGA`" != "0" ] ; then
 		amd_install="true"
 	fi
-	if [ "`lspci -v | grep -i intel`" != "0" ] ; then
+	if [ "`lspci -v | grep -i intel | grep VGA`" != "0" ] ; then
 		intel_install="true"
 	fi
 fi
