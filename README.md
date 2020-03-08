@@ -19,12 +19,22 @@ These installers are designed to run on fresh linux installs.
 
 ---
 
+## Requirements for GIT Installation
+
+Git has to be installed, to clone the repository.
+
+### Arch Linux, Manjaro, Artix Linux
+sudo pacman -S git
+
+### Debian
+sudo apt install git
+
 ## Installation
 
 The install Script detects the distribution you're using and sets up the system.
 
 ### with autoinstaller:
-sudo pacman -S git && git clone https://github.com/exgade/linux-gaming && sudo ./linux-gaming/autoinstall.sh
+git clone https://github.com/exgade/linux-gaming && sudo ./linux-gaming/autoinstall.sh
 
 ### with Distribution specific installer:
 You can also customize the installation by configuring the installer script for your installation before running it.
