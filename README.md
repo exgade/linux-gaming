@@ -36,8 +36,8 @@ The install Script detects the distribution you're using and sets up the system.
 ### with autoinstaller:
 git clone https://github.com/exgade/linux-gaming && sudo ./linux-gaming/autoinstall.sh
 
-### with Distribution specific installer:
-You can also customize the installation by configuring the installer script for your installation before running it.
+### with specific installer:
+You can also customize the installation by editing the installer script for your distribution.
 
 ---
 
