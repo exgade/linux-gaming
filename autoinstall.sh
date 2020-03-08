@@ -10,9 +10,8 @@ if [ -f /etc/os-release ] ; then
 		distrodetect="Arch Linux"
 		distroinstaller="arch"
 	fi
-else
-	distrochk="`distro | grep Name: | sed "s/Name: //" -`"
-	if [ "${distrochk}" = "Artix Linux" ] ; then
+elif [ -f /usr/lib/os-release ] ; then
+	if [ "`cat /usr/lib/os-release | grep ID=artix | wc -l`" = "1" ] ; then
 		distrodetect="Artix Linux"
 		distroinstaller="arch"	
 	fi
