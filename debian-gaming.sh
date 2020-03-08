@@ -47,6 +47,18 @@ if [ "${autodetect_graphics}" = "true" ] ; then
 	fi
 fi
 
+# graphic card pkgs
+pkg_graphic=""
+if [[ "${nvidia_install}" = "true" || "${amd_install}" = "true" || "${intel_install}" = "true" ]] ; then
+	pkg_graphic="${pkg_graphic}firmware-linux-nonfree "
+	if [ "${nvidia_install}" = "true" ] ; then
+		pkg_graphic="${pkg_graphic}nvidia-driver nvidia-driver-libs-i386 "
+	fi
+	if [ "${amd_install}" = "true" ] ; then
+		pkg_graphic="${pkg_graphic}libgl1-mesa-dri xserver-xorg-video-ati xserver-xorg-video-amdgpu "
+	fi
+fi
+
 # btrfs tuning if possible
 workdir="`dirname $0`"
 if [ -d "${workdir}/general" ] && [ -f "${workdir}/general/btrfs-tuning.sh" ] ; then
@@ -127,9 +139,9 @@ dpkg --add-architecture i386 && apt update && apt install ttf-mscorefonts-instal
 echo "### installing winehq-staging with recommendations"
 apt install --install-recommends winehq-staging -y
 
-if [ "$nvidia_install" = "true" ] ; then
-	echo "### installing nvidia proprietary driver"
-	apt install nvidia-driver nvidia-driver-libs-i386 -y
+if [ "${pkg_graphic}" != "" ] ; then
+	echo "### installing proprietary drivers: ${pkg_graphic}"
+	apt install ${pkg_graphic} -y
 fi
 
 echo "### installing some dependencies for many games"
