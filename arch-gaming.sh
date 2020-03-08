@@ -93,6 +93,8 @@ if [ -f /etc/pacman.conf.orig ] ; then
 else
 	echo "### activating multilib..."
 	perl -0777 -i.orig -pe "s/#\[multilib\]\n#Include = \/etc\/pacman.d\/mirrorlist/\[multilib\]\nInclude = \/etc\/pacman.d\/mirrorlist/" /etc/pacman.conf
+	echo "### updating pacman to load multilib..."
+	pacman -Sy
 fi
 
 
