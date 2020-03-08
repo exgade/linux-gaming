@@ -133,8 +133,8 @@ fi
 echo "### adding lutris repository"
 echo "deb https://download.opensuse.org/repositories/home:/strycore/Debian_10/ /" > /etc/apt/sources.list.d/home:strycore.list
 
-echo "### installing dxvk, corefonts, xboxdrv"
-dpkg --add-architecture i386 && apt update && apt install ttf-mscorefonts-installer dxvk-wine32-development dxvk-wine64-development xboxdrv -y
+echo "### installing dxvk, vkd3d, corefonts, xboxdrv"
+dpkg --add-architecture i386 && apt update && apt install ttf-mscorefonts-installer dxvk dxvk-wine32-development dxvk-wine64-development libvkd3d1 xboxdrv -y
 
 echo "### installing winehq-staging with recommendations"
 apt install --install-recommends winehq-staging -y
