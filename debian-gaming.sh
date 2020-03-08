@@ -11,7 +11,7 @@ lutris_install="true"
 steam_install="true"
 winetricks_install="true"
 #teamspeak_install="true"
-#mumble_install="true"
+mumble_install="true"
 #discord_install="true"
 
 if [ "`whoami`" != "root" ] ; then
@@ -29,6 +29,9 @@ if [ "${steam_install}" = "true" ] ; then
 fi
 if [ "${winetricks_install}" = "true" ] ; then
 	pkg_extra="${pkg_extra}winetricks "
+fi
+if [ "${mumble_install}" = "true" ] ; then
+	pkg_extra="${pkg_extra}mumble "
 fi
 
 # autodetect graphic cards
