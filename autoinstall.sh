@@ -9,6 +9,9 @@ if [ -f /etc/os-release ] ; then
 	elif [ "`cat /etc/os-release | grep 'ID=arch' | wc -l`" = "1" ] ; then
 		distrodetect="Arch Linux"
 		distroinstaller="arch"
+	elif [ "`cat /etc/os-release | grep 'ID=debian' | wc -l`" = "1" ] ; then
+		distrodetect="Debian"
+		distroinstaller="debian"
 	fi
 elif [ -f /usr/lib/os-release ] ; then
 	if [ "`cat /usr/lib/os-release | grep ID=artix | wc -l`" = "1" ] ; then
