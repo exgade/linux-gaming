@@ -128,9 +128,11 @@ else
 fi
 
 if [[ -f /etc/os-release && "`cat /etc/os-release | grep 'ID=manjaro' | wc -l`" = "1" ]] ; then
-	echo "### ATTENTION - Manjaro specific:"
-        echo "### you should check your manjaro settings -> hardware now. "
-	echo "### if you see old drivers there, you have to remove old drivers/ configurations and then auto install proprietary drivers afterwards"
+	if [ "`lspci | grep -i nvidia | grep VGA | wc -l`" != "0" ] ; then
+		echo "### ATTENTION - Manjaro specific:"
+		echo "### you should check your manjaro settings -> hardware now. "
+		echo "### if you see old drivers there, you have to remove old drivers/ configurations and then auto install proprietary drivers afterwards"
+	fi
 fi
 
 
