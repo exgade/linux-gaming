@@ -14,10 +14,28 @@ winetricks_install="true"
 mumble_install="true"
 #discord_install="true"
 
+# automatic installation - answer every question apt asks with yes
+# use this option with caution, it may break your system
+option_noconfirm="false"
+
+##### end configuration #####
+
 if [ "`whoami`" != "root" ] ; then
 	echo "### Error: you have to run this script as root or via sudo"
 	echo "Installation canceled"
 	exit
+fi
+
+if [ "`whoami`" != "root" ] ; then
+	echo "### Error: you have to run this script as root or via sudo"
+	echo "Installation canceled"
+	exit
+fi
+
+# noconfirm logic
+installer_addition=""
+if [ "${option_noconfirm}" = "true" ] ; then
+	installer_addition="-y"
 fi
 
 pkg_extra=""
@@ -85,9 +103,9 @@ fi
 #sed -i "s/http:/https:/g" /etc/apt/sources.list
 #sed -i "s/security\.debian\.org/cdn-aws.deb.debian.org/g" /etc/apt/sources.list
 
-apt update && apt full-upgrade -y
+apt update && apt full-upgrade ${installer_addition}
 
-apt install wget -y
+apt install wget ${installer_addition}
 
 # Check Checksums for Lutris & Winehq
 if [ ! -d ~/.aptkeys ] ; then
@@ -134,20 +152,20 @@ echo "### adding lutris repository"
 echo "deb https://download.opensuse.org/repositories/home:/strycore/Debian_10/ /" > /etc/apt/sources.list.d/home:strycore.list
 
 echo "### installing dxvk, vkd3d, corefonts, xboxdrv"
-dpkg --add-architecture i386 && apt update && apt install ttf-mscorefonts-installer dxvk dxvk-wine32-development dxvk-wine64-development libvkd3d1 xboxdrv -y
+dpkg --add-architecture i386 && apt update && apt install ttf-mscorefonts-installer dxvk dxvk-wine32-development dxvk-wine64-development libvkd3d1 xboxdrv ${installer_addition}
 
 echo "### installing winehq-staging with recommendations"
-apt install --install-recommends winehq-staging -y
+apt install --install-recommends winehq-staging ${installer_addition}
 
 if [ "${pkg_graphic}" != "" ] ; then
 	echo "### installing proprietary drivers: ${pkg_graphic}"
-	apt install ${pkg_graphic} -y
+	apt install ${pkg_graphic} ${installer_addition}
 fi
 
 echo "### installing some dependencies for many games"
-apt install libgnutls30:i386 libldap-2.4-2:i386 libgpg-error0:i386 libsqlite3-0:i386 -y
+apt install libgnutls30:i386 libldap-2.4-2:i386 libgpg-error0:i386 libsqlite3-0:i386 ${installer_addition}
 
 if [ "${pkg_extra}" != "" ] ; then
 	echo "### installing winetricks, steam and lutris, depending on configuration"
-	apt install ${pkg_extra} -y
+	apt install ${pkg_extra} ${installer_addition}
 fi
