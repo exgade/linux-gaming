@@ -51,7 +51,7 @@ pkg_graphics_install=""
 if [[ "${nvidia_install}" = "true" || "${amd_install}" = "true" || "${intel_install}" = "true" ]] ; then
 	if [ "${nvidia_install}" = "true" ] ; then
 		pkg_graphics_install="${pkg_graphics_install}nvidia nvidia-utils lib32-nvidia-utils lib32-vulkan-driver "
-		if [[ -f /etc/os-release && "`cat /etc/os-release | grep 'ID=manjaro' | wc -l`" = "0" ]] ; then
+		if [[ ! -f /etc/os-release || "`cat /etc/os-release | grep 'ID=manjaro' | wc -l`" = "0" ]] ; then
 			# manjaro doesn't have the package nvidia-settings
 			pkg_graphics_install="${pkg_graphics_install}nvidia-settings "
 		fi
