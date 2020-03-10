@@ -121,7 +121,7 @@ if [ ! -f ~/.aptkeys/winehq.key ] ; then
 	cd ~/.aptkeys
 	wget https://dl.winehq.org/wine-builds/winehq.key -O ~/.aptkeys/winehq.key
 fi
-	
+
 # Check sha256 checksum for winehq repo
 if [ "`sha256sum ~/.aptkeys/winehq.key | awk '{print $1}'`" = "78b185fabdb323971d13bd329fefc8038e08559aa51c4996de18db0639a51df6" ] ; then
 	echo "### Checksum of WineHQ OK, adding key"
