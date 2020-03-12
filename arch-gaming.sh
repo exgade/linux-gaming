@@ -20,6 +20,18 @@ option_noconfirm="false"
 
 ##### end configuration #####
 
+# argument handler
+for arg in "$@" ; do
+	if [ "$arg" = "--force" ] ; then
+		option_noconfirm="true"
+	elif [[ "$arg" = "--help" || "$arg" = "-h" ]] ; then
+		echo "usage: ./arch-gaming.sh [OPTIONS]"
+		echo "--force - no questions while installing / uninstalling packages - this might break your system"
+		exit
+	fi
+done
+
+# abort if not root and no sudo was used
 if [ "`whoami`" != "root" ] ; then
 	echo "### Error: you have to run this script as root or via sudo"
 	echo "Installation canceled"
