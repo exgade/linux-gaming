@@ -103,6 +103,10 @@ else
 	apt install ${pkg_additional_install} ${installer_addition}
 fi
 
+# install common required libraries
+echo "### installing libraries that are need for many games"
+apt install libgnutls30:i386 libldap-2.4-2:i386 libgpg-error0:i386 libsqlite3-0:i386 
+
 # software installation flathub
 if [[ "${teamspeak_install}" = "true" || "${discord_install}" = "true" ]] ; then
 	#echo "### starting additional software install with flatpak / flathub"
