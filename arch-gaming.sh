@@ -20,6 +20,18 @@ option_noconfirm="false"
 
 ##### end configuration #####
 
+# argument handler
+for arg in "$@" ; do
+	if [ "$arg" = "--force" ] ; then
+		option_noconfirm="true"
+	elif [[ "$arg" = "--help" || "$arg" = "-h" ]] ; then
+		echo "usage: ./arch-gaming.sh [OPTIONS]"
+		echo "--force - no questions while installing / uninstalling packages - this might break your system"
+		exit
+	fi
+done
+
+# abort if not root and no sudo was used
 if [ "`whoami`" != "root" ] ; then
 	echo "### Error: you have to run this script as root or via sudo"
 	echo "Installation canceled"
@@ -51,7 +63,7 @@ pkg_graphics_install=""
 if [[ "${nvidia_install}" = "true" || "${amd_install}" = "true" || "${intel_install}" = "true" ]] ; then
 	if [ "${nvidia_install}" = "true" ] ; then
 		pkg_graphics_install="${pkg_graphics_install}nvidia nvidia-utils lib32-nvidia-utils lib32-vulkan-driver "
-		if [[ ! -f /etc/os-release || "`cat /etc/os-release | grep 'ID=manjaro' | wc -l`" = "0" ]] ; then
+		if [[ ! -f /etc/os-release || "`grep 'ID=manjaro' /etc/os-release | wc -l`" = "0" ]] ; then
 			# manjaro doesn't have the package nvidia-settings
 			pkg_graphics_install="${pkg_graphics_install}nvidia-settings "
 		fi
@@ -139,7 +151,7 @@ else
 	pacman -S ${pkg_additional_install} --needed ${installer_addition}
 fi
 
-if [[ -f /etc/os-release && "`cat /etc/os-release | grep 'ID=manjaro' | wc -l`" = "1" ]] ; then
+if [[ -f /etc/os-release && "`grep 'ID=manjaro' /etc/os-release | wc -l`" = "1" ]] ; then
 	if [ "`lspci | grep -i nvidia | grep VGA | wc -l`" != "0" ] ; then
 		echo "### ATTENTION - Manjaro specific:"
 		echo "### you should check your manjaro settings -> hardware now. "
