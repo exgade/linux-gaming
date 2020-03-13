@@ -14,7 +14,7 @@ if [ -f /etc/os-release ] ; then
 		distroinstaller="debian"
 	fi
 elif [ -f /usr/lib/os-release ] ; then
-	if [ "`grep 'ID=artix' /etc/os-release | wc -l`" = "1" ] ; then
+	if [ "`grep 'ID=artix' /usr/lib/os-release | wc -l`" = "1" ] ; then
 		distrodetect="Artix Linux"
 		distroinstaller="arch"	
 	fi
