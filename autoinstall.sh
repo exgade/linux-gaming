@@ -18,7 +18,7 @@ if [ -f /etc/os-release ] ; then
 	elif [ "`grep 'ID_LIKE=ubuntu' /etc/os-release | wc -l`" = "1" ] ; then
 		if [ "`grep 'ID=elementary' /etc/os-release | wc -l`" = "1" ] ; then
 			distrodetect="Elementary"
-		elif [ "`grep 'ID=elementary' /etc/os-release | wc -l`" = "1" ] ; then
+		elif [ "`grep 'ID=linuxmint' /etc/os-release | wc -l`" = "1" ] ; then
 			distrodetect="Linux Mint"
 		else
 			distrodetect="Unknown Ubuntu"
