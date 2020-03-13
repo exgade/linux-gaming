@@ -84,9 +84,9 @@ if [ -d "${workdir}/general" ] && [ -f "${workdir}/general/btrfs-tuning.sh" ] ; 
 	echo "### if you see one error regarding to a not operation in a steam folder, this can be ignored"
 fi
 
-if [ "`cat /etc/apt/sources.list | grep ' main' | grep 'contrib' | grep 'non-free' | wc -l`" = "0" ] ; then
-	chk1="`cat /etc/apt/sources.list | grep ' main' | grep non-free | wc -l`"
-	chk2="`cat /etc/apt/sources.list | grep ' main' | grep contrib | wc -l`"
+if [ "`grep ' main' /etc/apt/sources.list | grep 'contrib' | grep 'non-free' | wc -l`" = "0" ] ; then
+	chk1="`grep ' main' /etc/apt/sources.list | grep non-free | wc -l`"
+	chk2="`grep ' main' /etc/apt/sources.list | grep contrib | wc -l`"
 	if [[ "$chk1" = "$chk2" && "$chk1" = "0" && ! -f /etc/apt/sources.list.bck ]] ; then
 		echo "### installing contrib / non-free sources"
 		cp /etc/apt/sources.list /etc/apt/sources.list.bck
@@ -141,7 +141,7 @@ fi
 
 #add winehq repo
 echo "### adding winehq repository"
-if [ "`cat /etc/os-release | grep bullseye | wc -l`" = "1" ] ; then
+if [ "`grep bullseye /etc/os-release | wc -l`" = "1" ] ; then
 	echo "deb https://dl.winehq.org/wine-builds/debian/ bullseye main" > /etc/apt/sources.list.d/winehq.list
 else
 	echo "deb https://dl.winehq.org/wine-builds/debian/ buster main" > /etc/apt/sources.list.d/winehq.list
