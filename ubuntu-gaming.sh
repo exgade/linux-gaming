@@ -105,13 +105,14 @@ fi
 
 # software installation flathub
 if [[ "${teamspeak_install}" = "true" || "${discord_install}" = "true" ]] ; then
-	echo "### starting additional software install with flatpak / flathub"
-	apt install flatpak ${installer_addition}
-	flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
-	if [ "${teamspeak_install}" = "true" ] ; then
-		#flatpak install flathub com.teamspeak.TeamSpeak ${installer_addition}
-	fi
-	if [ "${discord_install}" = "true" ] ; then
-		#flatpak install flathub com.discordapp.Discord ${installer_addition}
-	fi
+	#echo "### starting additional software install with flatpak / flathub"
+	#apt install flatpak ${installer_addition}
+	#flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
+	#if [ "${teamspeak_install}" = "true" ] ; then
+	#	flatpak install flathub com.teamspeak.TeamSpeak ${installer_addition}
+	#fi
+	#if [ "${discord_install}" = "true" ] ; then
+	#	flatpak install flathub com.discordapp.Discord ${installer_addition}
+	#fi
+	echo "discord and teamspeak installation is disabled at the moment"
 fi
