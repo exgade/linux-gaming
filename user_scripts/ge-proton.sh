@@ -26,7 +26,7 @@ if [ ! -d ~/.steam/root/compatibilitytools.d ] ; then
 	mkdir -p ~/.steam/root/compatibilitytools.d
 fi
 cd ~/.steam/root/compatibilitytools.d/
-if [ ! -f ~/.steam/root/compatibilitytools.d/Proton-${gerelease}.tar.gz ] ; then
+if [[ ! -d ~/.steam/root/compatibilitytools.d/Proton-${gerelease} && ! -f ~/.steam/root/compatibilitytools.d/Proton-${gerelease}.tar.gz ]] ; then
 	echo Downloading Glorious Eggroll Proton...
 	if [ "`ls -la /usr/local/bin/wget | grep /usr/bin/firejail | wc -l`" = "1" ] ;then
 		cmd_wget="/usr/bin/wget"
@@ -47,8 +47,11 @@ if [ ! -f ~/.steam/root/compatibilitytools.d/Proton-${gerelease}.tar.gz ] ; then
 		echo "checksum not ok"
 	fi
 else
-	echo "Error: Download already started or done. You may want to force a new download by: "
-	echo "rm ~/.steam/root/compatibilitytools.d/Proton-${gerelease}.tar.gz"
+	echo "Error: Download of Proton ${gerelease} already started or installation already done."
+	if [ ! -d ~/.steam/root/compatibilitytools.d/Proton-${gerelease} ] ; then
+		echo "Delete an broken Download with this and restart: "
+		echo "rm ~/.steam/root/compatibilitytools.d/Proton-${gerelease}.tar.gz"
+	fi
 fi
 if [[ "$1" = "both" || "$1" = "" ]] ; then
 	${workdir}/ge-proton.sh last
