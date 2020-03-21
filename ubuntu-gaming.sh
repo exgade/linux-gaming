@@ -16,7 +16,7 @@ mumble_install="true"
 
 # automatic installation - use this with care and only if you know what you're doing
 # this question will answer every question pacman asks with the default answer - it may break your system
-option_noconfirm="true"
+option_noconfirm="false"
 
 ##### end configuration #####
 
