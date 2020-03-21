@@ -25,18 +25,22 @@ These installers are designed to run on fresh linux installs.
 
 Git has to be installed, to clone the repository.
 
-### Arch Linux, Manjaro, Artix Linux
-sudo pacman -S git
+### 1) Install Git:
+* Arch Linux, Manjaro, Artix Linux  
+    sudo pacman -S git
+* Debian  
+    sudo apt install git
 
-### Debian
-sudo apt install git
+### 2) Download the scripts
+* This will create the folder linux-gaming and downloads the scripts:  
+    git clone https://github.com/exgade/linux-gaming
 
 ## Installation
 
 The install Script detects the distribution you're using and sets up the system.
 
 ### with autoinstaller:
-git clone https://github.com/exgade/linux-gaming && cd linux-gaming && sudo ./autoinstall.sh
+sudo linux-gaming/autoinstall.sh
 
 ### with specific installer:
 You can also customize the installation by editing the installer script for your distribution.
@@ -49,7 +53,7 @@ There is an installer for the newest Glorious Eggroll Version also, which is hav
 
 This Version will be installed for using in Steam, but you are also able to select it in Lutris.
 
-cd linux-gaming/user_scripts && ./ge-proton.sh
+linux-gaming/user_scripts/ge-proton.sh
 
 ---
 
@@ -57,7 +61,7 @@ cd linux-gaming/user_scripts && ./ge-proton.sh
 
 you can use git to pull down a new version of this script:
 
-cd linux-gaming && git pull
+cd linux-gaming && git pull && cd ..
 
 ---
 
