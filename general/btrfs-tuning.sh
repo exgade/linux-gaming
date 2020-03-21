@@ -2,7 +2,7 @@
 
 if [ "`mount | grep ' on / type btrfs' | wc -l`" = "1" ] ; then
 	if [ "`mount | grep 'on /home' | wc -l`" = "0" ] ; then
-	echo "### BTRFS detected, running optimizations"
+		echo "### BTRFS detected, running optimizations"
 		for loopdir in /home/*; do
 			loopuser="${loopdir/\/home\//}"
 			if [ "${loopdir}" = "/home/${loopuser}" ]; then
