@@ -20,6 +20,11 @@ option_noconfirm="true"
 
 ##### end configuration #####
 
+if [ "`grep -P '^NAME=\"Pop\!' | wc -l`" = "1" ] ; then
+	echo "Error: Pop! OS Detected, this distribution is unsupported"
+	exit
+fi
+
 if [ "`whoami`" != "root" ] ; then
 	echo "### Error: you have to run this script as root or via sudo"
 	echo "Installation canceled"
