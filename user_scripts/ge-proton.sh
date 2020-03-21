@@ -53,6 +53,6 @@ else
 		echo "rm ~/.steam/root/compatibilitytools.d/Proton-${gerelease}.tar.gz"
 	fi
 fi
-if [[ "$1" = "both" || "$1" = "" ]] ; then
+if [[ "$1" = "both" ]] ; then
 	${workdir}/ge-proton.sh last
 fi
