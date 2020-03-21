@@ -20,7 +20,7 @@ option_noconfirm="true"
 
 ##### end configuration #####
 
-if [ "`grep -P '^NAME=\"Pop\!' | wc -l`" = "1" ] ; then
+if [ "`grep -P '^NAME=\"Pop\!' /etc/os-release | wc -l`" = "1" ] ; then
 	echo "Error: Pop! OS Detected, this distribution is unsupported"
 	exit
 fi
