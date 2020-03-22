@@ -1,3 +1,5 @@
+[[Enlish]](README.md) [[German]](README_de.md)
+
 # Gaming Setup Scripts for Linux Distributions
 
 ---
@@ -9,7 +11,7 @@ These installers are designed to run on fresh linux installs.
 ### What's included:
 
 * Installation preparation for proprietary Nvidia, AMD and/or Intel Drivers
-* Lutris ( https://github.com/lutris/lutris )
+* Lutris ( Uses Lutris Repositories on Debian ; https://github.com/lutris/lutris )
 * Wine Staging ( Depending on the distribution from Winehq Repositories )
 * DXVK for better Direct X Support ( https://github.com/doitsujin/dxvk )
 * DXD3D for better Direct 3D Support ( https://github.com/d3d12/vkd3d )
@@ -17,7 +19,7 @@ These installers are designed to run on fresh linux installs.
 * a few dependencies or helpful resources (for instance windows core fonts)
 * Optimizes Copy on Write settings on BTRFS File Systems (if used) to avoid performance problems in games
 * Communication Tools: Mumble, Teamspeak 3 and Discord (On Debian it's at the moment just mumble)
-* Additional Install script for newest Glorious Eggroll Proton Build ( https://github.com/GloriousEggroll/proton-ge-custom/releases )
+* Additional Install script for newest Glorious Eggroll Proton Builds ( https://github.com/GloriousEggroll/proton-ge-custom/releases )
 
 ---
 
@@ -53,7 +55,8 @@ There is an installer for the newest Glorious Eggroll Version also, which is hav
 
 This Version will be installed for using in Steam, but you are also able to select it in Lutris.
 
-linux-gaming/user_scripts/ge-proton.sh
+### Command for installation of ge-proton
+* linux-gaming/user_scripts/ge-proton.sh
 
 ---
 
@@ -61,7 +64,7 @@ linux-gaming/user_scripts/ge-proton.sh
 
 you can use git to pull down a new version of this script:
 
-cd linux-gaming && git pull && cd ..
+* cd linux-gaming && git pull && cd ..
 
 ---
 
