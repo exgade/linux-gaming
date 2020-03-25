@@ -4,8 +4,8 @@ if [ "$1" = "last" ] ; then
 	gerelease="5.2-GE-2"
 	gechecksum="affc68e5956e84d679c9e801011448fe6a228cd08bc19dd5e9d7ae6e2d24d5cd"
 elif [[ "$1" = "" || "$1" = "both" ]] ; then
-	gerelease="5.4-GE-2"
-	gechecksum="ef8b91bc6a01cde30d43aa85692dfd252f99546cf629b7a4f04d8e39460f7635"
+	gerelease="5.4-GE-3"
+	gechecksum="3bd03323d6e2032a98e4309d510f6f82a443327cc4c128e6fd624586f50ec3ea"
 else
 	echo unknown operation
 	exit
