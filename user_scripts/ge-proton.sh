@@ -3,9 +3,17 @@ workdir="`pwd`/`dirname $0`"
 if [ "$1" = "last" ] ; then
 	gerelease="5.2-GE-2"
 	gechecksum="affc68e5956e84d679c9e801011448fe6a228cd08bc19dd5e9d7ae6e2d24d5cd"
-elif [[ "$1" = "" || "$1" = "both" ]] ; then
+elif [[ "$1" = "" || "$1" = "both" || "$1" = "latest" ]] ; then
 	gerelease="5.4-GE-3"
 	gechecksum="3bd03323d6e2032a98e4309d510f6f82a443327cc4c128e6fd624586f50ec3ea"
+elif [[ "$1" = "-h" || "$1" = "--help" ]] ; then
+	echo "usage: ./ge-proton.sh <command (optional)>"
+	echo "examples:"
+	echo "./ge-proton.sh		load and install newest ge proton"
+	echo "./ge-proton.sh latest	~"
+	echo "./ge-proton.sh last	load and install the second latest stable minor version"
+	echo "./ge-proton.sh both	load and install both versions"
+	exit
 else
 	echo unknown operation
 	exit
