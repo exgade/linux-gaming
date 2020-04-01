@@ -14,10 +14,10 @@ if [ "${latest_release}" != "" ] ; then
 	if [ "$@" != "check" ] ; then
 		cd /tmp
 		if [ ! -f /tmp/Proton-${latest_release}.tar.gz ] ; then
-			wget https://github.com/GloriousEggroll/proton-ge-custom/releases/download/${latest_release}/Proton-${latest_release}.tar.gz
+			wget "https://github.com/GloriousEggroll/proton-ge-custom/releases/download/${latest_release}/Proton-${latest_release}.tar.gz"
 		fi
 		echo "sha256sum: `sha256sum /tmp/Proton-${latest_release}.tar.gz`"
-		rm /tmp/Proton-${latest_release}.tar.gz
+		rm "/tmp/Proton-${latest_release}.tar.gz"
 	fi
 else
 	echo "Error determining last release"
