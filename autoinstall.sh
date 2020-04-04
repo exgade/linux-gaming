@@ -13,13 +13,13 @@ if [ -f /etc/os-release ] ; then
 	elif [ "${ID}" = "debian" ] ; then
 		distrodetect="Debian"
 		distroinstaller="debian"
-	elif [ "`grep 'ID=ubuntu' /etc/os-release | wc -l`" = "1" ] ; then
+	elif [ "${ID}" = "ubuntu" ] ; then
 		distrodetect="Ubuntu"
 		distroinstaller="ubuntu"
-	elif [ "`grep 'ID_LIKE=ubuntu' /etc/os-release | wc -l`" = "1" ] ; then
-		if [ "`grep 'ID=elementary' /etc/os-release | wc -l`" = "1" ] ; then
+	elif [ "${ID_LIKE}" = "ubuntu" ] ; then
+		if [ "${ID}" = "elementary" ] ; then
 			distrodetect="Elementary"
-		elif [ "`grep 'ID=linuxmint' /etc/os-release | wc -l`" = "1" ] ; then
+		elif [ "${ID}" = "linuxmint" ] ; then
 			distrodetect="Linux Mint"
 		else
 			distrodetect="Unknown Ubuntu"
