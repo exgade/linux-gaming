@@ -3,18 +3,20 @@ workdir="`dirname $0`"
 distrodetect=""
 distroinstaller=""
 if [ -f /etc/os-release ] ; then
-	if [ "`grep 'ID=manjaro' /etc/os-release | wc -l`" = "1" ] ; then
+	source /etc/os-release
+	if [ "${ID}" = "manjaro" ] ; then
 		distrodetect="Manjaro"
 		distroinstaller="manjaro"
-	elif [ "`grep 'ID=arch' /etc/os-release | wc -l`" = "1" ] ; then
+	elif [ "${ID}" = "arch" ] ; then
 		distrodetect="Arch Linux"
 		distroinstaller="arch"
-	elif [ "`grep 'ID=debian' /etc/os-release | wc -l`" = "1" ] ; then
+	elif [ "${ID}" = "debian" ] ; then
 		distrodetect="Debian"
 		distroinstaller="debian"
 	fi
 elif [ -f /usr/lib/os-release ] ; then
-	if [ "`grep 'ID=artix' /usr/lib/os-release | wc -l`" = "1" ] ; then
+	source /usr/lib/os-release
+	if [ "${ID}" = "artix" ] ; then
 		distrodetect="Artix Linux"
 		distroinstaller="arch"	
 	fi
