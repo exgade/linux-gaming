@@ -79,12 +79,14 @@ if [ "`grep lutris /etc/apt/sources.list.d/* | wc -l`" = "0" ] ; then
 else
 	echo "### lutris repository already added, skipping..."
 fi
-
 echo "### adding 32 Bit support and updating apt"
 dpkg --add-architecture i386 && apt update
 
-echo "### installing wine-devel with recommendations"
-apt install --install-recommends wine-development wine32-development wine64-development ${installer_addition}
+#echo "### installing wine-devel with recommendations"
+#apt install --install-recommends wine-development wine32-development wine64-development ${installer_addition}
+
+echo "### installing wine-staging with recommendations"
+apt install --install-recommends wine-staging wine-staging-amd64 wine-staging-i386:i386 ${installer_addition}
 
 echo "### installing winetricks, dxvk, basic wine, corefonts, xboxdrv"
 # missing in elementary or also on ubuntu? dxvk-wine32-development dxvk-wine64-development
@@ -97,6 +99,10 @@ if [ "${nvidia_install}" = "true" ] ; then
 	else
 		echo "### it seems that nvidia drivers are already installed"
 	fi
+fi
+if [[ "${amd_install}" = "true" || "${intel_install}" = "true" ]] ; then
+	echo "### installing intel/amd drivers"
+	apt install libgl1-mesa-dri:i386 mesa-vulkan-drivers mesa-vulkan-drivers:i386
 fi
 
 # Starting Software installation
