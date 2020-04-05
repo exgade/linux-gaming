@@ -94,7 +94,7 @@ apt install winetricks ttf-mscorefonts-installer xboxdrv ${installer_addition}
 
 if [ "${nvidia_install}" = "true" ] ; then
 	if [ '`apt list nvidia-driver-* | grep -i "\[inst" | wc -l`' = "0" ] ; then
-		echo "### installing nvidia proprietary driver - no installation candidate for ubuntu"
+		echo "### installing nvidia proprietary driver"
 		apt install nvidia-settings nvidia-driver-435 nvidia-utils-435 ${installer_addition}
 	else
 		echo "### it seems that nvidia drivers are already installed"
