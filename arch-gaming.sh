@@ -78,7 +78,7 @@ if [[ "${nvidia_install}" = "true" || "${amd_install}" = "true" || "${intel_inst
 				echo "### installing manjaro specific packages for nvidia"
 				sudo pacman -S ${manj_nvidia} lib32-nvidia-440xx-utils --needed
 			else
-				echo "### ERROR while autodetecting installed kernels, you might need to select your kernel/nvidia version in next step"
+				echo "### ERROR while autodetecting installed kernels"
 				echo "### installation abort"
 				exit
 			fi
