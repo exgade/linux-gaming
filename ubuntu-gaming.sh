@@ -96,6 +96,8 @@ if [ "${nvidia_install}" = "true" ] ; then
 	if [ "`apt list --installed nvidia-driver-440 | grep -i 'nvidia' | wc -l`" = "0" ] ; then
 		echo "### adding ubuntu's GPU Drivers PPA, press ENTER to confirm"
 		add-apt-repository ppa:graphics-drivers/ppa
+		echo "### updating repositories for the new ppa"
+		apt update
 		echo "### installing nvidia proprietary driver"
 		apt install nvidia-driver-440 libnvidia-gl-440 libnvidia-gl-440:i386 nvidia-settings nvidia-driver-440 nvidia-utils-440 ${installer_addition}
 	else
