@@ -88,9 +88,9 @@ dpkg --add-architecture i386 && apt update
 echo "### installing wine-staging with recommendations"
 apt install --install-recommends wine-staging wine-staging-amd64 wine-staging-i386:i386 ${installer_addition}
 
-echo "### installing winetricks, dxvk, basic wine, corefonts, xboxdrv"
-# missing in elementary or also on ubuntu? dxvk-wine32-development dxvk-wine64-development
-apt install winetricks ttf-mscorefonts-installer xboxdrv ${installer_addition}
+echo "### installing winetricks, dxvk, corefonts, xboxdrv"
+# missing in elementary: dxvk-wine32-development dxvk-wine64-development
+apt install winetricks dxvk ttf-mscorefonts-installer xboxdrv ${installer_addition}
 
 if [ "${nvidia_install}" = "true" ] ; then
 	if [ '`apt list nvidia-driver-* | grep -i "\[inst" | wc -l`' = "0" ] ; then
