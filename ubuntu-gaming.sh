@@ -65,7 +65,7 @@ if [ "${mumble_install}" = "true" ] ; then
 	pkg_additional_install="${pkg_additional_install}mumble "
 fi
 
-apt update && apt full-upgrade ${installer_addition}
+apt update && apt upgrade ${installer_addition}
 
 apt install wget ${installer_addition}
 
