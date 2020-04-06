@@ -70,9 +70,9 @@ if [[ "${nvidia_install}" = "true" || "${amd_install}" = "true" || "${intel_inst
 	if [ "${nvidia_install}" = "true" ] ; then
 		if [ "${ID}" = "manjaro" ] ; then
 			echo "### autodetecting manjaro kernel and installing nvidia driver depending on that"
-			if [ "`mhwd-kernel -li | sed 's/\s\s\s\*\s//g' - | grep '^linux'`" != "" ] ; then
+			if [ "`mhwd-kernel -li | sed 's/\s\s\s\*\s//g' - | grep -E '^linux[0-9]+$'`" != "" ] ; then
 				manj_nvidia=""
-				for i in `mhwd-kernel -li | sed 's/\s\s\s\*\s//g' - | grep '^linux'` ; do
+				for i in `mhwd-kernel -li | sed 's/\s\s\s\*\s//g' - | grep -E '^linux[0-9]+$'` ; do
 					manj_nvidia="${i}-nvidia-440xx ${manj_nvidia}"
 				done
 				echo "### installing manjaro specific packages for nvidia"
