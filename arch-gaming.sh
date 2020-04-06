@@ -75,7 +75,7 @@ if [[ "${nvidia_install}" = "true" || "${amd_install}" = "true" || "${intel_inst
 				manj_nvidia="linux56-nvidia-440xx"
 			fi
 			echo "### installing manjaro specific packages for nvidia"
-			sudo pacman -S "${manj_nvidia} lib32-nvidia-440xx-utils" --needed
+			sudo pacman -S ${manj_nvidia} lib32-nvidia-440xx-utils --needed
 		fi
 		pkg_graphics_install="${pkg_graphics_install}nvidia nvidia-utils lib32-nvidia-utils lib32-vulkan-driver "
 		if [ "${ID}" != "manjaro" ] ; then
