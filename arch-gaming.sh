@@ -57,13 +57,34 @@ if [ "${autodetect_graphics}" = "true" ] ; then
 	fi
 fi
 
+# setting os-release
+ID="unknown"
+if [ -f /etc/os-release ] ; then
+	source /etc/os-release
+fi
+
 # setting graphic drivers to install
 # More Info Driver Installation: https://github.com/lutris/lutris/wiki/Installing-drivers
 pkg_graphics_install=""
 if [[ "${nvidia_install}" = "true" || "${amd_install}" = "true" || "${intel_install}" = "true" ]] ; then
 	if [ "${nvidia_install}" = "true" ] ; then
+		if [ "${ID}" = "manjaro" ] ; then
+			echo "### autodetecting manjaro kernel and installing nvidia driver depending on that"
+			if [ "`mhwd-kernel -li | sed 's/\s\s\s\*\s//g' - | grep -E '^linux[0-9]+$'`" != "" ] ; then
+				manj_nvidia=""
+				for i in `mhwd-kernel -li | sed 's/\s\s\s\*\s//g' - | grep -E '^linux[0-9]+$'` ; do
+					manj_nvidia="${i}-nvidia-440xx ${manj_nvidia}"
+				done
+				echo "### installing manjaro specific packages for nvidia"
+				sudo pacman -S ${manj_nvidia} lib32-nvidia-440xx-utils --needed
+			else
+				echo "### ERROR while autodetecting installed kernels"
+				echo "### installation abort"
+				exit
+			fi
+		fi
 		pkg_graphics_install="${pkg_graphics_install}nvidia nvidia-utils lib32-nvidia-utils lib32-vulkan-driver "
-		if [[ ! -f /etc/os-release || "`grep 'ID=manjaro' /etc/os-release | wc -l`" = "0" ]] ; then
+		if [ "${ID}" != "manjaro" ] ; then
 			# manjaro doesn't have the package nvidia-settings
 			pkg_graphics_install="${pkg_graphics_install}nvidia-settings "
 		fi
@@ -140,7 +161,7 @@ fi
 pacman -S wine-staging giflib lib32-giflib libpng lib32-libpng libldap lib32-libldap gnutls lib32-gnutls mpg123 lib32-mpg123 openal lib32-openal v4l-utils lib32-v4l-utils libpulse lib32-libpulse libgpg-error lib32-libgpg-error alsa-plugins lib32-alsa-plugins alsa-lib lib32-alsa-lib libjpeg-turbo lib32-libjpeg-turbo sqlite lib32-sqlite libxcomposite lib32-libxcomposite libxinerama lib32-libgcrypt libgcrypt lib32-libxinerama ncurses lib32-ncurses opencl-icd-loader lib32-opencl-icd-loader libxslt lib32-libxslt libva lib32-libva gtk3 lib32-gtk3 gst-plugins-base-libs lib32-gst-plugins-base-libs vulkan-icd-loader lib32-vulkan-icd-loader --needed ${installer_addition}
 
 # dependencies for a lot of games
-pacman -S wine-gecko wine-mono lib32-gnutls lib32-libldap lib32-libgpg-error lib32-sqlite lib32-libpulse vkd3d lib32-vkd3d lib32-libvdpau libvdpau --needed ${installer_addition}
+pacman -S wine-gecko wine-mono lib32-gnutls lib32-libldap lib32-libgpg-error lib32-sqlite lib32-libpulse vkd3d lib32-vkd3d lib32-libvdpau libvdpau lib32-libxml2 lib32-sdl2 lib32-freetype2 lib32-dbus --needed ${installer_addition}
 
 # Starting Software installation
 echo "### installing additional gaming tools"
@@ -151,12 +172,4 @@ else
 	pacman -S ${pkg_additional_install} --needed ${installer_addition}
 fi
 
-if [[ -f /etc/os-release && "`grep 'ID=manjaro' /etc/os-release | wc -l`" = "1" ]] ; then
-	if [ "`lspci | grep -i nvidia | grep VGA | wc -l`" != "0" ] ; then
-		echo "### ATTENTION - Manjaro specific:"
-		echo "### you should check your manjaro settings -> hardware now. "
-		echo "### if you see old drivers there, you have to remove old drivers/ configurations and then auto install proprietary drivers afterwards"
-	fi
-fi
-
-
+echo "### installation complete"
