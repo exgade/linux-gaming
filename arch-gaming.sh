@@ -57,13 +57,28 @@ if [ "${autodetect_graphics}" = "true" ] ; then
 	fi
 fi
 
+# setting os-release
+ID="unknown"
+if [ -f /etc/os-release ] ; then
+	source /etc/os-release
+fi
+
 # setting graphic drivers to install
 # More Info Driver Installation: https://github.com/lutris/lutris/wiki/Installing-drivers
 pkg_graphics_install=""
 if [[ "${nvidia_install}" = "true" || "${amd_install}" = "true" || "${intel_install}" = "true" ]] ; then
 	if [ "${nvidia_install}" = "true" ] ; then
+		if [ "${ID}" = "manjaro" ] ; then
+			echo "### autodetecting manjaro kernel and installing nvidia driver depending on that"
+			manj_nvidia="linux54-nvidia-440xx"
+			if [ "`uname -r | grep 5\.6 | wc -l`" = "1"] ; then
+				manj_nvidia="linux56-nvidia-440xx"
+			fi
+			echo "### installing manjaro specific packages for nvidia"
+			sudo pacman -S "${manj_nvidia} lib32-nvidia-440xx-utils" --needed
+		fi
 		pkg_graphics_install="${pkg_graphics_install}nvidia nvidia-utils lib32-nvidia-utils lib32-vulkan-driver "
-		if [[ ! -f /etc/os-release || "`grep 'ID=manjaro' /etc/os-release | wc -l`" = "0" ]] ; then
+		if [ "${ID}" != "manjaro" ] ; then
 			# manjaro doesn't have the package nvidia-settings
 			pkg_graphics_install="${pkg_graphics_install}nvidia-settings "
 		fi
@@ -151,12 +166,4 @@ else
 	pacman -S ${pkg_additional_install} --needed ${installer_addition}
 fi
 
-if [[ -f /etc/os-release && "`grep 'ID=manjaro' /etc/os-release | wc -l`" = "1" ]] ; then
-	if [ "`lspci | grep -i nvidia | grep VGA | wc -l`" != "0" ] ; then
-		echo "### ATTENTION - Manjaro specific:"
-		echo "### you should check your manjaro settings -> hardware now. "
-		echo "### if you see old drivers there, you have to remove old drivers/ configurations and then auto install proprietary drivers afterwards"
-	fi
-fi
-
-
+echo "### installation complete"
