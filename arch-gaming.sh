@@ -79,8 +79,8 @@ if [[ "${nvidia_install}" = "true" || "${amd_install}" = "true" || "${intel_inst
 				sudo pacman -S ${manj_nvidia} lib32-nvidia-440xx-utils --needed
 			else
 				echo "### ERROR while autodetecting installed kernels, you might need to select your kernel/nvidia version in next step"
-				echo "### confirm with ENTER, abort installation with ctrl+c"
-				read
+				echo "### installation abort"
+				exit
 			fi
 		fi
 		pkg_graphics_install="${pkg_graphics_install}nvidia nvidia-utils lib32-nvidia-utils lib32-vulkan-driver "
