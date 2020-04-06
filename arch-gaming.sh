@@ -70,12 +70,18 @@ if [[ "${nvidia_install}" = "true" || "${amd_install}" = "true" || "${intel_inst
 	if [ "${nvidia_install}" = "true" ] ; then
 		if [ "${ID}" = "manjaro" ] ; then
 			echo "### autodetecting manjaro kernel and installing nvidia driver depending on that"
-			manj_nvidia="linux54-nvidia-440xx"
-			if [ "`uname -r | grep 5\.6 | wc -l`" = "1" ] ; then
-				manj_nvidia="linux56-nvidia-440xx"
+			if [ "`mhwd-kernel -li | sed 's/\s\s\s\*\s//g' - | grep '^linux'`" != "" ] ; then
+				manj_nvidia=""
+				for i in `mhwd-kernel -li | sed 's/\s\s\s\*\s//g' - | grep '^linux'` ; do
+					manj_nvidia="${i}-nvidia-440xx ${manj_nvidia}"
+				done
+				echo "### installing manjaro specific packages for nvidia"
+				sudo pacman -S ${manj_nvidia} lib32-nvidia-440xx-utils --needed
+			else
+				echo "### ERROR while autodetecting installed kernels, you might need to select your kernel/nvidia version in next step"
+				echo "### confirm with ENTER, abort installation with ctrl+c"
+				read
 			fi
-			echo "### installing manjaro specific packages for nvidia"
-			sudo pacman -S ${manj_nvidia} lib32-nvidia-440xx-utils --needed
 		fi
 		pkg_graphics_install="${pkg_graphics_install}nvidia nvidia-utils lib32-nvidia-utils lib32-vulkan-driver "
 		if [ "${ID}" != "manjaro" ] ; then
