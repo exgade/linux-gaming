@@ -90,12 +90,14 @@ apt install --install-recommends wine-staging wine-staging-amd64 wine-staging-i3
 
 echo "### installing winetricks, dxvk, corefonts, xboxdrv"
 # missing in elementary: dxvk-wine32-development dxvk-wine64-development
-apt install winetricks dxvk ttf-mscorefonts-installer xboxdrv ${installer_addition}
+apt install winetricks dxvk ttf-mscorefonts-installer xboxdrv mono-runtime-common ${installer_addition}
 
 if [ "${nvidia_install}" = "true" ] ; then
-	if [ "`apt list nvidia-driver-* | grep -i '\[inst' | wc -l`" = "0" ] ; then
+	if [ "`apt list --installed nvidia-driver-440 | grep -i 'nvidia' | wc -l`" = "0" ] ; then
+		echo "### adding ubuntu's GPU Drivers PPA, press ENTER to confirm"
+		add-apt-repository ppa:graphics-drivers/ppa
 		echo "### installing nvidia proprietary driver"
-		apt install nvidia-settings nvidia-driver-435 nvidia-utils-435 ${installer_addition}
+		apt install nvidia-driver-440 libnvidia-gl-440 libnvidia-gl-440:i386 nvidia-settings nvidia-driver-440 nvidia-utils-440 ${installer_addition}
 	else
 		echo "### it seems that nvidia drivers are already installed"
 	fi
