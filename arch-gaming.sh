@@ -71,7 +71,7 @@ if [[ "${nvidia_install}" = "true" || "${amd_install}" = "true" || "${intel_inst
 		if [ "${ID}" = "manjaro" ] ; then
 			echo "### autodetecting manjaro kernel and installing nvidia driver depending on that"
 			manj_nvidia="linux54-nvidia-440xx"
-			if [ "`uname -r | grep 5\.6 | wc -l`" = "1"] ; then
+			if [ "`uname -r | grep 5\.6 | wc -l`" = "1" ] ; then
 				manj_nvidia="linux56-nvidia-440xx"
 			fi
 			echo "### installing manjaro specific packages for nvidia"
