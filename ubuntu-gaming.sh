@@ -93,7 +93,7 @@ echo "### installing winetricks, dxvk, corefonts, xboxdrv"
 apt install winetricks dxvk ttf-mscorefonts-installer xboxdrv ${installer_addition}
 
 if [ "${nvidia_install}" = "true" ] ; then
-	if [ '`apt list nvidia-driver-* | grep -i "\[inst" | wc -l`' = "0" ] ; then
+	if [ "`apt list nvidia-driver-* | grep -i '\[inst' | wc -l`" = "0" ] ; then
 		echo "### installing nvidia proprietary driver"
 		apt install nvidia-settings nvidia-driver-435 nvidia-utils-435 ${installer_addition}
 	else
@@ -104,6 +104,9 @@ if [[ "${amd_install}" = "true" || "${intel_install}" = "true" ]] ; then
 	echo "### installing intel/amd drivers"
 	apt install libgl1-mesa-dri:i386 mesa-vulkan-drivers mesa-vulkan-drivers:i386
 fi
+
+echo "### installing vulkan 64+32 bit"
+apt install libvulkan1 libvulkan1:i386 ${installer_addition}
 
 # Starting Software installation
 echo "### installing additional gaming tools"
