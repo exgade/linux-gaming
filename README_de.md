@@ -70,9 +70,12 @@ Um eine neue Version des Scriptes herunterzuladen, kann folgender Befehl ausgef�
 ## Distributionsspezifische Informationen
 
 ### Für Anfänger
+* Linux Mint ( https://www.linuxmint.com/ )
 * Manjaro ( https://manjaro.org/ )
 
 ### Für erfahrene Benutzer
 * Arch Linux
 * Artix Linux
 * Debian Testing oder Sid
+* Ubuntu
+* Elementary OS

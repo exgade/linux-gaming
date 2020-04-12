@@ -70,9 +70,12 @@ you can use git to pull down a new version of this script:
 ## Distribution related infos
 
 ### For Beginners
+* Linux Mint ( https://www.linuxmint.com/ )
 * Manjaro ( https://manjaro.org/ )
 
-### For Advanced Users
+### For Advanced Users / Also working on these Distros
 * Arch Linux
 * Artix Linux
 * Debian Testing or Sid
+* Ubuntu
+* Elementary OS
