@@ -1,5 +1,5 @@
 # Gaming Setup Scripts for Linux Distributions
-[[Enlish]](README.md) [[German]](README_de.md)
+[[English]](README.md) [[German]](README_de.md)
 
 ---
 
