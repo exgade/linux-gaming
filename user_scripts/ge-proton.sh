@@ -7,8 +7,8 @@ elif [[ "$1" = "" || "$1" = "both" || "$1" = "latest" ]] ; then
 	gerelease="5.4-GE-3"
 	gechecksum="3bd03323d6e2032a98e4309d510f6f82a443327cc4c128e6fd624586f50ec3ea"
 elif [[ "$1" = "dev" ]] ; then
-	gerelease="5.5-GE-1"
-	gechecksum="679c6a526978f37408812848603249e4d7615475c0a2d3cf75cf2637ab932fe3"
+	gerelease="5.6-GE-1"
+	gechecksum="89711e4fbd9d3d0418cc1848880730f8f85f23e46322f5c1dbae2f138d1d4af7"
 elif [[ "$1" = "-h" || "$1" = "--help" ]] ; then
 	echo "usage: ./ge-proton.sh <command (optional)>"
 	echo "examples:"
