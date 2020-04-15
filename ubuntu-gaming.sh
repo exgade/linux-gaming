@@ -93,11 +93,8 @@ fi
 echo "### adding 32 Bit support and updating apt"
 dpkg --add-architecture i386 && apt update
 
-#echo "### installing wine-devel with recommendations"
-#apt install --install-recommends wine-development wine32-development wine64-development ${installer_addition}
-
 echo "### installing wine-development with recommendations"
-apt install --install-recommends wine-development wine-development-amd64 wine-development-i386:i386 ${installer_addition}
+apt install --install-recommends wine-development wine32-development wine64-development ${installer_addition}
 
 echo "### installing winetricks, dxvk, corefonts, xboxdrv"
 # missing in elementary: dxvk-wine32-development dxvk-wine64-development
