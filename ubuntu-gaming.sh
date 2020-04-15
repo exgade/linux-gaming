@@ -20,6 +20,17 @@ option_noconfirm="false"
 
 ##### end configuration #####
 
+# argument handler
+for arg in "$@" ; do
+	if [ "$arg" = "--force" ] ; then
+		option_noconfirm="true"
+	elif [[ "$arg" = "--help" || "$arg" = "-h" ]] ; then
+		echo "usage: ./ubuntu-gaming.sh [OPTIONS]"
+		echo "--force - no questions while installing / uninstalling packages - this might break your system"
+		exit
+	fi
+done
+
 if [ "`grep -P '^NAME=\"Pop\!' /etc/os-release | wc -l`" = "1" ] ; then
 	echo "Error: Pop! OS Detected, this distribution is unsupported"
 	exit
@@ -85,8 +96,8 @@ dpkg --add-architecture i386 && apt update
 #echo "### installing wine-devel with recommendations"
 #apt install --install-recommends wine-development wine32-development wine64-development ${installer_addition}
 
-echo "### installing wine-staging with recommendations"
-apt install --install-recommends wine-staging wine-staging-amd64 wine-staging-i386:i386 ${installer_addition}
+echo "### installing wine-development with recommendations"
+apt install --install-recommends wine-development wine-development-amd64 wine-development-i386:i386 ${installer_addition}
 
 echo "### installing winetricks, dxvk, corefonts, xboxdrv"
 # missing in elementary: dxvk-wine32-development dxvk-wine64-development
@@ -106,7 +117,7 @@ if [ "${nvidia_install}" = "true" ] ; then
 fi
 if [[ "${amd_install}" = "true" || "${intel_install}" = "true" ]] ; then
 	echo "### installing intel/amd drivers"
-	apt install libgl1-mesa-dri:i386 mesa-vulkan-drivers mesa-vulkan-drivers:i386
+	apt install libgl1-mesa-dri:i386 mesa-vulkan-drivers mesa-vulkan-drivers:i386 mesa-utils
 fi
 
 echo "### installing vulkan 64+32 bit"
