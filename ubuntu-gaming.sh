@@ -114,7 +114,7 @@ if [ "${nvidia_install}" = "true" ] ; then
 fi
 if [[ "${amd_install}" = "true" || "${intel_install}" = "true" ]] ; then
 	echo "### installing intel/amd drivers"
-	apt install libgl1-mesa-dri:i386 mesa-vulkan-drivers mesa-vulkan-drivers:i386 mesa-utils
+	apt install libgl1-mesa-dri:i386 mesa-vulkan-drivers mesa-vulkan-drivers:i386 mesa-utils ${installer_addition}
 fi
 
 echo "### installing vulkan 64+32 bit"
