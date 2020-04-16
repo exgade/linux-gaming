@@ -7,8 +7,8 @@ elif [[ "$1" = "" || "$1" = "both" || "$1" = "latest" ]] ; then
 	gerelease="5.4-GE-3"
 	gechecksum="3bd03323d6e2032a98e4309d510f6f82a443327cc4c128e6fd624586f50ec3ea"
 elif [[ "$1" = "dev" ]] ; then
-	gerelease="5.6-GE-1"
-	gechecksum="89711e4fbd9d3d0418cc1848880730f8f85f23e46322f5c1dbae2f138d1d4af7"
+	gerelease="5.6-GE-2"
+	gechecksum="22dd577b33758972551c0ee7874240d1969aa612b90902fff39787539beff6d0"
 elif [[ "$1" = "-h" || "$1" = "--help" ]] ; then
 	echo "usage: ./ge-proton.sh <command (optional)>"
 	echo "examples:"
@@ -39,7 +39,7 @@ fi
 cd ~/.steam/root/compatibilitytools.d/
 if [[ ! -d ~/.steam/root/compatibilitytools.d/Proton-${gerelease} && ! -f ~/.steam/root/compatibilitytools.d/Proton-${gerelease}.tar.gz ]] ; then
 	echo Downloading Glorious Eggroll Proton...
-	if [ "`ls -la /usr/local/bin/wget | grep /usr/bin/firejail | wc -l`" = "1" ] ;then
+	if [[ ! -f /usr/local/bin/wget || "`ls -la /usr/local/bin/wget | grep /usr/bin/firejail | wc -l`" = "1" ]] ;then
 		cmd_wget="/usr/bin/wget"
 	else
 		cmd_wget="wget"
