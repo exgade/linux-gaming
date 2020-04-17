@@ -36,6 +36,9 @@ if [ "`grep -P '^NAME=\"Pop\!' /etc/os-release | wc -l`" = "1" ] ; then
 	exit
 fi
 
+#load os-release variables
+source /etc/os-release
+
 if [ "`whoami`" != "root" ] ; then
 	echo "### Error: you have to run this script as root or via sudo"
 	echo "Installation canceled"
@@ -83,8 +86,35 @@ apt install wget ${installer_addition}
 # install add-apt-repository command
 apt install software-properties-common ${installer_addition}
 
+if [[ "${ID_LIKE}" = "ubuntu" && "${ID}" = "linuxmint" ]] ; then
+	echo "### avoiding install of winehq repo (detected Linux Mint)"
+else
+	# add winehq repo
+	if [ "`grep -E '^deb https://dl.winehq.org' /etc/apt/sources.list | wc -l`" = "0" ] ; then
+		mkdir -p /root/.aptkeys
+		if [ ! -f /root/.aptkeys/winehq.key ] ; then
+			cd /root/.aptkeys/
+			wget -nc https://dl.winehq.org/wine-builds/winehq.key
+			apt-key add winehq.key
+		fi
+		if [ "`sha256sum /root/.aptkeys/winehq.key | grep 78b185fabdb323971d13bd329fefc8038e08559aa51c4996de18db0639a51df6 | wc -l`" = "1" ] ; then
+			echo "### checksumme gültig, installiere repository für winehq"
+			apt-add-repository "deb https://dl.winehq.org/wine-builds/ubuntu/ ${UBUNTU_CODENAME} main"
+		else
+			echo "### Error: checksum invalid on winehq repository, aborting..."
+			exit
+		fi
+	else
+		echo "### winehq repository scheint schon installiert zu sein"
+	fi
+	if [ "${UBUNTU_CODENAME}" = "focal" ] ; then
+		echo "### hotfixing focal fossa winehq repo to eoan"
+		sed -i "s/dl\.winehq\.org\/wine-builds\/ubuntu\/ focal/dl.winehq.org\/wine-builds\/ubuntu\/ eoan/g" /etc/apt/sources.list
+	fi
+fi
+
 # add lutris ppa
-if [ "`grep lutris /etc/apt/sources.list.d/* | wc -l`" = "0" ] ; then
+if [ ! -f "/etc/apt/sources.list.d/lutris-team-ubuntu-lutris-${UBUNTU_CODENAME}.list" ] ; then
 	echo "### adding lutris ppa"
 	add-apt-repository ppa:lutris-team/lutris
 else
@@ -93,19 +123,28 @@ fi
 echo "### adding 32 Bit support and updating apt"
 dpkg --add-architecture i386 && apt update
 
-echo "### installing wine-development with recommendations"
-apt install --install-recommends wine-development wine32-development wine64-development ${installer_addition}
+if [[ "${ID_LIKE}" = "ubuntu" && "${ID}" = "linuxmint" ]] ; then
+	echo "### installing wine-development as workaround for linuxmint"
+	apt install --install-recommends wine-development wine32-development wine64-development ${installer_addition}
+else
+	echo "### installing wine-staging from winehq with recommendations"
+	apt install --install-recommends winehq-staging ${installer_addition}
+fi
 
 echo "### installing winetricks, dxvk, corefonts, xboxdrv"
 # missing in elementary: dxvk-wine32-development dxvk-wine64-development
 apt install winetricks dxvk ttf-mscorefonts-installer xboxdrv mono-runtime-common ${installer_addition}
 
 if [ "${nvidia_install}" = "true" ] ; then
-	if [ "`apt list --installed nvidia-driver-440 | grep -i 'nvidia' | wc -l`" = "0" ] ; then
+	if [ ! -f "/etc/apt/sources.list.d/graphics-drivers-ubuntu-ppa-${UBUNTU_CODENAME}.list" ] ; then
 		echo "### adding ubuntu's GPU Drivers PPA, press ENTER to confirm"
-		add-apt-repository ppa:graphics-drivers/ppa
-		echo "### updating repositories for the new ppa"
-		apt update
+                add-apt-repository ppa:graphics-drivers/ppa
+                echo "### updating repositories for the new ppa"
+                apt update
+	else
+		echo "### graphics-drivers ppa already installed, skipping"
+	fi
+	if [ "`apt list --installed nvidia-driver-440 | grep -i 'nvidia' | wc -l`" = "0" ] ; then
 		echo "### installing nvidia proprietary driver"
 		apt install nvidia-driver-440 libnvidia-gl-440 libnvidia-gl-440:i386 nvidia-settings nvidia-driver-440 nvidia-utils-440 ${installer_addition}
 	else
