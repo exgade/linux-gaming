@@ -10,9 +10,9 @@ autodetect_graphics="true"
 lutris_install="true"
 steam_install="true"
 winetricks_install="true"
-#teamspeak_install="true"
+teamspeak_install="true"
 mumble_install="true"
-#discord_install="true"
+discord_install="true"
 
 # automatic installation - use this with care and only if you know what you're doing
 # this question will answer every question pacman asks with the default answer - it may break your system
@@ -174,14 +174,13 @@ apt install libgnutls30:i386 libldap-2.4-2:i386 libgpg-error0:i386 libsqlite3-0:
 
 # software installation flathub
 if [[ "${teamspeak_install}" = "true" || "${discord_install}" = "true" ]] ; then
-	#echo "### starting additional software install with flatpak / flathub"
-	#apt install flatpak ${installer_addition}
-	#flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
-	#if [ "${teamspeak_install}" = "true" ] ; then
-	#	flatpak install flathub com.teamspeak.TeamSpeak ${installer_addition}
-	#fi
-	#if [ "${discord_install}" = "true" ] ; then
-	#	flatpak install flathub com.discordapp.Discord ${installer_addition}
-	#fi
-	echo "discord and teamspeak installation is disabled at the moment"
+	echo "### starting additional software install with flatpak / flathub"
+	apt install flatpak ${installer_addition}
+	flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
+	if [ "${teamspeak_install}" = "true" ] ; then
+		flatpak install flathub com.teamspeak.TeamSpeak ${installer_addition}
+	fi
+	if [ "${discord_install}" = "true" ] ; then
+		flatpak install flathub com.discordapp.Discord ${installer_addition}
+	fi
 fi
