@@ -86,9 +86,7 @@ apt install wget ${installer_addition}
 # install add-apt-repository command
 apt install software-properties-common ${installer_addition}
 
-if [[ "${ID_LIKE}" = "ubuntu" && "${ID}" = "linuxmint" ]] ; then
-	echo "### avoiding install of winehq repo (detected Linux Mint)"
-else
+if [[ "${UBUNTU_CODENAME}" = "fossa" || "${UBUNTU_CODENAME}" = "eoan" ]] ; then
 	# add winehq repo
 	if [ "`grep -E '^deb https://dl.winehq.org' /etc/apt/sources.list | wc -l`" = "0" ] ; then
 		mkdir -p /root/.aptkeys
@@ -111,6 +109,9 @@ else
 		echo "### hotfixing focal fossa winehq repo to eoan"
 		sed -i "s/dl\.winehq\.org\/wine-builds\/ubuntu\/ focal/dl.winehq.org\/wine-builds\/ubuntu\/ eoan/g" /etc/apt/sources.list
 	fi
+else
+	echo "### avoid installation of winehq repositories on anything older than fossa or eoan"
+	echo "### more info: https://forum.winehq.org/viewtopic.php?f=8&t=32192"
 fi
 
 # add lutris ppa
@@ -123,12 +124,12 @@ fi
 echo "### adding 32 Bit support and updating apt"
 dpkg --add-architecture i386 && apt update
 
-if [[ "${ID_LIKE}" = "ubuntu" && "${ID}" = "linuxmint" ]] ; then
-	echo "### installing wine-development as workaround for linuxmint"
-	apt install --install-recommends wine-development wine32-development wine64-development ${installer_addition}
-else
+if [[ "${UBUNTU_CODENAME}" = "fossa" || "${UBUNTU_CODENAME}" = "eoan" ]] ; then
 	echo "### installing wine-staging from winehq with recommendations"
 	apt install --install-recommends winehq-staging ${installer_addition}
+else
+	echo "### installing wine-development as workaround if the winehq version isn't supported"
+	apt install --install-recommends wine-development wine32-development wine64-development ${installer_addition}
 fi
 
 echo "### installing winetricks, dxvk, corefonts, xboxdrv"
