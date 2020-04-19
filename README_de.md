@@ -75,7 +75,7 @@ Um eine neue Version des Scriptes herunterzuladen, kann folgender Befehl ausgef√
 
 ### F√ºr Fortgeschrittene
 * Linux Mint ( https://www.linuxmint.com/ )
-  Distribution mit dem Mate Desktop kommt einem Workflow auf Windows nahe
+  Distribution mit dem Cinnamon Desktop kommt einem Workflow auf Windows nahe
 * Elementary OS ( https://elementary.io/de/ )
   Die Distribution mit dem Pantheon Desktop kommt einem Workflow auf MacOS nahe
 

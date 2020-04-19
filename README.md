@@ -75,7 +75,7 @@ you can use git to pull down a new version of this script:
 
 ### For Advanced Beginners
 * Linux Mint ( https://www.linuxmint.com/ )
-  With the mate desktop on Linux Mint you get an workflow close to windows
+  With the cinnamon desktop on Linux Mint you get an workflow close to windows
 * Elementary OS ( https://elementary.io/de/ )
   With the pantheon desktop on Elementary OS you get an workflow close to MacOS
 
