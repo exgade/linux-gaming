@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# Basic System
+microcode_install="true"
+
 # Graphic Driver Install
 nvidia_install="false"
 amd_install="false"
@@ -61,6 +64,18 @@ fi
 ID="unknown"
 if [ -f /etc/os-release ] ; then
 	source /etc/os-release
+fi
+
+if [ "${microcode_install}" = "true" ] ; then
+	echo "### Detecting CPU for Microcode installation"
+	if (lscpu | grep Intel > /dev/null) then
+		echo "### Intel CPU detected"
+		pacman -S intel-ucode --needed ${installer_addition}
+	fi
+	if (lscpu | grep AMD > /dev/null) then
+		echo "### AMD CPU detected"
+		pacman -S amd-ucode --needed ${installer_addition}
+	fi
 fi
 
 # setting graphic drivers to install
