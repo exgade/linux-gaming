@@ -70,9 +70,18 @@ you can use git to pull down a new version of this script:
 ## Distribution related infos
 
 ### For Beginners
-* Manjaro ( https://manjaro.org/ )
+* Manjaro XFCE Edition( https://manjaro.org/ )
+  The XFCE4 Desktop comes close to an workflow to windows
 
-### For Advanced Users
+### For Advanced Beginners
+* Linux Mint ( https://www.linuxmint.com/ )
+  With the cinnamon desktop on Linux Mint you get an workflow close to windows
+* Elementary OS ( https://elementary.io/de/ )
+  With the pantheon desktop on Elementary OS you get an workflow close to MacOS
+
+### For Advanced Users / Also working on these Distros
 * Arch Linux
 * Artix Linux
 * Debian Testing or Sid
+* Ubuntu
+* Elementary OS

@@ -13,6 +13,21 @@ if [ -f /etc/os-release ] ; then
 	elif [ "${ID}" = "debian" ] ; then
 		distrodetect="Debian"
 		distroinstaller="debian"
+	elif [ "${ID}" = "ubuntu" ] ; then
+		distrodetect="Ubuntu"
+		distroinstaller="ubuntu"
+	elif [ "${ID_LIKE}" = "ubuntu" ] ; then
+		if [ "${ID}" = "elementary" ] ; then
+			distrodetect="Elementary"
+		elif [ "${ID}" = "linuxmint" ] ; then
+			distrodetect="Linux Mint"
+		else
+			distrodetect="Unknown Ubuntu"
+			echo "WARNING: this ubuntu distribution is unknown, you might face a broken system if you continue."
+			echo "To abort press CTRL+C, continue anyway with ENTER"
+			read
+		fi
+		distroinstaller="ubuntu"
 	fi
 elif [ -f /usr/lib/os-release ] ; then
 	source /usr/lib/os-release
