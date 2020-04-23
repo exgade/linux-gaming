@@ -70,7 +70,7 @@ you can use git to pull down a new version of this script:
 ## Distribution related infos
 
 ### For Beginners
-* Manjaro XFCE Edition( https://manjaro.org/ )
+* Manjaro XFCE Edition ( https://manjaro.org/ )
   The XFCE4 Desktop comes close to an workflow to windows
 
 ### For Advanced Beginners
