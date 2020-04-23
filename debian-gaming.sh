@@ -33,6 +33,15 @@ if [ "`whoami`" != "root" ] ; then
 fi
 
 # noconfirm logic
+for arg in "$@" ; do
+	if [[ "$arg" = "--force" || "$arg" = "-f" ]] ; then
+		option_noconfirm="true"
+	elif [[ "$arg" = "--help" || "$arg" = "-h" ]] ; then
+		echo "usage: ./debian-gaming.sh [OPTIONS]"
+		echo "--force - no questions while installing / uninstalling packages - this might break your system"
+		exit
+	fi
+done
 installer_addition=""
 if [ "${option_noconfirm}" = "true" ] ; then
 	installer_addition="-y"

@@ -22,7 +22,7 @@ option_noconfirm="false"
 
 # argument handler
 for arg in "$@" ; do
-	if [ "$arg" = "--force" ] ; then
+	if [[ "$arg" = "--force" || "$arg" = "-f" ]] ; then
 		option_noconfirm="true"
 	elif [[ "$arg" = "--help" || "$arg" = "-h" ]] ; then
 		echo "usage: ./ubuntu-gaming.sh [OPTIONS]"
@@ -86,7 +86,7 @@ apt install wget ${installer_addition}
 # install add-apt-repository command
 apt install software-properties-common ${installer_addition}
 
-if [[ "${UBUNTU_CODENAME}" = "fossa" || "${UBUNTU_CODENAME}" = "eoan" ]] ; then
+if [[ "${UBUNTU_CODENAME}" = "focal" || "${UBUNTU_CODENAME}" = "eoan" ]] ; then
 	# add winehq repo
 	if [ "`grep -E '^deb https://dl.winehq.org' /etc/apt/sources.list | wc -l`" = "0" ] ; then
 		mkdir -p /root/.aptkeys
@@ -110,7 +110,7 @@ if [[ "${UBUNTU_CODENAME}" = "fossa" || "${UBUNTU_CODENAME}" = "eoan" ]] ; then
 		sed -i "s/dl\.winehq\.org\/wine-builds\/ubuntu\/ focal/dl.winehq.org\/wine-builds\/ubuntu\/ eoan/g" /etc/apt/sources.list
 	fi
 else
-	echo "### avoid installation of winehq repositories on anything older than fossa or eoan"
+	echo "### avoid installation of winehq repositories on anything older than focal fossa or eoan"
 	echo "### more info: https://forum.winehq.org/viewtopic.php?f=8&t=32192"
 fi
 
@@ -124,7 +124,7 @@ fi
 echo "### adding 32 Bit support and updating apt"
 dpkg --add-architecture i386 && apt update
 
-if [[ "${UBUNTU_CODENAME}" = "fossa" || "${UBUNTU_CODENAME}" = "eoan" ]] ; then
+if [[ "${UBUNTU_CODENAME}" = "focal" || "${UBUNTU_CODENAME}" = "eoan" ]] ; then
 	echo "### installing wine-staging from winehq with recommendations"
 	apt install --install-recommends winehq-staging ${installer_addition}
 else
@@ -174,14 +174,22 @@ echo "### installing libraries that are need for many games"
 apt install libgnutls30:i386 libldap-2.4-2:i386 libgpg-error0:i386 libsqlite3-0:i386 libxml2:i386 libasound2-plugins:i386 libsdl2-2.0-0:i386 libfreetype6:i386 libdbus-1-3:i386
 
 # software installation flathub
-if [[ "${teamspeak_install}" = "true" || "${discord_install}" = "true" ]] ; then
+if [[ "${ID}" != "linuxmint" ]] ; then
+	echo "### Installing Discord as Snap Package"
+	snap install discord
+	echo "### Avoid spamming Discord Log Spam ( More Info: https://snapcraft.io/discord )"
+	snap connect discord:system-observe
+fi
+if [[ "${teamspeak_install}" = "true" || "${discord_install}" = "true" && "${ID}" = "linuxmint" ]] ; then
 	echo "### starting additional software install with flatpak / flathub"
 	apt install flatpak ${installer_addition}
 	flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
 	if [ "${teamspeak_install}" = "true" ] ; then
+		echo "### installing Teamspeak3 via Flatpak"
 		flatpak install flathub com.teamspeak.TeamSpeak ${installer_addition}
 	fi
-	if [ "${discord_install}" = "true" ] ; then
+	if [[ "${discord_install}" = "true" && "${ID}" = "linuxmint" ]] ; then
+		echo "### installing Discord via Flatpak"
 		flatpak install flathub com.discordapp.Discord ${installer_addition}
 	fi
 fi

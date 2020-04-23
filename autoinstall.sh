@@ -2,6 +2,20 @@
 workdir="`dirname $0`"
 distrodetect=""
 distroinstaller=""
+option_noconfirm="false"
+installer_arguments=""
+for arg in "$@" ; do
+	if [[ "$arg" = "--force" || "$arg" = "-f" ]] ; then
+		option_noconfirm="true"
+	elif [[ "$arg" = "--help" || "$arg" = "-h" ]] ; then
+		echo "usage: ./autoinstall.sh [OPTIONS]"
+		echo "--force - no questions while installing / uninstalling packages - this might break your system"
+		exit
+	fi
+done
+if [ "$option_noconfirm" = "true" ] ; then
+	installer_arguments="--force"
+fi
 if [ -f /etc/os-release ] ; then
 	source /etc/os-release
 	if [ "${ID}" = "manjaro" ] ; then
@@ -41,6 +55,6 @@ if [ "${distrodetect}" = "" ] ; then
 	echo "No Distribution detected"
 else
 	echo "Detected Distribution ${distrodetect}, using installer ${distroinstaller}-gaming.sh"
-	cd "${workdir}" && ./${distroinstaller}-gaming.sh
+	cd "${workdir}" && ./${distroinstaller}-gaming.sh $installer_arguments
 fi
 

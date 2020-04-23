@@ -25,7 +25,7 @@ option_noconfirm="false"
 
 # argument handler
 for arg in "$@" ; do
-	if [ "$arg" = "--force" ] ; then
+	if [[ "$arg" = "--force" || "$arg" = "-f" ]] ; then
 		option_noconfirm="true"
 	elif [[ "$arg" = "--help" || "$arg" = "-h" ]] ; then
 		echo "usage: ./arch-gaming.sh [OPTIONS]"
