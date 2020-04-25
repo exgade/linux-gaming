@@ -88,15 +88,19 @@ apt install software-properties-common ${installer_addition}
 
 if [[ "${UBUNTU_CODENAME}" = "focal" || "${UBUNTU_CODENAME}" = "eoan" ]] ; then
 	# add winehq repo
-	if [ "`grep -E '^deb https://dl.winehq.org' /etc/apt/sources.list | wc -l`" = "0" ] ; then
+	if [[ ! -f /root/.aptkeys/winehq.key.old && "`grep -E '^deb https://dl.winehq.org' /etc/apt/sources.list | wc -l`" = "0" ]] ; then
 		mkdir -p /root/.aptkeys
-		if [ ! -f /root/.aptkeys/winehq.key ] ; then
-			cd /root/.aptkeys/
-			wget -nc https://dl.winehq.org/wine-builds/winehq.key
-			apt-key add winehq.key
+		if [ -f /root/.aptkeys/winehq.key ] ; then
+			echo "### retry downloading of winehq.key"
+			rm /root/.aptkeys/winehq.key
 		fi
-		if [ "`sha256sum /root/.aptkeys/winehq.key | grep 78b185fabdb323971d13bd329fefc8038e08559aa51c4996de18db0639a51df6 | wc -l`" = "1" ] ; then
-			echo "### checksumme gültig, installiere repository für winehq"
+		cd /root/.aptkeys/
+		wget -nc https://dl.winehq.org/wine-builds/winehq.key
+		if [[ -f /root/.aptkeys/winehq.key && "`sha256sum /root/.aptkeys/winehq.key | grep 78b185fabdb323971d13bd329fefc8038e08559aa51c4996de18db0639a51df6 | wc -l`" = "1" ]] ; then
+			echo "### checksumme valid, adding winehq.key"
+			apt-key add /root/.aptkeys/winehq.key
+			mv /root/.aptkeys/winehq.key /root/.aptkeys/winehq.key.old
+			echo "### adding repository for winehq"
 			apt-add-repository "deb https://dl.winehq.org/wine-builds/ubuntu/ ${UBUNTU_CODENAME} main" ${installer_addition}
 		else
 			echo "### Error: checksum invalid on winehq repository, aborting..."
