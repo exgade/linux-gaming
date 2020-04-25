@@ -97,7 +97,7 @@ if [[ "${UBUNTU_CODENAME}" = "focal" || "${UBUNTU_CODENAME}" = "eoan" ]] ; then
 		fi
 		if [ "`sha256sum /root/.aptkeys/winehq.key | grep 78b185fabdb323971d13bd329fefc8038e08559aa51c4996de18db0639a51df6 | wc -l`" = "1" ] ; then
 			echo "### checksumme gültig, installiere repository für winehq"
-			apt-add-repository "deb https://dl.winehq.org/wine-builds/ubuntu/ ${UBUNTU_CODENAME} main"
+			apt-add-repository "deb https://dl.winehq.org/wine-builds/ubuntu/ ${UBUNTU_CODENAME} main" ${installer_addition}
 		else
 			echo "### Error: checksum invalid on winehq repository, aborting..."
 			exit
@@ -117,7 +117,7 @@ fi
 # add lutris ppa
 if [ ! -f "/etc/apt/sources.list.d/lutris-team-ubuntu-lutris-${UBUNTU_CODENAME}.list" ] ; then
 	echo "### adding lutris ppa"
-	add-apt-repository ppa:lutris-team/lutris
+	add-apt-repository ppa:lutris-team/lutris ${installer_addition}
 else
 	echo "### lutris repository already added, skipping..."
 fi
@@ -139,7 +139,7 @@ apt install winetricks dxvk ttf-mscorefonts-installer xboxdrv mono-runtime-commo
 if [ "${nvidia_install}" = "true" ] ; then
 	if [ ! -f "/etc/apt/sources.list.d/graphics-drivers-ubuntu-ppa-${UBUNTU_CODENAME}.list" ] ; then
 		echo "### adding ubuntu's GPU Drivers PPA, press ENTER to confirm"
-                add-apt-repository ppa:graphics-drivers/ppa
+                add-apt-repository ppa:graphics-drivers/ppa ${installer_addition}
                 echo "### updating repositories for the new ppa"
                 apt update
 	else
