@@ -35,7 +35,7 @@ for arg in "$@" ; do
 done
 
 # abort if not root and no sudo was used
-if [ "`whoami`" != "root" ] ; then
+if [ "$(whoami)" != "root" ] ; then
 	echo "### Error: you have to run this script as root or via sudo"
 	echo "Installation canceled"
 	exit
@@ -49,13 +49,13 @@ fi
 
 # autodetect graphic cards
 if [ "${autodetect_graphics}" = "true" ] ; then
-	if [ "`lspci | grep -i nvidia | grep VGA | wc -l`" != "0" ] ; then
+	if [ "$(lspci | grep -i nvidia | grep VGA -c)" != "0" ] ; then
 		nvidia_install="true"
 	fi
-	if [ "`lspci | grep -i amd | grep VGA | wc -l`" != "0" ] ; then
+	if [ "$(lspci | grep -i amd | grep VGA -c)" != "0" ] ; then
 		amd_install="true"
 	fi
-	if [ "`lspci | grep -i intel | grep VGA | wc -l`" != "0" ] ; then
+	if [ "$(lspci | grep -i intel | grep VGA -c)" != "0" ] ; then
 		intel_install="true"
 	fi
 fi
@@ -85,12 +85,12 @@ if [[ "${nvidia_install}" = "true" || "${amd_install}" = "true" || "${intel_inst
 	if [ "${nvidia_install}" = "true" ] ; then
 		if [ "${ID}" = "manjaro" ] ; then
 			echo "### autodetecting manjaro kernel and installing nvidia driver depending on that"
-			if [ "`mhwd-kernel -li | sed 's/\s\s\s\*\s//g' - | grep -E '^linux[0-9]+$'`" != "" ] ; then
+			if [ "$(mhwd-kernel -li | sed 's/\s\s\s\*\s//g' - | grep -E '^linux[0-9]+$')" != "" ] ; then
 				manj_nvidia=""
-				for i in `mhwd-kernel -li | sed 's/\s\s\s\*\s//g' - | grep -E '^linux[0-9]+$'` ; do
+				for i in $(mhwd-kernel -li | sed 's/\s\s\s\*\s//g' - | grep -E '^linux[0-9]+$') ; do
 					manj_nvidia="${i}-nvidia-440xx ${manj_nvidia}"
 				done
-				for i in `mhwd-kernel -li | sed 's/\s\s\s\*\s//g' - | grep -E '^linux[0-9]+-rt$'` ; do
+				for i in $(mhwd-kernel -li | sed 's/\s\s\s\*\s//g' - | grep -E '^linux[0-9]+-rt$') ; do
 					manj_nvidia="${i}-nvidia-440xx ${manj_nvidia}"
 				done
 				echo "### installing manjaro specific packages for nvidia"
@@ -141,10 +141,10 @@ fi
 
 # btrfs tuning if possible
 # if you dont want this - just delete the file general/btrfs-tuning.sh
-workdir="`dirname $0`"
+workdir="$(dirname "$0")"
 if [ -d "${workdir}/general" ] && [ -f "${workdir}/general/btrfs-tuning.sh" ] ; then
 	echo "### optimizing btrfs, if needed"
-	${workdir}/general/btrfs-tuning.sh
+	"${workdir}"/general/btrfs-tuning.sh
 	echo "### if you see one error (per user) regarding to an steam folder, this can be ignored"
 fi
 
@@ -170,7 +170,7 @@ else
 fi
 
 # if wine is installed, remove it to avoid conflict with wine-staging
-if [[ "`pacman -Q wine | wc -l`" = "1" && "`pacman -Q wine | grep wine-staging | wc -l`" = "0" ]] ; then
+if [[ "$(pacman -Q wine | wc -l)" = "1" && "$(pacman -Q wine | grep wine-staging -c)" = "0" ]] ; then
 	echo "### detected that wine is installed, we need to remove the wine package to install wine-staging"
 	echo "### sadly we also need to remove packages depending on wine to avoid conflicts later on"
 	pacman -Rc wine ${installer_addition}

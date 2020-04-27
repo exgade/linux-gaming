@@ -20,13 +20,7 @@ option_noconfirm="false"
 
 ##### end configuration #####
 
-if [ "`whoami`" != "root" ] ; then
-	echo "### Error: you have to run this script as root or via sudo"
-	echo "Installation canceled"
-	exit
-fi
-
-if [ "`whoami`" != "root" ] ; then
+if [ "$(whoami)" != "root" ] ; then
 	echo "### Error: you have to run this script as root or via sudo"
 	echo "Installation canceled"
 	exit
@@ -63,13 +57,13 @@ fi
 
 # autodetect graphic cards
 if [ "${autodetect_graphics}" = "true" ] ; then
-	if [ "`lspci | grep -i nvidia | grep VGA | wc -l`" != "0" ] ; then
+	if [ "$(lspci | grep -i nvidia | grep VGA -c)" != "0" ] ; then
 		nvidia_install="true"
 	fi
-	if [ "`lspci | grep -i amd | grep VGA | wc -l`" != "0" ] ; then
+	if [ "$(lspci | grep -i amd | grep VGA -c)" != "0" ] ; then
 		amd_install="true"
 	fi
-	if [ "`lspci | grep -i intel | grep VGA | wc -l`" != "0" ] ; then
+	if [ "$(lspci | grep -i intel | grep VGA -c)" != "0" ] ; then
 		intel_install="true"
 	fi
 fi
@@ -87,15 +81,15 @@ if [[ "${nvidia_install}" = "true" || "${amd_install}" = "true" || "${intel_inst
 fi
 
 # btrfs tuning if possible
-workdir="`dirname $0`"
+workdir="$(dirname "$0")"
 if [ -d "${workdir}/general" ] && [ -f "${workdir}/general/btrfs-tuning.sh" ] ; then
-	${workdir}/general/btrfs-tuning.sh
+	"${workdir}"/general/btrfs-tuning.sh
 	echo "### if you see one error regarding to a not operation in a steam folder, this can be ignored"
 fi
 
-if [ "`grep ' main' /etc/apt/sources.list | grep 'contrib' | grep 'non-free' | wc -l`" = "0" ] ; then
-	chk1="`grep ' main' /etc/apt/sources.list | grep non-free | wc -l`"
-	chk2="`grep ' main' /etc/apt/sources.list | grep contrib | wc -l`"
+if [ "$(grep ' main' /etc/apt/sources.list | grep 'contrib' | grep 'non-free' -c)" = "0" ] ; then
+	chk1="$(grep ' main' /etc/apt/sources.list | grep non-free -c)"
+	chk2="$(grep ' main' /etc/apt/sources.list | grep contrib -c)"
 	if [[ "$chk1" = "$chk2" && "$chk1" = "0" && ! -f /etc/apt/sources.list.bck ]] ; then
 		echo "### installing contrib / non-free sources"
 		cp /etc/apt/sources.list /etc/apt/sources.list.bck
@@ -122,17 +116,17 @@ if [ ! -d ~/.aptkeys ] ; then
 fi
 if [ ! -f ~/.aptkeys/LutrisDebian10.key ] ; then
 	echo "### downloading lutris key"
-	cd ~/.aptkeys
+	cd ~/.aptkeys || exit
 	wget https://download.opensuse.org/repositories/home:/strycore/Debian_9.0/Release.key -O ~/.aptkeys/LutrisDebian10.key
 fi
 if [ ! -f ~/.aptkeys/winehq.key ] ; then
 	echo "### downloading winehq key"
-	cd ~/.aptkeys
+	cd ~/.aptkeys || exit
 	wget https://dl.winehq.org/wine-builds/winehq.key -O ~/.aptkeys/winehq.key
 fi
 
 # Check sha256 checksum for winehq repo
-if [ "`sha256sum ~/.aptkeys/winehq.key | awk '{print $1}'`" = "78b185fabdb323971d13bd329fefc8038e08559aa51c4996de18db0639a51df6" ] ; then
+if [ "$(sha256sum ~/.aptkeys/winehq.key | awk '{print $1}')" = "78b185fabdb323971d13bd329fefc8038e08559aa51c4996de18db0639a51df6" ] ; then
 	echo "### Checksum of WineHQ OK, adding key"
 	apt-key add ~/.aptkeys/winehq.key
 else
@@ -140,7 +134,7 @@ else
 	exit
 fi
 # Check sha256 checksum for lutris repo
-if [ "`sha256sum ~/.aptkeys/LutrisDebian10.key | awk '{print $1}'`" = "8f43b344d71eb648c3ec687ab4e13521db42666c777560d1845d917458f6b35a" ] ; then
+if [ "$(sha256sum ~/.aptkeys/LutrisDebian10.key | awk '{print $1}')" = "8f43b344d71eb648c3ec687ab4e13521db42666c777560d1845d917458f6b35a" ] ; then
 	echo "### Checksum of Lutris OK, adding key"
 	apt-key add ~/.aptkeys/LutrisDebian10.key
 else
@@ -150,7 +144,7 @@ fi
 
 #add winehq repo
 echo "### adding winehq repository"
-if [ "`grep bullseye /etc/os-release | wc -l`" = "1" ] ; then
+if [ "$(grep bullseye /etc/os-release -c)" = "1" ] ; then
 	echo "deb https://dl.winehq.org/wine-builds/debian/ bullseye main" > /etc/apt/sources.list.d/winehq.list
 else
 	echo "deb https://dl.winehq.org/wine-builds/debian/ buster main" > /etc/apt/sources.list.d/winehq.list

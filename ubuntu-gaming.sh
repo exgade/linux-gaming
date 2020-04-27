@@ -31,7 +31,7 @@ for arg in "$@" ; do
 	fi
 done
 
-if [ "`grep -P '^NAME=\"Pop\!' /etc/os-release | wc -l`" = "1" ] ; then
+if [ "$(grep -P '^NAME=\"Pop\!' /etc/os-release -c)" = "1" ] ; then
 	echo "Error: Pop! OS Detected, this distribution is unsupported"
 	exit
 fi
@@ -39,7 +39,7 @@ fi
 #load os-release variables
 source /etc/os-release
 
-if [ "`whoami`" != "root" ] ; then
+if [ "$(whoami)" != "root" ] ; then
 	echo "### Error: you have to run this script as root or via sudo"
 	echo "Installation canceled"
 	exit
@@ -53,13 +53,13 @@ fi
 
 # autodetect graphic cards
 if [ "${autodetect_graphics}" = "true" ] ; then
-	if [ "`lspci | grep -i nvidia | grep VGA | wc -l`" != "0" ] ; then
+	if [ "$(lspci | grep -i nvidia | grep VGA -c)" != "0" ] ; then
 		nvidia_install="true"
 	fi
-	if [ "`lspci | grep -i amd | grep VGA | wc -l`" != "0" ] ; then
+	if [ "$(lspci | grep -i amd | grep VGA -c)" != "0" ] ; then
 		amd_install="true"
 	fi
-	if [ "`lspci | grep -i intel | grep VGA | wc -l`" != "0" ] ; then
+	if [ "$(lspci | grep -i intel | grep VGA -c)" != "0" ] ; then
 		intel_install="true"
 	fi
 fi
@@ -88,15 +88,15 @@ apt install software-properties-common ${installer_addition}
 
 if [[ "${UBUNTU_CODENAME}" = "focal" || "${UBUNTU_CODENAME}" = "eoan" ]] ; then
 	# add winehq repo
-	if [[ ! -f /root/.aptkeys/winehq.key.old && "`grep -E '^deb https://dl.winehq.org' /etc/apt/sources.list | wc -l`" = "0" ]] ; then
+	if [[ ! -f /root/.aptkeys/winehq.key.old && "$(grep -E '^deb https://dl.winehq.org' /etc/apt/sources.list -c)" = "0" ]] ; then
 		mkdir -p /root/.aptkeys
 		if [ -f /root/.aptkeys/winehq.key ] ; then
 			echo "### retry downloading of winehq.key"
 			rm /root/.aptkeys/winehq.key
 		fi
-		cd /root/.aptkeys/
+		cd /root/.aptkeys/ || exit
 		wget -nc https://dl.winehq.org/wine-builds/winehq.key
-		if [[ -f /root/.aptkeys/winehq.key && "`sha256sum /root/.aptkeys/winehq.key | grep 78b185fabdb323971d13bd329fefc8038e08559aa51c4996de18db0639a51df6 | wc -l`" = "1" ]] ; then
+		if [[ -f /root/.aptkeys/winehq.key && "$(sha256sum /root/.aptkeys/winehq.key | grep 78b185fabdb323971d13bd329fefc8038e08559aa51c4996de18db0639a51df6 -c)" = "1" ]] ; then
 			echo "### checksumme valid, adding winehq.key"
 			apt-key add /root/.aptkeys/winehq.key
 			mv /root/.aptkeys/winehq.key /root/.aptkeys/winehq.key.old
@@ -149,7 +149,7 @@ if [ "${nvidia_install}" = "true" ] ; then
 	else
 		echo "### graphics-drivers ppa already installed, skipping"
 	fi
-	if [ "`apt list --installed nvidia-driver-440 | grep -i 'nvidia' | wc -l`" = "0" ] ; then
+	if [ "$(apt list --installed nvidia-driver-440 | grep -i 'nvidia' -c)" = "0" ] ; then
 		echo "### installing nvidia proprietary driver"
 		apt install nvidia-driver-440 libnvidia-gl-440 libnvidia-gl-440:i386 nvidia-settings nvidia-driver-440 nvidia-utils-440 ${installer_addition}
 	else

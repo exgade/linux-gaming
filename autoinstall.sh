@@ -1,5 +1,5 @@
 #!/bin/bash
-workdir="`dirname $0`"
+workdir="$(dirname "${0}")"
 distrodetect=""
 distroinstaller=""
 option_noconfirm="false"
