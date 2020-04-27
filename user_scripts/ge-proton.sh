@@ -1,5 +1,5 @@
 #!/bin/bash
-workdir="`pwd`/`dirname $0`"
+workdir="$(pwd)/$(dirname "$0")"
 if [ "$1" = "last" ] ; then
 	gerelease="5.2-GE-2"
 	gechecksum="affc68e5956e84d679c9e801011448fe6a228cd08bc19dd5e9d7ae6e2d24d5cd"
@@ -22,13 +22,13 @@ else
 	exit
 fi
 
-if [ "`whoami`" = "root" ] ; then
+if [ "$(whoami)" = "root" ] ; then
 	echo "this script should NOT be run as root or via sudo"
 	echo "please use this with your user account"
 	exit
 fi
 
-if [ "`whereis wget | grep \/bin | wc -l`" = "0" ] ; then
+if [ "$(whereis wget | grep "/bin" -c)" = "0" ] ; then
 	echo "Error: please install wget first"
 	exit
 fi
@@ -36,10 +36,10 @@ fi
 if [ ! -d ~/.steam/root/compatibilitytools.d ] ; then
 	mkdir -p ~/.steam/root/compatibilitytools.d
 fi
-cd ~/.steam/root/compatibilitytools.d/
+cd ~/.steam/root/compatibilitytools.d/ || exit
 if [[ ! -d ~/.steam/root/compatibilitytools.d/Proton-${gerelease} && ! -f ~/.steam/root/compatibilitytools.d/Proton-${gerelease}.tar.gz ]] ; then
 	echo Downloading Glorious Eggroll Proton...
-	if [[ ! -f /usr/local/bin/wget || "`ls -la /usr/local/bin/wget | grep /usr/bin/firejail | wc -l`" = "1" ]] ;then
+	if [[ ! -f /usr/local/bin/wget || "$(readlink -f /usr/local/bin/wget)" = "/usr/bin/firejail" ]] ;then
 		cmd_wget="/usr/bin/wget"
 	else
 		cmd_wget="wget"
@@ -48,7 +48,7 @@ if [[ ! -d ~/.steam/root/compatibilitytools.d/Proton-${gerelease} && ! -f ~/.ste
 
 	echo checksum check...
 
-	if [ "`sha256sum ~/.steam/root/compatibilitytools.d/Proton-${gerelease}.tar.gz | grep ${gechecksum} | wc -l`" = "1" ] ; then
+	if [ "$(sha256sum ~/.steam/root/compatibilitytools.d/Proton-${gerelease}.tar.gz | grep ${gechecksum} -c)" = "1" ] ; then
 		echo "checksum ok, extracting tar.gz..."
 		tar xzf "Proton-${gerelease}.tar.gz"
 		echo "removing tar.gz file"
@@ -65,5 +65,5 @@ else
 	fi
 fi
 if [[ "$1" = "both" ]] ; then
-	${workdir}/ge-proton.sh last
+	"${workdir}"/ge-proton.sh last
 fi

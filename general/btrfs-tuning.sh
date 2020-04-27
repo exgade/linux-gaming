@@ -1,12 +1,12 @@
 #!/bin/bash
 
-if [ "`mount | grep ' on / type btrfs' | wc -l`" = "1" ] ; then
-	if [ "`mount | grep 'on /home' | wc -l`" = "0" ] ; then
+if [ "$(mount | grep ' on / type btrfs' -c)" = "1" ] ; then
+	if [ "$(mount | grep 'on /home' -c)" = "0" ] ; then
 		echo "### BTRFS detected, running optimizations"
 		for loopdir in /home/*; do
 			loopuser="${loopdir/\/home\//}"
 			if [ "${loopdir}" = "/home/${loopuser}" ]; then
-				realuser="`cat /etc/passwd | grep \"${loopuser}:\" | wc -l`"
+				realuser="$(grep "${loopuser}:" /etc/passwd -c)"
 				if [ "$realuser" = "1" ] ; then
 					echo "### optimizing for user ${loopuser}"
 					# Winetricks Default Directory for Wine Bottles
@@ -39,7 +39,7 @@ if [ "`mount | grep ' on / type btrfs' | wc -l`" = "1" ] ; then
 					chattr +C -Rf "${loopdir}/.steam"
 				fi
 			else
-				echo "### Error: Folder ${loopfolder} ignored: is it not in /home/ ?"
+				echo "### Error: Folder ${loopdir} ignored: is it not in /home/ ?"
 			fi
 		done
 	fi
