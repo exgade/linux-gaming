@@ -1,8 +1,9 @@
 #!/bin/bash
 
 if [ "$(mount | grep ' on / type btrfs' -c)" = "1" ] ; then
+	echo "### BTRFS detected, running optimizations"
 	if [ "$(mount | grep 'on /home' -c)" = "0" ] ; then
-		echo "### BTRFS detected, running optimizations"
+		echo "### BTRFS: running optimizations in /home"
 		for loopdir in /home/*; do
 			loopuser="${loopdir/\/home\//}"
 			if [ "${loopdir}" = "/home/${loopuser}" ]; then
@@ -45,10 +46,12 @@ if [ "$(mount | grep ' on / type btrfs' -c)" = "1" ] ; then
 	fi
 	# arch pkg cache
 	if [ -d "/var/cache/pacman/pkg" ] ; then
+		echo "### BTRFS: running pacman cache optimization"
 		chattr +C -R /var/cache/pacman/pkg
 	fi
 	# debian/ ubuntu apt cache
 	if [ -d "/var/cache/apt" ] ; then
+		echo "### BTRFS: running apt cache optimization"
 		chattr +C -R /var/cache/apt
 	fi
 fi
