@@ -84,4 +84,3 @@ you can use git to pull down a new version of this script:
 * Artix Linux
 * Debian Testing or Sid
 * Ubuntu
-* Elementary OS

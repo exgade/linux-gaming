@@ -84,4 +84,3 @@ Um eine neue Version des Scriptes herunterzuladen, kann folgender Befehl ausgefÃ
 * Artix Linux
 * Debian Testing oder Sid
 * Ubuntu
-* Elementary OS
