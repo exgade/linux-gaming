@@ -29,7 +29,7 @@ Git has to be installed, to clone the repository.
 ### 1) Install Git:
 * Arch Linux, Manjaro, Artix Linux  
     sudo pacman -S git
-* Debian  
+* Debian, Ubuntu, Linux Mint, Elementary OS
     sudo apt install git
 
 ### 2) Download the scripts

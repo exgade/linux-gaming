@@ -29,7 +29,7 @@ Um das Repository herunterzuladen muss man zunächst Git installiert haben.
 ### 1) Installiere Git:
 * Arch Linux, Manjaro, Artix Linux  
     sudo pacman -S git
-* Debian  
+* Debian, Ubuntu, Linux Mint, Elementary OS
     sudo apt install git
 
 ### 2) Lade die Scripte mit Git herunter
