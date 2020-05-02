@@ -40,8 +40,8 @@ Um das Repository herunterzuladen muss man zunächst Git installiert haben.
 
 Das Installationsscript erkennt eure Distribution und installiert setzt dann das System entsprechend auf.
 
-### Installation per autoinstaller:
-sudo linux-gaming/autoinstall.sh
+### Installation per Installer:
+sudo linux-gaming/ui-install.sh
 
 ### Installation mit einem speziellem installer:
 Die installation kann auch per Hand durchgeführt werden, indem zunächst das Script für die entsprechende Distribution bearbeitet wird.

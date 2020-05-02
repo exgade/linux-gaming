@@ -40,8 +40,8 @@ Git has to be installed, to clone the repository.
 
 The install Script detects the distribution you're using and sets up the system.
 
-### with autoinstaller:
-sudo linux-gaming/autoinstall.sh
+### with installer:
+sudo linux-gaming/ui-install.sh
 
 ### with specific installer:
 You can also customize the installation by editing the installer script for your distribution.
