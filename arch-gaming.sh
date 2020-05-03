@@ -160,7 +160,7 @@ fi
 
 # btrfs tuning if possible
 # if you dont want this - just delete the file general/btrfs-tuning.sh
-workdir="$(dirname "$0")"
+workdir="$( cd "$(dirname "$0")" >/dev/null 2>&1 ; pwd -P )"
 if [ -d "${workdir}/general" ] && [ -f "${workdir}/general/btrfs-tuning.sh" ] ; then
 	echo "### optimizing btrfs, if needed"
 	"${workdir}"/general/btrfs-tuning.sh

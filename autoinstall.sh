@@ -1,5 +1,5 @@
 #!/bin/bash
-workdir="$(dirname "${0}")"
+workdir="$( cd "$(dirname "$0")" >/dev/null 2>&1 ; pwd -P )"
 distrodetect=""
 distroinstaller=""
 option_noconfirm="false"

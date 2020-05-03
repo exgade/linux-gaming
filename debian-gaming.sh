@@ -100,7 +100,7 @@ if [[ "${nvidia_install}" = "true" || "${amd_install}" = "true" || "${intel_inst
 fi
 
 # btrfs tuning if possible
-workdir="$(dirname "$0")"
+workdir="$( cd "$(dirname "$0")" >/dev/null 2>&1 ; pwd -P )"
 if [ -d "${workdir}/general" ] && [ -f "${workdir}/general/btrfs-tuning.sh" ] ; then
 	"${workdir}"/general/btrfs-tuning.sh
 	echo "### if you see one error regarding to a not operation in a steam folder, this can be ignored"
