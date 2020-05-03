@@ -23,16 +23,14 @@ if [ "$(whoami)" != "root" ] ; then
 fi
 
 function askQuestion {
-	if [ "$default" = "" ] ; then
+	if [[ "$default" = "" || "$default" =~ ^[Yy]$ ]] ; then
 		default="y"
-	fi
-	if [ "$default" = "y" ] ; then
 		echo -n "$question [Y/n] "
 	else
 		echo -n "$question [y/N] "
 	fi
 	read -n 1 answer
-	if [[ "${answer}" = "Y" || "${answer}" = "y" || ( "${default}" = "y" && "${answer}" = "" ) ]];then
+	if [[ "${answer}" =~ ^[Yy]$ || ( "${default}" = "y" && "${answer}" = "" ) ]];then
 		answer="true"
 	else
 		answer="false"
