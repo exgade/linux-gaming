@@ -47,26 +47,26 @@ function askQuestion {
 #fi
 
 default="y"
-question="Install Lutris?"
-askQuestion
-if [ "${answer}" != "true" ] ; then
-	installer_arguments="${installer_arguments} nolutris"
-fi
-echo
+#question="Install Lutris?"
+#askQuestion
+#if [ "${answer}" != "true" ] ; then
+#	installer_arguments="${installer_arguments} nolutris"
+#fi
+#echo
 
-question="Install Steam?"
-askQuestion
-if [ "${answer}" != "true" ] ; then
-	installer_arguments="${installer_arguments} nosteam"
-fi
-echo
+#question="Install Steam?"
+#askQuestion
+#if [ "${answer}" != "true" ] ; then
+#	installer_arguments="${installer_arguments} nosteam"
+#fi
+#echo
 
-question="Install Winetricks?"
-askQuestion
-if [ "${answer}" != "true" ] ; then
-	installer_arguments="${installer_arguments} nowinetricks"
-fi
-echo
+#question="Install Winetricks?"
+#askQuestion
+#if [ "${answer}" != "true" ] ; then
+#	installer_arguments="${installer_arguments} nowinetricks"
+#fi
+#echo
 
 question="Install Teamspeak 3?"
 askQuestion
