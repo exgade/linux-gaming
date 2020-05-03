@@ -38,13 +38,13 @@ for arg in "$@" ; do
 		discord_install="false"
 	elif [[ "$arg" = "--help" || "$arg" = "-h" ]] ; then
 		echo "usage: ./ubuntu-gaming.sh [OPTIONS]"
-		echo "--force - no questions while installing / uninstalling packages - this might break your system"
-		echo "nolutris - don't install Lutris"
-		echo "nosteam - don't install Steam"
-		echo "nowinetricks - don't install Winetricks"
-		echo "nots3 - don't install Teamspeak3"
-		echo "nomumble - don't install Mumble"
-		echo "nodiscord - don't install Discord"
+		echo "--force       - no questions while installing / uninstalling packages - this might break your system"
+		echo "nolutris      - don't install Lutris"
+		echo "nosteam       - don't install Steam"
+		echo "nowinetricks  - don't install Winetricks"
+		echo "nots3         - don't install Teamspeak3"
+		echo "nomumble      - don't install Mumble"
+		echo "nodiscord     - don't install Discord"
 
 		exit
 	fi
