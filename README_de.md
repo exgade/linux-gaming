@@ -77,9 +77,11 @@ Um eine neue Version des Scriptes herunterzuladen, kann folgender Befehl ausgef�
 
 ### Für Fortgeschrittene
 * Linux Mint ( https://www.linuxmint.com/ )
-  Distribution mit dem Cinnamon Desktop kommt einem Workflow auf Windows nahe
+  Die Distribution mit dem Cinnamon Desktop kommt einem Workflow auf Windows nahe
 * Elementary OS ( https://elementary.io/de/ )
   Die Distribution mit dem Pantheon Desktop kommt einem Workflow auf MacOS nahe
+* Fedora (https://getfedora.org/de/ )  
+  Mit dem Gnome Desktop bekommt Ihr einen recht speziellen Workflow, der auch durch plugins erweitert werden kann
 
 ### Für erfahrene Benutzer
 * Arch Linux
