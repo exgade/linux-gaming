@@ -24,6 +24,9 @@ if [ -f /etc/os-release ] ; then
 	elif [ "${ID}" = "arch" ] ; then
 		distrodetect="Arch Linux"
 		distroinstaller="arch"
+	elif [ "${ID}" = "fedora" ] ; then
+		distrodetect="Fedora"
+		distroinstaller="fedora"
 	elif [ "${ID}" = "debian" ] ; then
 		distrodetect="Debian"
 		distroinstaller="debian"
