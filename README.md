@@ -31,6 +31,8 @@ Git has to be installed, to clone the repository.
     sudo pacman -S git
 * Debian, Ubuntu, Linux Mint, Elementary OS  
     sudo apt install git
+* Fedora  
+    sudo dnf install git
 
 ### 2) Download the scripts
 * This will create the folder linux-gaming and downloads the scripts:  

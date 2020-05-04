@@ -31,6 +31,8 @@ Um das Repository herunterzuladen muss man zunächst Git installiert haben.
     sudo pacman -S git
 * Debian, Ubuntu, Linux Mint, Elementary OS
     sudo apt install git
+* Fedora  
+    sudo dnf install git
 
 ### 2) Lade die Scripte mit Git herunter
 * Dies wird den Ordner linux-gaming erstellen und die Scripte in den Ordner herunterladen:  
