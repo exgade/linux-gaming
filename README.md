@@ -76,9 +76,9 @@ you can use git to pull down a new version of this script:
   The XFCE4 Desktop comes close to an workflow to windows
 
 ### For Advanced Beginners
-* Linux Mint ( https://www.linuxmint.com/ )
+* Linux Mint ( https://www.linuxmint.com/ )  
   With the cinnamon desktop on Linux Mint you get an workflow close to windows
-* Elementary OS ( https://elementary.io/de/ )
+* Elementary OS ( https://elementary.io/de/ )  
   With the pantheon desktop on Elementary OS you get an workflow close to MacOS
 * Fedora ( https://getfedora.org/ )  
   With the Gnome Desktop you get a unique workflow, Gnome might be customized with extensions to suit your needs
