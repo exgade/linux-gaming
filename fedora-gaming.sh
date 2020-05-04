@@ -146,7 +146,7 @@ fi
 
 # install common required libraries
 echo "### installing libraries/ dependencies that are need for many games"
-dnf install vdpauinfo libva-vdpau-driver libva-utils libvdpau gamemode sqlite ${installer_addition}
+dnf install vdpauinfo libva-vdpau-driver libva-utils libvdpau gamemode sqlite SDL SDL_image SDL_mixer ${installer_addition}
 
 if [ "${nvidia_install}" = "true" ] ; then
 	echo "### installing nvidia drivers"
