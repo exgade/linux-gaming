@@ -76,9 +76,9 @@ Um eine neue Version des Scriptes herunterzuladen, kann folgender Befehl ausgef√
   Der XFCE4 Desktop kommt dem Windows workflow nahe
 
 ### F√ºr Fortgeschrittene
-* Linux Mint ( https://www.linuxmint.com/ )
+* Linux Mint ( https://www.linuxmint.com/ )  
   Die Distribution mit dem Cinnamon Desktop kommt einem Workflow auf Windows nahe
-* Elementary OS ( https://elementary.io/de/ )
+* Elementary OS ( https://elementary.io/de/ )  
   Die Distribution mit dem Pantheon Desktop kommt einem Workflow auf MacOS nahe
 * Fedora (https://getfedora.org/de/ )  
   Mit dem Gnome Desktop bekommt Ihr einen recht speziellen Workflow, der auch durch plugins erweitert werden kann
