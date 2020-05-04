@@ -1,5 +1,5 @@
 #!/bin/bash
-workdir="$(pwd)/$(dirname "$0")"
+workdir="$( cd "$(dirname "$0")" >/dev/null 2>&1 ; pwd -P )"
 if [ "$1" = "last" ] ; then
 	gerelease="5.2-GE-2"
 	gechecksum="affc68e5956e84d679c9e801011448fe6a228cd08bc19dd5e9d7ae6e2d24d5cd"

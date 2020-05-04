@@ -29,7 +29,7 @@ Um das Repository herunterzuladen muss man zun채chst Git installiert haben.
 ### 1) Installiere Git:
 * Arch Linux, Manjaro, Artix Linux  
     sudo pacman -S git
-* Debian  
+* Debian, Ubuntu, Linux Mint, Elementary OS
     sudo apt install git
 
 ### 2) Lade die Scripte mit Git herunter
@@ -40,8 +40,8 @@ Um das Repository herunterzuladen muss man zun채chst Git installiert haben.
 
 Das Installationsscript erkennt eure Distribution und installiert setzt dann das System entsprechend auf.
 
-### Installation per autoinstaller:
-sudo linux-gaming/autoinstall.sh
+### Installation per Installer:
+sudo linux-gaming/ui-install.sh
 
 ### Installation mit einem speziellem installer:
 Die installation kann auch per Hand durchgef체hrt werden, indem zun채chst das Script f체r die entsprechende Distribution bearbeitet wird.
@@ -84,4 +84,3 @@ Um eine neue Version des Scriptes herunterzuladen, kann folgender Befehl ausgef�
 * Artix Linux
 * Debian Testing oder Sid
 * Ubuntu
-* Elementary OS

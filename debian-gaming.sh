@@ -30,9 +30,28 @@ fi
 for arg in "$@" ; do
 	if [[ "$arg" = "--force" || "$arg" = "-f" ]] ; then
 		option_noconfirm="true"
+	elif [[ "$arg" = "nolutris" ]] ; then
+		lutris_install="false"
+	elif [[ "$arg" = "nosteam" ]] ; then
+		steam_install="false"
+	elif [[ "$arg" = "nowinetricks" ]] ; then
+		winetricks_install="false"
+	elif [[ "$arg" = "nots3" ]] ; then
+		teamspeak_install="false"
+	elif [[ "$arg" = "nomumble" ]] ; then
+		mumble_install="false"
+	elif [[ "$arg" = "nodiscord" ]] ; then
+		discord_install="false"
 	elif [[ "$arg" = "--help" || "$arg" = "-h" ]] ; then
 		echo "usage: ./debian-gaming.sh [OPTIONS]"
-		echo "--force - no questions while installing / uninstalling packages - this might break your system"
+		echo "--force       - no questions while installing / uninstalling packages - this might break your system"
+		echo "nolutris      - don't install Lutris"
+		echo "nosteam       - don't install Steam"
+		echo "nowinetricks  - don't install Winetricks"
+		echo "nots3         - don't install Teamspeak3"
+		echo "nomumble      - don't install Mumble"
+		echo "nodiscord     - don't install Discord"
+
 		exit
 	fi
 done
@@ -81,7 +100,7 @@ if [[ "${nvidia_install}" = "true" || "${amd_install}" = "true" || "${intel_inst
 fi
 
 # btrfs tuning if possible
-workdir="$(dirname "$0")"
+workdir="$( cd "$(dirname "$0")" >/dev/null 2>&1 ; pwd -P )"
 if [ -d "${workdir}/general" ] && [ -f "${workdir}/general/btrfs-tuning.sh" ] ; then
 	"${workdir}"/general/btrfs-tuning.sh
 	echo "### if you see one error regarding to a not operation in a steam folder, this can be ignored"

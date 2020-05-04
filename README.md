@@ -29,7 +29,7 @@ Git has to be installed, to clone the repository.
 ### 1) Install Git:
 * Arch Linux, Manjaro, Artix Linux  
     sudo pacman -S git
-* Debian  
+* Debian, Ubuntu, Linux Mint, Elementary OS  
     sudo apt install git
 
 ### 2) Download the scripts
@@ -40,8 +40,8 @@ Git has to be installed, to clone the repository.
 
 The install Script detects the distribution you're using and sets up the system.
 
-### with autoinstaller:
-sudo linux-gaming/autoinstall.sh
+### with installer:
+sudo linux-gaming/ui-install.sh
 
 ### with specific installer:
 You can also customize the installation by editing the installer script for your distribution.
@@ -84,4 +84,3 @@ you can use git to pull down a new version of this script:
 * Artix Linux
 * Debian Testing or Sid
 * Ubuntu
-* Elementary OS
