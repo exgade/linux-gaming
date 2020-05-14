@@ -1,11 +1,11 @@
 #!/bin/bash
 workdir="$( cd "$(dirname "$0")" >/dev/null 2>&1 ; pwd -P )"
 if [ "$1" = "last" ] ; then
-	gerelease="5.2-GE-2"
-	gechecksum="affc68e5956e84d679c9e801011448fe6a228cd08bc19dd5e9d7ae6e2d24d5cd"
-elif [[ "$1" = "" || "$1" = "both" || "$1" = "latest" ]] ; then
 	gerelease="5.4-GE-3"
 	gechecksum="3bd03323d6e2032a98e4309d510f6f82a443327cc4c128e6fd624586f50ec3ea"
+elif [[ "$1" = "" || "$1" = "both" || "$1" = "latest" ]] ; then
+	gerelease="5.8-GE-2-MF"
+	gechecksum="78caef79712302dd076284fcdbc992404f4ced305de46e9cadb9f5031e7787d6"
 elif [[ "$1" = "dev" ]] ; then
 	gerelease="5.6-GE-2"
 	gechecksum="22dd577b33758972551c0ee7874240d1969aa612b90902fff39787539beff6d0"
