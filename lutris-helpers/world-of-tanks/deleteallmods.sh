@@ -8,8 +8,8 @@ wotversion="$(grep "<version>" "$wotfolder/Games/World_of_Tanks_EU/version.xml" 
 echo "WARNING: This will clear all your Mod Files, press Enter to continue or STRG+C to abort"
 read
 
-rm -Rdf ${wotfolder}/Games/World_of_Tanks_EU/mods 
-rm -Rdf ${wotfolder}/Games/World_of_Tanks_EU/res_mods 
+rm -Rdf ${wotfolder}/Games/World_of_Tanks_EU/mods
+rm -Rdf ${wotfolder}/Games/World_of_Tanks_EU/res_mods
 mkdir -p ${wotfolder}/Games/World_of_Tanks_EU/mods/"${wotversion}"
 mkdir -p ${wotfolder}/Games/World_of_Tanks_EU/res_mods/"${wotversion}"
 
