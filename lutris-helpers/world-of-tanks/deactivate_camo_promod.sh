@@ -5,9 +5,6 @@ wotprefix="${lutrisPath}world-of-tanks/"
 wotfolder="${wotprefix}drive_c"
 
 for folder in ${wotfolder}/Games/World_of_Tanks_EU/mods/1.* ; do 
-	#echo "Old Folder: $folder"
-	newfolder="$(echo $folder | sed 's/\/mods\//\/mods_deactivated\//g' -)"
-	#echo "New Folder: $newfolder"
 	newfolder="$(echo $folder | sed 's/\/mods\//\/mods_deactivated\//g' -)"
 	echo "creating Folder: $newfolder/oldskool"
 	mkdir -p "$newfolder/oldskool"
