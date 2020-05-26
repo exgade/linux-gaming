@@ -34,3 +34,7 @@ else
 	unzip ProMod.zip
 fi
 WINEPREFIX="${wotprefix}" "${wineexec}" ProMod.exe
+
+echo "deactivating reserve feature from wot"
+sed -i "s/    remove |= not filters\[PREFS.RESERVE\]/    #remove \|= not filters[PREFS.RESERVE]/g" "${wotfolder}/Games/World_of_Tanks_EU/res_mods/mods/xfw_packages/xvm_tankcarousel/python/filter_popover.py"
+sed -i "s/    remove |= filters\[PREFS.RESERVE\]/    #remove \|= filters[PREFS.RESERVE]/g" "${wotfolder}/Games/World_of_Tanks_EU/res_mods/mods/xfw_packages/xvm_tankcarousel/python/filter_popover.py"
