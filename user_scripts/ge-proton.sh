@@ -2,13 +2,16 @@
 workdir="$( cd "$(dirname "$0")" >/dev/null 2>&1 ; pwd -P )"
 if [ "$1" = "last" ] ; then
 	gerelease="5.4-GE-3"
+	getag="${gerelease}"
 	gechecksum="3bd03323d6e2032a98e4309d510f6f82a443327cc4c128e6fd624586f50ec3ea"
 elif [[ "$1" = "" || "$1" = "both" || "$1" = "latest" ]] ; then
 	gerelease="5.8-GE-2-MF"
+	getag="${gerelease}"
 	gechecksum="78caef79712302dd076284fcdbc992404f4ced305de46e9cadb9f5031e7787d6"
 elif [[ "$1" = "dev" ]] ; then
-	gerelease="5.6-GE-2"
-	gechecksum="22dd577b33758972551c0ee7874240d1969aa612b90902fff39787539beff6d0"
+	gerelease="5.9-GE-1-MF"
+	getag="5.9-GE-1-NR"
+	gechecksum="5d2c7f4ccc6a3e30b49ae426c8a85e0c009522d84921088cfa8898e3791dc5ba"
 elif [[ "$1" = "-h" || "$1" = "--help" ]] ; then
 	echo "usage: ./ge-proton.sh <command (optional)>"
 	echo "examples:"
@@ -44,7 +47,7 @@ if [[ ! -d ~/.steam/root/compatibilitytools.d/Proton-${gerelease} && ! -f ~/.ste
 	else
 		cmd_wget="wget"
 	fi
-	${cmd_wget} "https://github.com/GloriousEggroll/proton-ge-custom/releases/download/${gerelease}/Proton-${gerelease}.tar.gz" -P ~/.steam/root/compatibilitytools.d/ -O Proton-${gerelease}.tar.gz
+	${cmd_wget} "https://github.com/GloriousEggroll/proton-ge-custom/releases/download/${getag}/Proton-${gerelease}.tar.gz" -P ~/.steam/root/compatibilitytools.d/ -O Proton-${gerelease}.tar.gz
 
 	echo checksum check...
 
