@@ -9,9 +9,9 @@ elif [[ "$1" = "" || "$1" = "both" || "$1" = "latest" ]] ; then
 	getag="${gerelease}"
 	gechecksum="78caef79712302dd076284fcdbc992404f4ced305de46e9cadb9f5031e7787d6"
 elif [[ "$1" = "dev" ]] ; then
-	gerelease="5.9-GE-1-MF"
-	getag="5.9-GE-1-NR"
-	gechecksum="5d2c7f4ccc6a3e30b49ae426c8a85e0c009522d84921088cfa8898e3791dc5ba"
+	gerelease="5.9-GE-2-MF"
+	getag="${gerelease}"
+	gechecksum="aedeeeeb5435cf7c5e6e062935e1d565562ce7dc34d5dbea8b6db7235fc69391"
 elif [[ "$1" = "-h" || "$1" = "--help" ]] ; then
 	echo "usage: ./ge-proton.sh <command (optional)>"
 	echo "examples:"
