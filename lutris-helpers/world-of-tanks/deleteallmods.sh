@@ -4,6 +4,10 @@ lutrisPath="$(grep game_path "${HOME}/.config/lutris/system.yml" | sed "s/\s\sga
 wotprefix="${lutrisPath}world-of-tanks/"
 wotfolder="${wotprefix}drive_c"
 wotversion="$(grep "<version>" "$wotfolder/Games/World_of_Tanks_EU/version.xml" | awk '{print $2}' | sed "s/v\.//" -)"
+if [[ "${wotversion}" = "" || "$(echo $wotversion | sed "s/[0-9]\.[0-9]\.[0-9]\.[0-9]//g" -)" != "" ]] ; then
+	echo "error determining wot version"
+	exit
+fi
 
 echo "WARNING: This will clear all your Mod Files, press Enter to continue or STRG+C to abort"
 read
