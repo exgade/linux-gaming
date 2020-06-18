@@ -3,7 +3,12 @@
 lutrisPath="$(grep game_path "${HOME}/.config/lutris/system.yml" | sed "s/\s\sgame_path: //" -)/"
 wotprefix="${lutrisPath}world-of-tanks/"
 wotfolder="${wotprefix}drive_c"
-winefolder="${HOME}/.local/share/lutris/runners/wine/lutris-5.6-2-x86_64/"
+wineversion="$(grep -h -m1 version: $HOME/.config/lutris/games/world-of-tanks*.yml | sed "s/\s\sversion: //g" -)"
+if [ "$wineversion" = "" || "$(echo "${wineversion}" | sed "s/lutris-[0-9]\.[0-9]-[0-9]-x86_64//g" -)" != "" ] ; then
+	echo "problem detecting wine version"
+	wineversion="lutris-5.6-2-x86_64"
+fi
+winefolder="${HOME}/.local/share/lutris/runners/wine/${wineversion}/"
 if [ -f "${winefolder}dist/bin/wine" ] ; then
 	# define wine executable for proton wine
 	wineexec="${winefolder}dist/bin/wine"
