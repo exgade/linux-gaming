@@ -4,7 +4,7 @@ lutrisPath="$(grep game_path "${HOME}/.config/lutris/system.yml" | sed "s/\s\sga
 wotprefix="${lutrisPath}world-of-tanks/"
 wotfolder="${wotprefix}drive_c"
 wineversion="$(grep -h -m1 "version:" "$HOME/.config/lutris/games/world-of-tanks*.yml" | sed "s/\s\sversion: //g" -)"
-if [ "$wineversion" = "" || "$(echo "${wineversion}" | sed "s/lutris-[0-9]\.[0-9]-[0-9]-x86_64//g" -)" != "" ] ; then
+if [[ "$wineversion" = "" || "$(echo "${wineversion}" | sed "s/lutris-[0-9]\.[0-9]-[0-9]-x86_64//g" -)" != "" ]] ; then
 	echo "problem detecting wine version"
 	wineversion="lutris-5.6-2-x86_64"
 fi
