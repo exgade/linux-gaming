@@ -5,7 +5,7 @@
 
 scriptdir="$(dirname "$0")"
 export DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/${UID}/bus 
-if [ "Latest Release: 5.8-GE-2-MF" = "$("$scriptdir"/ge-proton-shaupdate.sh check)" ] ; then
+if [ "Latest Release: 5.11-GE-1-MF" = "$("$scriptdir"/ge-proton-shaupdate.sh check)" ] ; then
 	echo "Version unchanged"
 else
 	echo "Version changed"
