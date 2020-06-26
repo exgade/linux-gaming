@@ -1,6 +1,13 @@
 #!/bin/bash
 # Installer to get oldskools promod working and updated in world of tanks installed by lutris
-lutrisPath="$(grep "game_path" "${HOME}"/.config/lutris/system.yml | sed "s/\s\sgame_path: //" -)/"
+lutrisPath="${HOME}"/Games/
+if [ "$(grep "game_path" "${HOME}"/.config/lutris/system.yml | wc -l)" = "1" ] ; then
+	lutrisPath="$(grep "game_path" "${HOME}"/.config/lutris/system.yml | sed "s/\s\sgame_path: //" -)/"
+fi
+if [ ! -d "${lutrisPath}" ] ; then
+	echo "Problem detecting Lutris Path, aborting..."
+	exit
+fi
 wotprefix="${lutrisPath}world-of-tanks/"
 wotfolder="${wotprefix}drive_c"
 wotversion="$(grep "<version>" "$wotfolder/Games/World_of_Tanks_EU/version.xml" | awk '{print $2}' | sed "s/v\.//" -)"
