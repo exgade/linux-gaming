@@ -21,7 +21,7 @@ else
 fi
 
 if [ ! -d "${wotfolder}" ] ; then
-	wotfolder="$(grep -h -m1 prefix "${HOME}/.config/lutris/games/world-of-tanks*.yml" | head -n1 | sed "s/\s\sprefix: //" -)"
+	wotfolder="$(grep -h -m1 "prefix" "${HOME}"/.config/lutris/games/world-of-tanks*.yml | head -n1 | sed "s/\s\sprefix: //" -)"
 	if [ ! -d "${wotfolder}" ] ; then
 		echo "problem detecting world of tanks folder, aborting"
 		exit
