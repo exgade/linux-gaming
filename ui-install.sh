@@ -88,4 +88,4 @@ if [ "${answer}" != "true" ] ; then
 	installer_arguments="${installer_arguments} nodiscord"
 fi
 
-cd "${workdir}" && ./autoinstall.sh $installer_arguments
+cd "${workdir}" && ./distro_installers/autoinstall.sh $installer_arguments
