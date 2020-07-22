@@ -20,6 +20,22 @@ elif [[ "$1" = "-h" || "$1" = "--help" ]] ; then
 	echo "./ge-proton.sh last	load and install the second latest stable minor version"
 	echo "./ge-proton.sh both	load and install both versions"
 	exit
+elif [[ "$1" = "--cleanup" ]] ; then
+	deleted="false"
+	oldversions="Proton-5.2-GE-2 Proton-5.6-GE-2 Proton-5.4-GE-3 Proton-5.11-GE-3-MF Proton-5.11-GE-1-MF Proton-5.11-GE-2-MF"
+	for tmpdir in $oldversions ; do
+		if [ -d "${HOME}/.local/share/Steam/compatibilitytools.d/${tmpdir}" ] ; then
+			echo "${tmpdir} found, deleting..."
+			rm -Rdf "${HOME}/.local/share/Steam/compatibilitytools.d/${tmpdir}"
+			deleted="true"
+		fi
+	done
+	if [ "${deleted}" = "true" ] ; then
+		echo "One or more Proton Versions have been deleted"
+	else
+		echo "No old Proton Versions found, no need to delete anything"
+	fi
+	exit
 else
 	echo unknown operation
 	exit
