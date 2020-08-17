@@ -17,6 +17,7 @@ discord_install="true"
 # automatic installation - use this with care and only if you know what you're doing
 # this question will answer every question pacman asks with the default answer - it may break your system
 option_noconfirm="false"
+nvidia_allowupdate="true"
 
 ##### end configuration #####
 
@@ -159,6 +160,17 @@ echo "### installing winetricks, dxvk, corefonts, xboxdrv"
 # missing in elementary: dxvk-wine32-development dxvk-wine64-development
 apt install winetricks dxvk ttf-mscorefonts-installer xboxdrv mono-runtime-common ${installer_addition}
 
+nvidia_version_install="440"
+if [[ "${nvidia_allowupdate}" = "true" || "${nvidia_install}" = "true" ]] ; then
+	if [ "$(apt list "nvidia-driver-450" | grep -i 'nvidia' -c)" = "1" ] ; then
+		nvidia_version_install="450"
+		if [ "$(apt list --installed "nvidia-driver-440" | grep -i 'nvidia' -c)" != "0" ] ; then
+			echo "### uninstalling old 440 nvidia driver and update to allow update to ${nvidia_version_install}"
+			apt purge nvidia-driver-440 ${installer_addition}
+			nvidia_install="true"
+		fi
+	fi
+fi
 if [ "${nvidia_install}" = "true" ] ; then
 	if [ ! -f "/etc/apt/sources.list.d/graphics-drivers-ubuntu-ppa-${UBUNTU_CODENAME}.list" ] ; then
 		echo "### adding ubuntu's GPU Drivers PPA, press ENTER to confirm"
@@ -168,9 +180,9 @@ if [ "${nvidia_install}" = "true" ] ; then
 	else
 		echo "### graphics-drivers ppa already installed, skipping"
 	fi
-	if [ "$(apt list --installed nvidia-driver-440 | grep -i 'nvidia' -c)" = "0" ] ; then
+	if [ "$(apt list --installed "nvidia-driver-${nvidia_version_install}" | grep -i 'nvidia' -c)" = "0" ] ; then
 		echo "### installing nvidia proprietary driver"
-		apt install nvidia-driver-440 libnvidia-gl-440 libnvidia-gl-440:i386 nvidia-settings nvidia-driver-440 nvidia-utils-440 ${installer_addition}
+		apt install nvidia-driver-${nvidia_version_install} libnvidia-gl-${nvidia_version_install} libnvidia-gl-${nvidia_version_install}:i386 nvidia-settings nvidia-driver-${nvidia_version_install} nvidia-utils-${nvidia_version_install} ${installer_addition}
 	else
 		echo "### it seems that nvidia drivers are already installed"
 	fi
