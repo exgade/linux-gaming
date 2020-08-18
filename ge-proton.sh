@@ -7,7 +7,7 @@ if [ "$1" = "last" ] ; then
 elif [[ "$1" = "" || "$1" = "both" || "$1" = "latest" ]] ; then
 	gerelease="5.9-GE-5-ST"
 	getag="${gerelease}"
-	gechecksum="202643b4c796ee1c4e7dad48d88e6acd71c61262d0767829d92e55d9631a0fe1"
+	gechecksum="34a70ba35857f24f74c51e5194729f488f2bf17364102ebdf90650054acc804f"
 elif [[ "$1" = "dev" ]] ; then
 	gerelease="5.9-GE-2-MF"
 	getag="${gerelease}"
