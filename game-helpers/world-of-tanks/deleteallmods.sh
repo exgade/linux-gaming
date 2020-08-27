@@ -11,7 +11,7 @@ fi
 wotprefix="${lutrisPath}world-of-tanks/"
 wotfolder="${wotprefix}drive_c"
 wotversion="$(grep "<version>" "$wotfolder/Games/World_of_Tanks_EU/version.xml" | awk '{print $2}' | sed "s/v\.//" -)"
-if [[ "${wotversion}" = "" || "$(echo $wotversion | sed "s/[0-9]\.[0-9]\.[0-9]\.[0-9]//g" -)" != "" ]] ; then
+if [[ "${wotversion}" = "" || "$(echo $wotversion | sed "s/[0-9]\.[0-9]\.[0-9]\.[0-9]//g" | sed "s/[0-9]\.[0-9][0-9]\.[0-9]\.[0-9]//g" -)" != "" ]] ; then
 	echo "error determining wot version"
 	exit
 fi
