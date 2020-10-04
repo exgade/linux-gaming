@@ -16,6 +16,7 @@ winetricks_install="true"
 teamspeak_install="true"
 mumble_install="true"
 discord_install="true"
+gamemode_install="true"
 
 # automatic installation - use this with care and only if you know what you're doing
 # this question will answer every question pacman asks with the default answer - it may break your system
@@ -157,6 +158,10 @@ fi
 if [ "${discord_install}" = "true" ] ; then
 	pkg_additional_install="${pkg_additional_install}discord "
 fi
+if [ "${gamemode_install}" = "true" ] ; then
+	pkg_additional_install="${pkg_additional_install}gamemode lib32-gamemode "
+fi
+
 
 # btrfs tuning if possible
 # if you dont want this - just delete the file general/btrfs-tuning.sh
