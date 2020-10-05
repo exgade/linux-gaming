@@ -6,7 +6,7 @@
 scriptdir="$(dirname "$0")"
 export DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/${UID}/bus 
 checkproton="$("$scriptdir"/ge-proton-shaupdate.sh check)"
-if [[ "" != "${checkproton}" && "Latest Release: 5.9-GE-6-ST" = "${checkproton}" ]] ; then
+if [[ "" != "${checkproton}" && "Latest Release: 5.9-GE-7-ST" = "${checkproton}" ]] ; then
 	echo "Version unchanged"
 else
 	echo "Version changed"

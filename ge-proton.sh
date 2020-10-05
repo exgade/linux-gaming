@@ -5,13 +5,13 @@ if [ "$1" = "last" ] ; then
 	getag="${gerelease}"
 	gechecksum="78caef79712302dd076284fcdbc992404f4ced305de46e9cadb9f5031e7787d6"
 elif [[ "$1" = "" || "$1" = "both" || "$1" = "latest" ]] ; then
-	gerelease="5.9-GE-6-ST"
+	gerelease="5.9-GE-7-ST"
 	getag="${gerelease}"
-	gechecksum="e9d4d42be5271b33de38b45fb8c381cca2f3ab4c1d9d71cab7b8bcb8239fd9e7"
-elif [[ "$1" = "dev" ]] ; then
-	gerelease="5.9-GE-2-MF"
-	getag="${gerelease}"
-	gechecksum="aedeeeeb5435cf7c5e6e062935e1d565562ce7dc34d5dbea8b6db7235fc69391"
+	gechecksum="d80f015cf9b83df651a09d2d16c0d1c4bcce35dc932047145d45907ebeaa0a2b"
+#elif [[ "$1" = "dev" ]] ; then
+#	gerelease="5.9-GE-2-MF"
+#	getag="${gerelease}"
+#	gechecksum="aedeeeeb5435cf7c5e6e062935e1d565562ce7dc34d5dbea8b6db7235fc69391"
 elif [[ "$1" = "-h" || "$1" = "--help" ]] ; then
 	echo "usage: ./ge-proton.sh <command (optional)>"
 	echo "examples:"
@@ -22,7 +22,7 @@ elif [[ "$1" = "-h" || "$1" = "--help" ]] ; then
 	exit
 elif [[ "$1" = "--cleanup" ]] ; then
 	deleted="false"
-	oldversions="Proton-5.2-GE-2 Proton-5.6-GE-2 Proton-5.4-GE-3 Proton-5.11-GE-3-MF Proton-5.11-GE-1-MF Proton-5.11-GE-2-MF"
+	oldversions="Proton-5.2-GE-2 Proton-5.4-GE-3 Proton-5.6-GE-2 Proton-5.9-GE-3-ST Proton-5.9-GE-4-ST Proton-5.9-GE-5-ST Proton-5.9-GE-6-ST Proton-5.11-GE-3-MF Proton-5.11-GE-1-MF Proton-5.11-GE-2-MF"
 	for tmpdir in $oldversions ; do
 		if [ -d "${HOME}/.local/share/Steam/compatibilitytools.d/${tmpdir}" ] ; then
 			echo "${tmpdir} found, deleting..."
