@@ -22,7 +22,7 @@ elif [[ "$1" = "-h" || "$1" = "--help" ]] ; then
 	exit
 elif [[ "$1" = "--cleanup" ]] ; then
 	deleted="false"
-	oldversions="Proton-5.2-GE-2 Proton-5.4-GE-3 Proton-5.6-GE-2 Proton-5.9-GE-3-ST Proton-5.9-GE-4-ST Proton-5.9-GE-5-ST Proton-5.9-GE-6-ST Proton-5.11-GE-3-MF Proton-5.11-GE-1-MF Proton-5.11-GE-2-MF"
+	oldversions="Proton-5.2-GE-2 Proton-5.4-GE-3 Proton-5.6-GE-2 Proton-5.9-GE-3-ST Proton-5.9-GE-4-ST Proton-5.9-GE-5-ST Proton-5.9-GE-6-ST Proton-5.9-GE-7-ST Proton-5.11-GE-3-MF Proton-5.11-GE-1-MF Proton-5.11-GE-2-MF"
 	for tmpdir in $oldversions ; do
 		if [ -d "${HOME}/.local/share/Steam/compatibilitytools.d/${tmpdir}" ] ; then
 			echo "${tmpdir} found, deleting..."
