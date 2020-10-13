@@ -5,9 +5,9 @@ if [ "$1" = "last" ] ; then
 	getag="${gerelease}"
 	gechecksum="78caef79712302dd076284fcdbc992404f4ced305de46e9cadb9f5031e7787d6"
 elif [[ "$1" = "" || "$1" = "both" || "$1" = "latest" ]] ; then
-	gerelease="5.9-GE-7-ST"
+	gerelease="5.9-GE-8-ST"
 	getag="${gerelease}"
-	gechecksum="d80f015cf9b83df651a09d2d16c0d1c4bcce35dc932047145d45907ebeaa0a2b"
+	gechecksum="adfd6e911ac5bdf4b725444ff4815dc8688bd262cf29e19359cb508121d03c89"
 #elif [[ "$1" = "dev" ]] ; then
 #	gerelease="5.9-GE-2-MF"
 #	getag="${gerelease}"
