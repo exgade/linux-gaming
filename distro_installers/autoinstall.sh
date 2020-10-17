@@ -4,6 +4,7 @@ distrodetect=""
 distroinstaller=""
 option_noconfirm="false"
 installer_arguments=""
+echo "DEBUG: $@"
 for arg in "$@" ; do
 	if [[ "$arg" = "--force" || "$arg" = "-f" ]] ; then
 		installer_arguments="${installer_arguments} --force"
@@ -19,6 +20,12 @@ for arg in "$@" ; do
 		installer_arguments="${installer_arguments} nomumble"
 	elif [[ "$arg" = "nodiscord" ]] ; then
 		installer_arguments="${installer_arguments} nodiscord"
+        elif [[ "$arg" = "nvidia" ]] ; then
+		installer_arguments="${installer_arguments} nvidia"
+	elif [[ "$arg" = "amd" ]] ; then
+		installer_arguments="${installer_arguments} amd"
+	elif [[ "$arg" = "intel" ]] ; then
+		installer_arguments="${installer_arguments} intel"
 	elif [[ "$arg" = "--help" || "$arg" = "-h" ]] ; then
 		echo "usage: ./autoinstall.sh [OPTIONS]"
 		echo "--force       - no questions while installing / uninstalling packages - this might break your system"
@@ -28,6 +35,9 @@ for arg in "$@" ; do
 		echo "nots3         - don't install Teamspeak3"
 		echo "nomumble      - don't install Mumble"
 		echo "nodiscord     - don't install Discord"
+                echo "nvidia        - force installation of nvidia drivers"
+		echo "amd           - force installation of amd drivers"
+		echo "intel         - force installation of intel drivers"
 
 		exit
 	fi

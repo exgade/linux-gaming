@@ -42,6 +42,12 @@ for arg in "$@" ; do
 		mumble_install="false"
 	elif [[ "$arg" = "nodiscord" ]] ; then
 		discord_install="false"
+        elif [[ "$arg" = "nvidia" ]] ; then
+		nvidia_install="true"
+	elif [[ "$arg" = "amd" ]] ; then
+		amd_install="true"
+	elif [[ "$arg" = "intel" ]] ; then
+		intel_install="true"
 	elif [[ "$arg" = "--help" || "$arg" = "-h" ]] ; then
 		echo "usage: ./debian-gaming.sh [OPTIONS]"
 		echo "--force       - no questions while installing / uninstalling packages - this might break your system"
@@ -51,6 +57,9 @@ for arg in "$@" ; do
 		echo "nots3         - don't install Teamspeak3"
 		echo "nomumble      - don't install Mumble"
 		echo "nodiscord     - don't install Discord"
+		echo "nvidia        - force installation of nvidia drivers"
+		echo "amd           - force installation of amd drivers"
+		echo "intel         - force installation of intel drivers"
 
 		exit
 	fi

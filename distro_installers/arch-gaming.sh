@@ -24,6 +24,7 @@ option_noconfirm="false"
 ##### end configuration #####
 
 # argument handler
+echo "DEBUG: $@"
 for arg in "$@" ; do
 	if [[ "$arg" = "--force" || "$arg" = "-f" ]] ; then
 		option_noconfirm="true"
@@ -39,6 +40,15 @@ for arg in "$@" ; do
 		mumble_install="false"
 	elif [[ "$arg" = "nodiscord" ]] ; then
 		discord_install="false"
+	elif [[ "$arg" = "nvidia" ]] ; then
+		nvidia_install="true"
+		echo "Debug: Nvidia installation"
+	elif [[ "$arg" = "amd" ]] ; then
+		amd_install="true"
+		echo "Debug: AMD installation"
+	elif [[ "$arg" = "intel" ]] ; then
+		intel_install="true"
+		echo "Debug: Intel installation"
 	elif [[ "$arg" = "--help" || "$arg" = "-h" ]] ; then
 		echo "usage: ./arch-gaming.sh [OPTIONS]"
 		echo "--force       - no questions while installing / uninstalling packages - this might break your system"
@@ -48,6 +58,9 @@ for arg in "$@" ; do
 		echo "nots3         - don't install Teamspeak3"
 		echo "nomumble      - don't install Mumble"
 		echo "nodiscord     - don't install Discord"
+		echo "nvidia        - force installation of nvidia drivers"
+		echo "amd           - force installation of amd drivers"
+		echo "intel         - force installation of intel drivers"
 
 		exit
 	fi
@@ -107,13 +120,13 @@ if [[ "${nvidia_install}" = "true" || "${amd_install}" = "true" || "${intel_inst
 			if [ "$(mhwd-kernel -li | sed 's/\s\s\s\*\s//g' - | grep -E '^linux[0-9]+$')" != "" ] ; then
 				manj_nvidia=""
 				for i in $(mhwd-kernel -li | sed 's/\s\s\s\*\s//g' - | grep -E '^linux[0-9]+$') ; do
-					manj_nvidia="${i}-nvidia-440xx ${manj_nvidia}"
+					manj_nvidia="${i}-nvidia-455xx ${manj_nvidia}"
 				done
 				for i in $(mhwd-kernel -li | sed 's/\s\s\s\*\s//g' - | grep -E '^linux[0-9]+-rt$') ; do
-					manj_nvidia="${i}-nvidia-440xx ${manj_nvidia}"
+					manj_nvidia="${i}-nvidia-455xx ${manj_nvidia}"
 				done
 				echo "### installing manjaro specific packages for nvidia"
-				sudo pacman -S ${manj_nvidia} lib32-nvidia-440xx-utils --needed
+				sudo pacman -S ${manj_nvidia} lib32-nvidia-455xx-utils --needed
 			else
 				echo "### ERROR while autodetecting installed kernels"
 				echo "### installation abort"

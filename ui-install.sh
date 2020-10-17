@@ -9,6 +9,12 @@ for arg in "$@" ; do
 	if [[ "$arg" = "--force" || "$arg" = "-f" ]] ; then
 		installer_arguments="${installer_arguments} --force"
 		force_install="true"
+	elif [[ "$arg" = "nvidia" ]] ; then
+		installer_arguments="${installer_arguments} nvidia"
+	elif [[ "$arg" = "amd" ]] ; then
+		installer_arguments="${installer_arguments} amd"
+	elif [[ "$arg" = "intel" ]] ; then
+		installer_arguments="${installer_arguments} intel"
 	elif [[ "$arg" = "--help" || "$arg" = "-h" ]] ; then
 		echo "usage: ./ui-install.sh [OPTIONS]"
 		echo "--force - no questions while installing / uninstalling packages - this might break your system"
