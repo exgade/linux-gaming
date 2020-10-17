@@ -108,7 +108,7 @@ if [ "${mumble_install}" = "true" ] ; then
 	pkg_additional_install="${pkg_additional_install}mumble "
 fi
 if [ "${gamemode_install}" = "true" ] ; then
-        pkg_additional_install="${pkg_additional_install}meson libsystemd-dev pkg-config ninja-build git libdbus-1-dev libinih-dev gamemode "
+        pkg_additional_install="${pkg_additional_install}gamemode "
 fi
 
 apt update && apt upgrade ${installer_addition}
