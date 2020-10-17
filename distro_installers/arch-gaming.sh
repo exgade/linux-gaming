@@ -24,7 +24,6 @@ option_noconfirm="false"
 ##### end configuration #####
 
 # argument handler
-echo "DEBUG: $@"
 for arg in "$@" ; do
 	if [[ "$arg" = "--force" || "$arg" = "-f" ]] ; then
 		option_noconfirm="true"

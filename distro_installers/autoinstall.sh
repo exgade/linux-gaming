@@ -4,7 +4,6 @@ distrodetect=""
 distroinstaller=""
 option_noconfirm="false"
 installer_arguments=""
-echo "DEBUG: $@"
 for arg in "$@" ; do
 	if [[ "$arg" = "--force" || "$arg" = "-f" ]] ; then
 		installer_arguments="${installer_arguments} --force"
