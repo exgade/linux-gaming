@@ -4,9 +4,11 @@ distrodetect=""
 distroinstaller=""
 option_noconfirm="false"
 installer_arguments=""
+force_install="false"
 for arg in "$@" ; do
 	if [[ "$arg" = "--force" || "$arg" = "-f" ]] ; then
 		installer_arguments="${installer_arguments} --force"
+		force_install="true"
 	elif [[ "$arg" = "--help" || "$arg" = "-h" ]] ; then
 		echo "usage: ./ui-install.sh [OPTIONS]"
 		echo "--force - no questions while installing / uninstalling packages - this might break your system"
@@ -29,7 +31,12 @@ function askQuestion {
 	else
 		echo -n "$question [y/N] "
 	fi
-	read -n 1 answer
+	if [ "${force_install}" != "true" ] ; then
+		read -n 1 answer
+	else
+		answer="${default}"
+		echo "${default} (autoselected)"
+	fi
 	if [[ "${answer}" =~ ^[Yy]$ || ( "${default}" = "y" && "${answer}" = "" ) ]];then
 		answer="true"
 	else
