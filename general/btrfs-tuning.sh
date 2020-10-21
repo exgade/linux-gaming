@@ -38,6 +38,13 @@ if [ "$(mount | grep ' on / type btrfs' -c)" = "1" ] ; then
 					fi
 					# less error messages (-f), since there are a lot of symlinks
 					chattr +C -Rf "${loopdir}/.steam"
+					# Steam Default Directory for Downloads, etc.
+					if [ ! -d "${loopdir}/.local/share/Steam" ] ; then
+						mkdir "${loopdir}/.local/share/Steam"
+						chown "${loopuser}" "${loopdir}/.local/share/Steam"
+					fi
+					# less error messages (-f), since there are probably a lot of symlinks
+					chattr +C -Rf "${loopdir}/.local/share/Steam"
 				fi
 			else
 				echo "### Error: Folder ${loopdir} ignored: is it not in /home/ ?"
