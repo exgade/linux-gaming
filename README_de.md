@@ -15,6 +15,7 @@ Diese Installationsscripte sind für den Einsatz auf frisch installierten Linux 
 * DXVK für bessere Direct X Unterstützung ( https://github.com/doitsujin/dxvk )
 * DXD3D für bessere Direct 3D Unterstützung ( https://github.com/d3d12/vkd3d )
 * Winetricks ( https://github.com/Winetricks/winetricks )
+* Feral Game Mode ( https://github.com/FeralInteractive/gamemode )
 * Einige benötigte Pakete und weitere hilfreiche Ressourcen (beispielsweise windows core fonts)
 * Optimiert Copy on Write Einstellungen auf BTRFS Dateisystemen (sofern verwendet), um Performance Probleme mit Spielen zu verhindern.
 * Kommunikations Tools: Mumble, Teamspeak 3 und Discord (Auf Debian ist aktuell nur Mumble verfügbar)

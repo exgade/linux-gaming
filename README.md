@@ -15,6 +15,7 @@ These installers are designed to run on fresh linux installs.
 * DXVK for better Direct X Support ( https://github.com/doitsujin/dxvk )
 * DXD3D for better Direct 3D Support ( https://github.com/d3d12/vkd3d )
 * Winetricks ( https://github.com/Winetricks/winetricks )
+* Feral Game Mode ( https://github.com/FeralInteractive/gamemode )
 * a few dependencies or helpful resources (for instance windows core fonts)
 * Optimizes Copy on Write settings on BTRFS File Systems (if used) to avoid performance problems in games
 * Communication Tools: Mumble, Teamspeak 3 and Discord (On Debian it's at the moment just mumble)
