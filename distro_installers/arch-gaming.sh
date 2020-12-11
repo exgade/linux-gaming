@@ -153,7 +153,7 @@ if [[ "${nvidia_install}" = "true" || "${amd_install}" = "true" || "${intel_inst
 		fi
 	fi
 	if [[ "${amd_install}" = "true" || "${intel_install}" = "true" ]] ; then
-		pkg_graphics_install="${pkg_graphics_install}lib32-mesa vulkan-mesa-layers "
+		pkg_graphics_install="${pkg_graphics_install}mesa lib32-mesa vulkan-mesa-layers "
 	fi
 	if [ "${amd_install}" = "true" ] ; then
 		pkg_graphics_install="${pkg_graphics_install}vulkan-radeon lib32-vulkan-radeon "
