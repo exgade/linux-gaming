@@ -120,10 +120,10 @@ if [[ "${nvidia_install}" = "true" || "${amd_install}" = "true" || "${intel_inst
 			if [ "$(mhwd-kernel -li | sed 's/\s\s\s\*\s//g' - | grep -E '^linux[0-9]+$')" != "" ] ; then
 				manj_nvidia=""
 				for i in $(mhwd-kernel -li | sed 's/\s\s\s\*\s//g' - | grep -E '^linux[0-9]+$') ; do
-					manj_nvidia="${i}-nvidia-450xx ${manj_nvidia}"
+					manj_nvidia="${i}-nvidia ${manj_nvidia}"
 				done
 				for i in $(mhwd-kernel -li | sed 's/\s\s\s\*\s//g' - | grep -E '^linux[0-9]+-rt$') ; do
-					manj_nvidia="${i}-nvidia-450xx ${manj_nvidia}"
+					manj_nvidia="${i}-nvidia ${manj_nvidia}"
 				done
 				echo "### installing manjaro specific packages for nvidia"
 				sudo pacman -S ${manj_nvidia} lib32-nvidia-utils --needed ${installer_addition}
