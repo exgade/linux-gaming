@@ -236,8 +236,12 @@ if [[ "${ID}" != "linuxmint" ]] ; then
 	snap connect discord:system-observe
 fi
 if [[ "${teamspeak_install}" = "true" || "${discord_install}" = "true" && "${ID}" = "linuxmint" ]] ; then
-	echo "### starting additional software install with flatpak / flathub"
+	echo "### install flatpak if not needed"
 	apt install flatpak ${installer_addition}
+	echo "### updating flatpak and cleaning up"
+	flatpak update
+	flatpak remove --unused
+	echo "### starting additional software install with flatpak / flathub"
 	flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
 	if [ "${teamspeak_install}" = "true" ] ; then
 		echo "### installing Teamspeak3 via Flatpak"
