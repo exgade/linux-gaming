@@ -174,9 +174,17 @@ apt install winetricks dxvk ttf-mscorefonts-installer xboxdrv mono-runtime-commo
 
 nvidia_version_install="440"
 if [[ "${nvidia_allowupdate}" = "true" || "${nvidia_install}" = "true" ]] ; then
-	if [ "$(apt list "nvidia-driver-450" | grep -i 'nvidia' -c)" = "1" ] ; then
+	if [ "$(apt list "nvidia-driver-455" | grep -i 'nvidia' -c)" = "1" ] ; then
+		nvidia_version_install="455"
+	elif [ "$(apt list "nvidia-driver-450" | grep -i 'nvidia' -c)" = "1" ] ; then
 		nvidia_version_install="450"
-		if [ "$(apt list --installed "nvidia-driver-440" | grep -i 'nvidia' -c)" != "0" ] ; then
+	fi
+	if [ "${nvidia_version_install}" != "440" ] ; then
+		if [ "$(apt list --installed "nvidia-driver-450" | grep -i 'nvidia' -c)" != "0" ] ; then
+			echo "### uninstalling old 450 nvidia driver and update to allow update to ${nvidia_version_install}"
+			apt purge nvidia-driver-450 ${installer_addition}
+			nvidia_install="true"
+		elif [ "$(apt list --installed "nvidia-driver-440" | grep -i 'nvidia' -c)" != "0" ] ; then
 			echo "### uninstalling old 440 nvidia driver and update to allow update to ${nvidia_version_install}"
 			apt purge nvidia-driver-440 ${installer_addition}
 			nvidia_install="true"
