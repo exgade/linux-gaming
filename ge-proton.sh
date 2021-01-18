@@ -1,13 +1,13 @@
 #!/bin/bash
 workdir="$( cd "$(dirname "$0")" >/dev/null 2>&1 ; pwd -P )"
 if [ "$1" = "last" ] ; then
-	gerelease="5.9-GE-8-ST"
-	getag="${gerelease}"
-	gechecksum="adfd6e911ac5bdf4b725444ff4815dc8688bd262cf29e19359cb508121d03c89"
-elif [[ "$1" = "" || "$1" = "both" || "$1" = "latest" ]] ; then
 	gerelease="5.21-GE-1"
 	getag="${gerelease}"
 	gechecksum="7a9444f6143a6d55d63dc2f7e3893328a99442438553e01a4915a45816f90931"
+elif [[ "$1" = "" || "$1" = "both" || "$1" = "latest" ]] ; then
+	gerelease="6.0-GE-1"
+	getag="${gerelease}"
+	gechecksum="cda31baea6e0edb4ee12168a786b9a07863e7ac9eb58f8c7500346778b1176a2"
 #elif [[ "$1" = "dev" ]] ; then
 #	gerelease="5.9-GE-2-MF"
 #	getag="${gerelease}"
@@ -22,7 +22,7 @@ elif [[ "$1" = "-h" || "$1" = "--help" ]] ; then
 	exit
 elif [[ "$1" = "--cleanup" ]] ; then
 	deleted="false"
-	oldversions="Proton-5.2-GE-2 Proton-5.4-GE-3 Proton-5.6-GE-2 Proton-5.8-GE-2-MF Proton-5.9-GE-3-ST Proton-5.9-GE-4-ST Proton-5.9-GE-5-ST Proton-5.9-GE-6-ST Proton-5.9-GE-7-ST Proton-5.11-GE-3-MF Proton-5.11-GE-1-MF Proton-5.11-GE-2-MF"
+	oldversions="Proton-5.2-GE-2 Proton-5.4-GE-3 Proton-5.6-GE-2 Proton-5.8-GE-2-MF Proton-5.9-GE-3-ST Proton-5.9-GE-4-ST Proton-5.9-GE-5-ST Proton-5.9-GE-6-ST Proton-5.9-GE-7-ST Proton-5.9-GE-8-ST Proton-5.11-GE-3-MF Proton-5.11-GE-1-MF Proton-5.11-GE-2-MF"
 	for tmpdir in $oldversions ; do
 		if [ -d "${HOME}/.local/share/Steam/compatibilitytools.d/${tmpdir}" ] ; then
 			echo "${tmpdir} found, deleting..."
