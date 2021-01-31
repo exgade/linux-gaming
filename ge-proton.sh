@@ -28,14 +28,20 @@ elif [[ "$1" = "-h" || "$1" = "--help" ]] ; then
 	echo "./ge-proton.sh both	load and install both versions"
 	exit
 elif [[ "$1" = "--cleanup" ]] ; then
-	deleted="false"
-	oldversions="Proton-5.2-GE-2 Proton-5.4-GE-3 Proton-5.6-GE-2 Proton-5.8-GE-2-MF Proton-5.9-GE-3-ST Proton-5.9-GE-4-ST Proton-5.9-GE-5-ST Proton-5.9-GE-6-ST Proton-5.9-GE-7-ST Proton-5.9-GE-8-ST Proton-5.11-GE-3-MF Proton-5.11-GE-1-MF Proton-5.11-GE-2-MF Proton-5.21-GE-1"
-	for tmpdir in $oldversions ; do
-		if [ -d "${HOME}/.local/share/Steam/compatibilitytools.d/${tmpdir}" ] ; then
-			echo "${tmpdir} found, deleting..."
-			rm -Rdf "${HOME}/.local/share/Steam/compatibilitytools.d/${tmpdir}"
+	delete_proton () {
+		if [[ "$1" != "" && -d "${HOME}/.local/share/Steam/compatibilitytools.d/$1" ]] ; then
+			echo "$1 found, deleting..."
+			rm -Rdf "${HOME}/.local/share/Steam/compatibilitytools.d/$1"
 			deleted="true"
 		fi
+	}
+	deleted="false"
+	for tmpdir in Proton-5.{1,2,3,4,5,6,7,8,9}{,1,2,3,4,5,6,7,8,9,0}-GE-{1,2,3,4,5,6,7,8,9}{,-ST,-MF} ; do
+		delete_proton "${tmpdir}"
+	done
+	oldversions=""
+	for tmpdir in $oldversions ; do
+		delete_proton "${tmpdir}"
 	done
 	if [ "${deleted}" = "true" ] ; then
 		echo "One or more Proton Versions have been deleted"
