@@ -1,5 +1,12 @@
 #!/bin/bash
 workdir="$( cd "$(dirname "$0")" >/dev/null 2>&1 ; pwd -P )"
+
+if [ "$(whoami)" = "root" ] ; then
+	echo "this script should NOT be run as root or via sudo"
+	echo "please use this with your user account"
+	exit
+fi
+
 if [ "$1" = "last" ] ; then
 	gerelease="6.0-GE-1"
 	getag="${gerelease}"
@@ -38,12 +45,6 @@ elif [[ "$1" = "--cleanup" ]] ; then
 	exit
 else
 	echo unknown operation
-	exit
-fi
-
-if [ "$(whoami)" = "root" ] ; then
-	echo "this script should NOT be run as root or via sudo"
-	echo "please use this with your user account"
 	exit
 fi
 
