@@ -8,7 +8,7 @@ export DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/${UID}/bus
 checkproton="$("$scriptdir"/ge-proton-shaupdate.sh check)"
 if [[ "" = "${checkproton}" ]] ; then
 	echo "Version number not found"
-elif [[ "Latest Release: 6.4-GE-1" = "${checkproton}" ]] ; then
+elif [[ "Latest Release: 6.5-GE-1" = "${checkproton}" ]] ; then
 	echo "Version unchanged"
 else
 	echo "Version changed"
