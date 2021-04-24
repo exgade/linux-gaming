@@ -101,7 +101,7 @@ pkg_graphic=""
 if [[ "${nvidia_install}" = "true" || "${amd_install}" = "true" || "${intel_install}" = "true" ]] ; then
 	pkg_graphic="${pkg_graphic}firmware-linux-nonfree "
 	if [ "${nvidia_install}" = "true" ] ; then
-		pkg_graphic="${pkg_graphic}nvidia-driver nvidia-driver-libs-i386 "
+		pkg_graphic="${pkg_graphic}nvidia-driver "
 	fi
 	if [ "${amd_install}" = "true" ] ; then
 		pkg_graphic="${pkg_graphic}libgl1-mesa-dri libgl1-mesa-dri:i386 xserver-xorg-video-ati xserver-xorg-video-amdgpu mesa-vulkan-drivers mesa-vulkan-drivers:i386 "
