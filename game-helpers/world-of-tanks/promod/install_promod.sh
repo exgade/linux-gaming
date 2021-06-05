@@ -12,13 +12,14 @@ prefix_name="world-of-tanks"
 #prefix_name="world-of-warships"
 wotprefix="${lutrisPath}${prefix_name}/"
 wotfolder="${wotprefix}drive_c"
-wineversion="$(grep -h -m1 "version:" "${HOME}/.config/lutris/games/${prefix_name}*.yml" | head -n1 | sed "s/\s\sversion: //g" -)"
-systemwine="false"
+wineversion="$(grep -h -m1 "version:" "${HOME}/.config/lutris/games/${prefix_name}"*.yml | head -n1 | sed "s/\s\sversion: //g" -)"
+systemwine="true"
 #systemwine="true"
 if [[ "$wineversion" = "" || "$(echo "${wineversion}" | sed "s/lutris-[0-9]\.[0-9]\(\|-[0-9]\(\|[0-9]\)\)-x86_64//g" -)" != "" ]] ; then
 	echo "problem detecting wine version"
 	wineversion="lutris-5.7-11-x86_64"
 fi
+echo "using wine version ${wineversion}"
 winefolder="${HOME}/.local/share/lutris/runners/wine/${wineversion}/"
 if [ "${systemwine}" = "true" ] ; then
 	wineexec="wine"
