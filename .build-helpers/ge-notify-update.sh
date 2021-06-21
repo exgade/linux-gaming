@@ -8,7 +8,7 @@ export DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/${UID}/bus
 checkproton="$("$scriptdir"/ge-proton-shaupdate.sh check)"
 if [[ "" = "${checkproton}" ]] ; then
 	echo "Version number not found"
-elif [[ "Latest Release: 6.9-GE-2-github-actions-test" = "${checkproton}" ]] ; then
+elif [[ "Latest Release: 6.10-GE-1" = "${checkproton}" ]] ; then
 	echo "Version unchanged"
 else
 	echo "Version changed"
