@@ -8,13 +8,13 @@ if [ "$(whoami)" = "root" ] ; then
 fi
 
 if [ "$1" = "last" ] ; then
-	gerelease="6.9-GE-2-github-actions-test"
-	getag="${gerelease}"
-	gechecksum="e78cc2a37f771046bc9bde886c9e4ab7502d92f689c84e8a5ea25d118be36d25"
-elif [[ "$1" = "" || "$1" = "both" || "$1" = "latest" ]] ; then
 	gerelease="6.10-GE-1"
 	getag="${gerelease}"
 	gechecksum="33d090dc23ba5df84402d3a95b46828100cb25ec61e64329d0f5004cb8d47fa6"
+elif [[ "$1" = "" || "$1" = "both" || "$1" = "latest" ]] ; then
+	gerelease="6.12-GE-1"
+	getag="${gerelease}"
+	gechecksum="8a04d8e1af8523e12b16208ea94ca272ff1b77a9e505227f61a02699e4bc70d0"
 #elif [[ "$1" = "dev" ]] ; then
 #	gerelease="5.9-GE-2-MF"
 #	getag="${gerelease}"
@@ -39,7 +39,7 @@ elif [[ "$1" = "--cleanup" ]] ; then
 	for tmpdir in Proton-5.{1,2,3,4,5,6,7,8,9}{,1,2,3,4,5,6,7,8,9,0}-GE-{1,2,3,4,5,6,7,8,9}{,-ST,-MF} ; do
 		delete_proton "${tmpdir}"
 	done
-	oldversions="Proton-6.0-GE-1 Proton-6.1-GE-1 Proton-6.1-GE-2 Proton-6.4-GE-1 Proton-6.5-GE-1 Proton-6.5-GE-2"
+	oldversions="Proton-6.0-GE-1 Proton-6.1-GE-1 Proton-6.1-GE-2 Proton-6.4-GE-1 Proton-6.5-GE-1 Proton-6.5-GE-2 Proton-6.9-GE-2-github-actions-test"
 	for tmpdir in $oldversions ; do
 		delete_proton "${tmpdir}"
 	done
