@@ -162,7 +162,7 @@ else
 	exit
 fi
 # Check sha256 checksum for lutris repo
-if [ "$(sha256sum ~/.aptkeys/LutrisDebian10.key | awk '{print $1}')" = "8f43b344d71eb648c3ec687ab4e13521db42666c777560d1845d917458f6b35a" ] ; then
+if [ "$(sha256sum ~/.aptkeys/LutrisDebian10.key | awk '{print $1}')" = "43fea79b052823e02b9f2d0929ece6f39a10a0b7f1a8377c2e326128fe3604e3" ] ; then
 	echo "### Checksum of Lutris OK, adding key"
 	apt-key add ~/.aptkeys/LutrisDebian10.key
 else
