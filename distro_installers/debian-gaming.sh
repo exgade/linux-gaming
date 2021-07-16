@@ -145,7 +145,7 @@ fi
 if [ ! -f ~/.aptkeys/LutrisDebian10.key ] ; then
 	echo "### downloading lutris key"
 	cd ~/.aptkeys || exit
-	wget https://download.opensuse.org/repositories/home:/strycore/Debian_9.0/Release.key -O ~/.aptkeys/LutrisDebian10.key
+	wget https://download.opensuse.org/repositories/home:/strycore/Debian_10/Release.key -O ~/.aptkeys/LutrisDebian10.key
 fi
 if [ ! -f ~/.aptkeys/winehq.key ] ; then
 	echo "### downloading winehq key"
