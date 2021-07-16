@@ -186,7 +186,7 @@ echo "### installing dxvk, vkd3d, corefonts, xboxdrv"
 dpkg --add-architecture i386 && apt update && apt install ttf-mscorefonts-installer dxvk dxvk-wine32-development dxvk-wine64-development libvkd3d1 xboxdrv vulkan-tools ${installer_addition}
 
 echo "### installing winehq-staging with recommendations"
-apt install --install-recommends winehq-staging ${installer_addition}
+apt install --install-recommends winehq-staging wine32 wine64 ${installer_addition}
 
 if [ "${pkg_graphic}" != "" ] ; then
 	echo "### installing proprietary drivers: ${pkg_graphic}"
