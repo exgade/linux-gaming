@@ -38,7 +38,7 @@ elif [[ "$1" = "--cleanup" ]] ; then
 	delete_proton () {
 		if [[ "$1" != "" && -d "${steamcompatdir}/$1" ]] ; then
 			echo "$1 found, deleting..."
-			rm -Rdf "${steamcompatdir}/$1"
+			rm -Rdf "${steamcompatdir:?}/${1:?}"
 			deleted="true"
 		fi
 	}
