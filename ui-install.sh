@@ -1,8 +1,5 @@
 #!/bin/bash
 workdir="$( cd "$(dirname "$0")" >/dev/null 2>&1 ; pwd -P )"
-distrodetect=""
-distroinstaller=""
-option_noconfirm="false"
 installer_arguments=""
 force_install="false"
 for arg in "$@" ; do
@@ -49,15 +46,6 @@ function askQuestion {
 		answer="false"
 	fi
 }
-
-#if [ "${option_noconfirm}" = "false" ] ; then
-#	default="n"
-#	question="Install all forced? This might damage your system"
-#	askQuestion
-#	if [ "${answer}" = "true" ] ; then
-#		option_noconfirm="true"
-#	fi
-#fi
 
 default="y"
 #question="Install Lutris?"
