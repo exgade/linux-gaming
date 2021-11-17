@@ -18,7 +18,7 @@ These installers are designed to run on fresh linux installs.
 * Feral Game Mode ( https://github.com/FeralInteractive/gamemode )
 * a few dependencies or helpful resources (for instance windows core fonts)
 * Optimizes Copy on Write settings on BTRFS File Systems (if used) to avoid performance problems in games
-* Communication Tools: Mumble, Teamspeak 3 and Discord (On Debian it's at the moment just mumble)
+* Communication Tools: Mumble, Teamspeak 3 and Discord
 * Additional Install script for newest Glorious Eggroll Proton Builds ( https://github.com/GloriousEggroll/proton-ge-custom/releases )
 
 ---
