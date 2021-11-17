@@ -10,9 +10,9 @@ autodetect_graphics="true"
 lutris_install="true"
 steam_install="true"
 winetricks_install="true"
-#teamspeak_install="true"
+teamspeak_install="true"
 mumble_install="true"
-#discord_install="true"
+discord_install="true"
 
 # automatic installation - answer every question apt asks with yes
 # use this option with caution, it may break your system
@@ -201,4 +201,21 @@ apt install libgnutls30:i386 libldap-2.4-2:i386 libgpg-error0:i386 libsqlite3-0:
 if [ "${pkg_extra}" != "" ] ; then
 	echo "### installing winetricks, steam and lutris, depending on configuration"
 	apt install ${pkg_extra} ${installer_addition}
+fi
+if [[ "${teamspeak_install}" = "true" || "${discord_install}" = "true" ]] ; then
+	echo "### install flatpak if not needed"
+	apt install flatpak ${installer_addition}
+	echo "### updating flatpak and cleaning up"
+	flatpak update
+	flatpak remove --unused
+	echo "### starting additional software install with flatpak / flathub"
+	flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
+	if [ "${teamspeak_install}" = "true" ] ; then
+		echo "### installing Teamspeak3 via Flatpak"
+		flatpak install flathub com.teamspeak.TeamSpeak ${installer_addition}
+	fi
+	if [[ "${discord_install}" = "true" ]] ; then
+		echo "### installing Discord via Flatpak"
+		flatpak install flathub com.discordapp.Discord ${installer_addition}
+	fi
 fi
