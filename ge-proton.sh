@@ -14,13 +14,13 @@ fi
 
 
 if [ "$1" = "last" ] ; then
-	gerelease="7.1-GE-2"
-	getag="${gerelease}"
-	gechecksum="36144abe3f4f398c7521387a743d3fbbc1f173c0dfdbeb85b8dde21738d0dc1d"
-elif [[ "$1" = "" || "$1" = "both" || "$1" = "latest" ]] ; then
 	gerelease="7.2-GE-2"
 	getag="${gerelease}"
 	gechecksum="3c07133f60efa074267b6804884ab602ce18ef2f3897916072c3bf0c72d2aeb7"
+elif [[ "$1" = "" || "$1" = "both" || "$1" = "latest" ]] ; then
+	gerelease="7-3"
+	getag="${gerelease}"
+	gechecksum="d6f4d3cfeaa64283f99be2cd63b4624c0a9f1fb4df0838f8d8d707ec62fcf22e"
 #elif [[ "$1" = "dev" ]] ; then
 #	gerelease="5.9-GE-2-MF"
 #	getag="${gerelease}"
@@ -46,7 +46,7 @@ elif [[ "$1" = "--cleanup" ]] ; then
 	for tmpdir in Proton-5.{1,2,3,4,5,6,7,8,9}{,1,2,3,4,5,6,7,8,9,0}-GE-{1,2,3,4,5,6,7,8,9}{,-ST,-MF} ; do
 		delete_proton "${tmpdir}"
 	done
-	oldversions="Proton-6.0-GE-1 Proton-6.1-GE-1 Proton-6.1-GE-2 Proton-6.4-GE-1 Proton-6.5-GE-1 Proton-6.5-GE-2 Proton-6.9-GE-2-github-actions-test Proton-6.10-GE-1 Proton-6.12-GE-1 Proton-6.13-GE-1 Proton-6.14-GE-2 Proton-6.15-GE-2 Proton-6.16-GE-1 Proton-6.19-GE-2 Proton-6.20-GE-1 Proton-6.21-GE-2 Proton-7.0rc2-GE-1 Proton-7.0rc6-GE-1"
+	oldversions="Proton-6.0-GE-1 Proton-6.1-GE-1 Proton-6.1-GE-2 Proton-6.4-GE-1 Proton-6.5-GE-1 Proton-6.5-GE-2 Proton-6.9-GE-2-github-actions-test Proton-6.10-GE-1 Proton-6.12-GE-1 Proton-6.13-GE-1 Proton-6.14-GE-2 Proton-6.15-GE-2 Proton-6.16-GE-1 Proton-6.19-GE-2 Proton-6.20-GE-1 Proton-6.21-GE-2 Proton-7.0rc2-GE-1 Proton-7.0rc6-GE-1 Proton-7.1-GE-2"
 	for tmpdir in $oldversions ; do
 		delete_proton "${tmpdir}"
 	done
@@ -77,7 +77,13 @@ if [[ ! -d "${steamcompatdir}/Proton-${gerelease}" && ! -f "${steamcompatdir}/Pr
 	else
 		cmd_wget="wget"
 	fi
-	${cmd_wget} "https://github.com/GloriousEggroll/proton-ge-custom/releases/download/${getag}/Proton-${gerelease}.tar.gz" -P ~/.steam/root/compatibilitytools.d/ -O Proton-${gerelease}.tar.gz
+	releasefolder="${gerelease}"
+	releasefilename="Proton-${gerelease}.tar.gz"
+	if [ "${gerelease}" = "7-3" ] ; then
+		releasefolder="GE-Proton${gerelease}"
+		releasefilename="GE-Proton${gerelease}.tar.gz"
+	fi
+	${cmd_wget} "https://github.com/GloriousEggroll/proton-ge-custom/releases/download/${releasefolder}/${releasefilename}" -P ~/.steam/root/compatibilitytools.d/ -O Proton-${gerelease}.tar.gz
 
 	echo checksum check...
 
