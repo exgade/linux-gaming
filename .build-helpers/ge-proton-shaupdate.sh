@@ -21,7 +21,7 @@ if [ "${latest_release}" != "" ] ; then
 		if [ ! -f /tmp/Proton-"${latest_release}".tar.gz ] ; then
 			releasefolder="${latest_release}"
 			releasefilename="Proton-${latest_release}.tar.gz"
-			if [ "${latest_release}" = "7-3" ] ; then
+			if [[ "${latest_release}" = "7-3" || "${latest_release}" = "7-8" ]] ; then
 				releasefolder="GE-Proton${latest_release}"
 				releasefilename="GE-Proton${latest_release}.tar.gz"
 			fi
