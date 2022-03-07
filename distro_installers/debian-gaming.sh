@@ -156,7 +156,7 @@ fi
 # Check sha256 checksum for winehq repo
 if [ "$(sha256sum ~/.aptkeys/winehq.key | awk '{print $1}')" = "78b185fabdb323971d13bd329fefc8038e08559aa51c4996de18db0639a51df6" ] ; then
 	echo "### Checksum of WineHQ OK, adding key"
-	apt-key add ~/.aptkeys/winehq.key
+	cp ~/.aptkeys/winehq.key /etc/apt/trusted.gpg.d/winehq.asc
 else
 	echo "### Aborting: Checksum of WineHQ NOT OK!"
 	exit
@@ -164,7 +164,7 @@ fi
 # Check sha256 checksum for lutris repo
 if [ "$(sha256sum ~/.aptkeys/LutrisDebian10.key | awk '{print $1}')" = "43fea79b052823e02b9f2d0929ece6f39a10a0b7f1a8377c2e326128fe3604e3" ] ; then
 	echo "### Checksum of Lutris OK, adding key"
-	apt-key add ~/.aptkeys/LutrisDebian10.key
+	cp ~/.aptkeys/LutrisDebian10.key /etc/apt/trusted.gpg.d/LutrisDebian10.asc
 else
 	echo "### Aborting: Checksum of Lutris NOT OK!"
 	exit
