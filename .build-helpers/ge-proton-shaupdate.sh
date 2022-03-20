@@ -19,12 +19,8 @@ if [ "${latest_release}" != "" ] ; then
 	if [ "$justcheck" != "true" ] ; then
 		cd /tmp || exit
 		if [ ! -f /tmp/Proton-"${latest_release}".tar.gz ] ; then
-			releasefolder="${latest_release}"
-			releasefilename="Proton-${latest_release}.tar.gz"
-			if [[ "${latest_release}" = "7-3" || "${latest_release}" = "7-8" ]] ; then
-				releasefolder="GE-Proton${latest_release}"
-				releasefilename="GE-Proton${latest_release}.tar.gz"
-			fi
+			releasefolder="GE-Proton${latest_release}"
+			releasefilename="GE-Proton${latest_release}.tar.gz"
 			wget "https://github.com/GloriousEggroll/proton-ge-custom/releases/download/${releasefolder}/${releasefilename}"
 		fi
 		echo "sha256sum: $(sha256sum /tmp/${releasefilename})"
