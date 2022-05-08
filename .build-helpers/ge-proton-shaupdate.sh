@@ -12,7 +12,7 @@ for arg in "$@" ; do
 	fi
 done
 
-latest_release="$(curl https://github.com/GloriousEggroll/proton-ge-custom/releases/latest | sed 's/[^0-9]*//' - | sed 's/\".*//')"
+latest_release="$(curl https://github.com/GloriousEggroll/proton-ge-custom/releases/latest -I | grep "location:" | sed 's/[^0-9]*//' | sed 's/\".*//' | tr -d '\r' )"
 
 if [ "${latest_release}" != "" ] ; then
 	echo "Latest Release: ${latest_release}"
