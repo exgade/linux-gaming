@@ -14,13 +14,13 @@ fi
 
 
 if [ "$1" = "last" ] ; then
-	gerelease="7-14"
-	getag="${gerelease}"
-	gechecksum="a848c126b2053e04a1e50dc5b16c34d5841a316438f407e14de4728017fa86d9"
-elif [[ "$1" = "" || "$1" = "both" || "$1" = "latest" ]] ; then
 	gerelease="7-17"
 	getag="${gerelease}"
 	gechecksum="d3d5f0dd442b67df4bf88beb078383f858f4057524fa2555bf0b3b10ead1d031"
+elif [[ "$1" = "" || "$1" = "both" || "$1" = "latest" ]] ; then
+	gerelease="7-20"
+	getag="${gerelease}"
+	gechecksum="4abbfa4099533c8f6a350263bc49a4e1ab79904ed47daa2368b63fb2465d28cd"
 #elif [[ "$1" = "dev" ]] ; then
 #	gerelease="5.9-GE-2-MF"
 #	getag="${gerelease}"
@@ -46,7 +46,7 @@ elif [[ "$1" = "--cleanup" ]] ; then
 	for tmpdir in Proton-5.{1,2,3,4,5,6,7,8,9}{,1,2,3,4,5,6,7,8,9,0}-GE-{1,2,3,4,5,6,7,8,9}{,-ST,-MF} ; do
 		delete_proton "${tmpdir}"
 	done
-	oldversions="Proton-6.0-GE-1 Proton-6.1-GE-1 Proton-6.1-GE-2 Proton-6.4-GE-1 Proton-6.5-GE-1 Proton-6.5-GE-2 Proton-6.9-GE-2-github-actions-test Proton-6.10-GE-1 Proton-6.12-GE-1 Proton-6.13-GE-1 Proton-6.14-GE-2 Proton-6.15-GE-2 Proton-6.16-GE-1 Proton-6.19-GE-2 Proton-6.20-GE-1 Proton-6.21-GE-2 Proton-7.0rc2-GE-1 Proton-7.0rc6-GE-1 Proton-7.1-GE-2 Proton-7.2-GE-2 GE-Proton7-3 GE-Proton7-8 GE-Proton7-10"
+	oldversions="Proton-6.0-GE-1 Proton-6.1-GE-1 Proton-6.1-GE-2 Proton-6.4-GE-1 Proton-6.5-GE-1 Proton-6.5-GE-2 Proton-6.9-GE-2-github-actions-test Proton-6.10-GE-1 Proton-6.12-GE-1 Proton-6.13-GE-1 Proton-6.14-GE-2 Proton-6.15-GE-2 Proton-6.16-GE-1 Proton-6.19-GE-2 Proton-6.20-GE-1 Proton-6.21-GE-2 Proton-7.0rc2-GE-1 Proton-7.0rc6-GE-1 Proton-7.1-GE-2 Proton-7.2-GE-2 GE-Proton7-3 GE-Proton7-8 GE-Proton7-10 GE-Proton7-14"
 	for tmpdir in $oldversions ; do
 		delete_proton "${tmpdir}"
 	done
