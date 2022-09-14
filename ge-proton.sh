@@ -14,9 +14,9 @@ fi
 
 
 if [ "$1" = "last" ] ; then
-	gerelease="7-24"
+	gerelease="7-29"
 	getag="${gerelease}"
-	gechecksum="cd41cc3b6afd3a7180e0c4e9711e3c0ed3253afb8000aa66d0975061ff3bbe15"
+	gechecksum="6e68b797c157a6821d040a7c1e2b172756b0371345ccaf97895c2104dfe33946"
 elif [[ "$1" = "" || "$1" = "both" || "$1" = "latest" ]] ; then
 	gerelease="7-33"
 	getag="${gerelease}"
