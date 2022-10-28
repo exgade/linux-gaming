@@ -10,7 +10,7 @@ Diese Installationsscripte sind für den Einsatz auf frisch installierten Linux 
 ### What's included:
 
 * Installation von (proprietären) Nvidia, AMD and/or Intel Treibern
-* Lutris ( Benutzt Lutris Repositories für Debian ; https://github.com/lutris/lutris )
+* Lutris ( Benutzt Lutris Repositories für Debian ; https://github.com/lutris/lutris ; nicht für ubuntu )
 * Wine Staging ( Benutzt WineHQ Repositories für Debian )
 * DXVK für bessere Direct X Unterstützung ( https://github.com/doitsujin/dxvk )
 * DXD3D für bessere Direct 3D Unterstützung ( https://github.com/d3d12/vkd3d )
