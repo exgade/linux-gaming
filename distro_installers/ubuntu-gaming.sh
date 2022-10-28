@@ -175,7 +175,11 @@ apt install winetricks dxvk ttf-mscorefonts-installer xboxdrv mono-runtime-commo
 
 nvidia_version_install="440"
 if [[ "${nvidia_allowupdate}" = "true" || "${nvidia_install}" = "true" ]] ; then
-	if [ "$(apt list "nvidia-driver-455" | grep -i 'nvidia' -c)" = "1" ] ; then
+	if [ "$(apt list "nvidia-driver-470" | grep -i 'nvidia' -c)" = "1" ] ; then
+		nvidia_version_install="470"
+	elif [ "$(apt list "nvidia-driver-460" | grep -i 'nvidia' -c)" = "1" ] ; then
+		nvidia_version_install="460"
+	elif [ "$(apt list "nvidia-driver-455" | grep -i 'nvidia' -c)" = "1" ] ; then
 		nvidia_version_install="455"
 	elif [ "$(apt list "nvidia-driver-450" | grep -i 'nvidia' -c)" = "1" ] ; then
 		nvidia_version_install="450"
