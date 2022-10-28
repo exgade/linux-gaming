@@ -7,7 +7,7 @@ intel_install="false"
 autodetect_graphics="true"
 
 # Gaming Tools Installer
-lutris_install="true"
+#lutris_install="true"
 steam_install="true"
 winetricks_install="true"
 teamspeak_install="true"
@@ -25,8 +25,8 @@ nvidia_allowupdate="true"
 for arg in "$@" ; do
 	if [[ "$arg" = "--force" || "$arg" = "-f" ]] ; then
 		option_noconfirm="true"
-	elif [[ "$arg" = "nolutris" ]] ; then
-		lutris_install="false"
+#	elif [[ "$arg" = "nolutris" ]] ; then
+#		lutris_install="false"
 	elif [[ "$arg" = "nosteam" ]] ; then
 		steam_install="false"
 	elif [[ "$arg" = "nowinetricks" ]] ; then
@@ -46,7 +46,7 @@ for arg in "$@" ; do
 	elif [[ "$arg" = "--help" || "$arg" = "-h" ]] ; then
 		echo "usage: ./ubuntu-gaming.sh [OPTIONS]"
 		echo "--force       - no questions while installing / uninstalling packages - this might break your system"
-		echo "nolutris      - don't install Lutris"
+#		echo "nolutris      - don't install Lutris"
 		echo "nosteam       - don't install Steam"
 		echo "nowinetricks  - don't install Winetricks"
 		echo "nots3         - don't install Teamspeak3"
@@ -95,9 +95,9 @@ fi
 
 # setting additional packages to install
 pkg_additional_install=""
-if [ "${lutris_install}" = "true" ] ; then
-	pkg_additional_install="${pkg_additional_install}lutris "
-fi
+#if [ "${lutris_install}" = "true" ] ; then
+#	pkg_additional_install="${pkg_additional_install}lutris "
+#fi
 if [ "${steam_install}" = "true" ] ; then
 	pkg_additional_install="${pkg_additional_install}steam "
 fi
@@ -151,12 +151,13 @@ else
 fi
 
 # add lutris ppa
-if [ ! -f "/etc/apt/sources.list.d/lutris-team-ubuntu-lutris-${UBUNTU_CODENAME}.list" ] ; then
-	echo "### adding lutris ppa"
-	add-apt-repository ppa:lutris-team/lutris ${installer_addition}
-else
-	echo "### lutris repository already added, skipping..."
-fi
+#if [ ! -f "/etc/apt/sources.list.d/lutris-team-ubuntu-lutris-${UBUNTU_CODENAME}.list" ] ; then
+#	echo "### adding lutris ppa"
+#	add-apt-repository ppa:lutris-team/lutris ${installer_addition}
+#else
+#	echo "### lutris repository already added, skipping..."
+#fi
+
 echo "### adding 32 Bit support and updating apt"
 dpkg --add-architecture i386 && apt update
 
