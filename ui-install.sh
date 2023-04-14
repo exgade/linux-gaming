@@ -28,64 +28,49 @@ if [ "$(whoami)" != "root" ] ; then
 fi
 
 function askQuestion {
-	if [[ "$default" = "" || "$default" =~ ^[Yy]$ ]] ; then
-		default="y"
-		echo -n "$question [Y/n] "
-	else
-		echo -n "$question [y/N] "
-	fi
-	if [ "${force_install}" != "true" ] ; then
-		read -n 1 answer
+	local question="$1"
+	local default="${2:-y}"
+	local answer
+
+	local prompt="[Y/n]"
+	[[ "$default" =~ ^[yY]$ || "$default" = "" ]] || prompt="[y/N]"
+
+	if [[ "${force_install}" != "true" ]]; then
+		read -rp "$question $prompt" answer
 	else
 		answer="${default}"
 		echo "${default} (autoselected)"
 	fi
-	if [[ "${answer}" =~ ^[Yy]$ || ( "${default}" = "y" && "${answer}" = "" ) ]];then
-		answer="true"
-	else
-		answer="false"
-	fi
+
+	[[ "${answer}" =~ ^[yY]$ || ( "${default}" = "y" && -z "${answer}" ) ]]
 }
 
-default="y"
-#question="Install Lutris?"
-#askQuestion
-#if [ "${answer}" != "true" ] ; then
+#if ! askQuestion "Install Lutris?" ; then
 #	installer_arguments="${installer_arguments} nolutris"
 #fi
 #echo
 
-#question="Install Steam?"
-#askQuestion
-#if [ "${answer}" != "true" ] ; then
+#if ! askQuestion "Install Steam?" ; then
 #	installer_arguments="${installer_arguments} nosteam"
 #fi
 #echo
 
-#question="Install Winetricks?"
-#askQuestion
-#if [ "${answer}" != "true" ] ; then
+#if ! askQuestion "Install Winetricks?" ; then
 #	installer_arguments="${installer_arguments} nowinetricks"
 #fi
 #echo
 
-question="Install Teamspeak 3?"
-askQuestion
-if [ "${answer}" != "true" ] ; then
+if ! askQuestion "Install Teamspeak3?" ; then
 	installer_arguments="${installer_arguments} nots3"
 fi
 echo
 
-question="Install Mumble?"
-askQuestion
-if [ "${answer}" != "true" ] ; then
+if ! askQuestion "Install Mumble?" ; then
 	installer_arguments="${installer_arguments} nomumble"
 fi
 echo
 
-question="Install Discord?"
-askQuestion
-if [ "${answer}" != "true" ] ; then
+if ! askQuestion "Install Discord?" ; then
 	installer_arguments="${installer_arguments} nodiscord"
 fi
 

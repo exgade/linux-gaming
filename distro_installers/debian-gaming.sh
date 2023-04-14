@@ -172,7 +172,7 @@ fi
 
 #add winehq repo
 echo "### adding winehq repository"
-if [ "$(grep bookworm /etc/os-release -c)" = "1" ] ; then
+if [ "$(grep bookworm /etc/os-release -c)" != "0" ] ; then
 	echo "deb https://dl.winehq.org/wine-builds/debian/ bookworm main" > /etc/apt/sources.list.d/winehq.list
 elif [ "$(grep bullseye /etc/os-release -c)" = "1" ] ; then
 	echo "deb https://dl.winehq.org/wine-builds/debian/ bullseye main" > /etc/apt/sources.list.d/winehq.list
