@@ -46,7 +46,11 @@ elif [[ "$1" = "--cleanup" ]] ; then
 	for tmpdir in Proton-{5,6}.{1,2,3,4,5,6,7,8,9}{,1,2,3,4,5,6,7,8,9,0}-GE-{1,2,3,4,5,6,7,8,9}{,-ST,-MF} ; do
 		delete_proton "${tmpdir}"
 	done
-	oldversions="Proton-6.9-GE-2-github-actions-test Proton-7.0rc2-GE-1 Proton-7.0rc6-GE-1 Proton-7.1-GE-2 Proton-7.2-GE-2 GE-Proton7-3 GE-Proton7-8 GE-Proton7-10 GE-Proton7-14 GE-Proton7-17 GE-Proton7-20 GE-Proton7-23 GE-Proton7-29 GE-Proton7-33 GE-Proton7-35 GE-Proton7-37 GE-Proton7-38 GE-Proton7-41 GE-Proton7-43 GE-Proton7-47 GE-Proton7-49 GE-Proton7-53 GE-Proton8-1"
+	for tmpdir in GE-Proton7-{1,2,3,4,5,6,7,8,9}{,1,2,3,4,5,6,7,8,9,0} ; do
+		delete_proton "${tmpdir}"
+	done
+	oldversions="Proton-6.9-GE-2-github-actions-test Proton-7.0rc2-GE-1 Proton-7.0rc6-GE-1 Proton-7.1-GE-2 Proton-7.2-GE-2"
+	oldversions="${oldversions} GE-Proton8-1"
 	for tmpdir in $oldversions ; do
 		delete_proton "${tmpdir}"
 	done
