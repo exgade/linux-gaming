@@ -133,7 +133,7 @@ if [[ "${nvidia_install}" = "true" || "${amd_install}" = "true" || "${intel_inst
 				exit
 			fi
 		fi
-		pkg_graphics_install="${pkg_graphics_install}nvidia nvidia-utils lib32-nvidia-utils lib32-vulkan-driver "
+		pkg_graphics_install="${pkg_graphics_install}nvidia nvidia-utils lib32-nvidia-utils "
 		if [ "${ID}" != "manjaro" ] ; then
 			# manjaro doesn't have the package nvidia-settings
 			pkg_graphics_install="${pkg_graphics_install}nvidia-settings "
