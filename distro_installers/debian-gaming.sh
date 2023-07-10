@@ -115,13 +115,19 @@ if [ -d "${workdir}/../general" ] && [ -f "${workdir}/../general/btrfs-tuning.sh
 	echo "### if you see one error regarding to a not operation in a steam folder, this can be ignored"
 fi
 
-if [ "$(grep ' main' /etc/apt/sources.list | grep 'contrib' | grep 'non-free' -c)" = "0" ] ; then
+if [ "$(grep ' main' /etc/apt/sources.list | grep 'contrib' -c)" = "0" ] ; then
 	chk1="$(grep ' main' /etc/apt/sources.list | grep non-free -c)"
 	chk2="$(grep ' main' /etc/apt/sources.list | grep contrib -c)"
+	chk3="$(grep ' main' /etc/apt/sources.list | grep non-free-firmware -c)"
+	chk4="$(grep ' main' /etc/apt/sources.list -c)"
 	if [[ "$chk1" = "$chk2" && "$chk1" = "0" && ! -f /etc/apt/sources.list.bck ]] ; then
 		echo "### installing contrib / non-free sources"
 		cp /etc/apt/sources.list /etc/apt/sources.list.bck
 		sed -i "s/ main/ main contrib non-free/g" /etc/apt/sources.list
+	elif [[ "$chk3" = "$chk4" && "$chk3" != "$chk2" && "$chk2" = "0" && ! -f /etc/apt/sources.list.bck ]] ; then
+		echo "### installing contrib / non-free sources by adding to existing non-free-firmware"
+		cp /etc/apt/sources.list /etc/apt/sources.list.bck
+		sed -i "s/ main non-free-firmware/ main contrib non-free non-free-firmware/g" /etc/apt/sources.list
 	else
 		echo "### can't automatically install contrib / non-free repos, aborting"
 		exit
