@@ -13,6 +13,7 @@ winetricks_install="true"
 teamspeak_install="true"
 mumble_install="true"
 discord_install="true"
+gamemode_install="true"
 
 # automatic installation - use this with care and only if you know what you're doing
 # this question will answer every question pacman asks with the default answer - it may break your system
@@ -37,6 +38,8 @@ for arg in "$@" ; do
 		mumble_install="false"
 	elif [[ "$arg" = "nodiscord" ]] ; then
 		discord_install="false"
+	elif [[ "$arg" = "nogamemode" ]] ; then
+		gamemode_install="false"
 	elif [[ "$arg" = "nvidia" ]] ; then
 		nvidia_install="true"
 	elif [[ "$arg" = "amd" ]] ; then
@@ -52,6 +55,7 @@ for arg in "$@" ; do
 		echo "nots3         - don't install Teamspeak3"
 		echo "nomumble      - don't install Mumble"
 		echo "nodiscord     - don't install Discord"
+		echo "nogamemode    - don't install Gamemode"
 		echo "nvidia        - force installation of nvidia drivers"
 		echo "amd           - force installation of amd drivers"
 		echo "intel         - force installation of intel drivers"

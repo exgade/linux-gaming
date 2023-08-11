@@ -1,5 +1,5 @@
 #!/bin/bash
-workdir="$( cd "$(dirname "$0")" >/dev/null 2>&1 ; pwd -P )"
+workdir="$( cd "$(dirname "$0")" >/dev/null 2>&1 || exit ; pwd -P )"
 
 if [ "$(whoami)" = "root" ] ; then
 	echo "this script should NOT be run as root or via sudo"
@@ -15,15 +15,12 @@ fi
 
 if [ "$1" = "last" ] ; then
 	gerelease="8-9"
-	getag="${gerelease}"
 	gechecksum="c999f8beb1bd1425f65afa73dda28f6aa04ae2db4dba9666ae65f5dd0043645a"
 elif [[ "$1" = "" || "$1" = "both" || "$1" = "latest" ]] ; then
 	gerelease="8-11"
-	getag="${gerelease}"
 	gechecksum="95d241c29ffd0a36f993d141adcea2cf8feb9cc854e40c9fdf9fa435302f5c28"
 #elif [[ "$1" = "dev" ]] ; then
 #	gerelease="5.9-GE-2-MF"
-#	getag="${gerelease}"
 #	gechecksum="aedeeeeb5435cf7c5e6e062935e1d565562ce7dc34d5dbea8b6db7235fc69391"
 elif [[ "$1" = "-h" || "$1" = "--help" ]] ; then
 	echo "usage: ./ge-proton.sh <command (optional)>"

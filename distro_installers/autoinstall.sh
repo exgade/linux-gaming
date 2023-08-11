@@ -1,8 +1,7 @@
 #!/bin/bash
-workdir="$( cd "$(dirname "$0")" >/dev/null 2>&1 ; pwd -P )"
+workdir="$( cd "$(dirname "$0")" >/dev/null 2>&1 || exit ; pwd -P )"
 distrodetect=""
 distroinstaller=""
-option_noconfirm="false"
 installer_arguments=""
 for arg in "$@" ; do
 	if [[ "$arg" = "--force" || "$arg" = "-f" ]] ; then
@@ -19,6 +18,8 @@ for arg in "$@" ; do
 		installer_arguments="${installer_arguments} nomumble"
 	elif [[ "$arg" = "nodiscord" ]] ; then
 		installer_arguments="${installer_arguments} nodiscord"
+	elif [[ "$arg" = "nogamemode" ]] ; then
+		installer_arguments="${installer_arguments} nogamemode"
         elif [[ "$arg" = "nvidia" ]] ; then
 		installer_arguments="${installer_arguments} nvidia"
 	elif [[ "$arg" = "amd" ]] ; then
@@ -34,6 +35,7 @@ for arg in "$@" ; do
 		echo "nots3         - don't install Teamspeak3"
 		echo "nomumble      - don't install Mumble"
 		echo "nodiscord     - don't install Discord"
+		echo "nogamemode    - don't install Gamemode"
                 echo "nvidia        - force installation of nvidia drivers"
 		echo "amd           - force installation of amd drivers"
 		echo "intel         - force installation of intel drivers"

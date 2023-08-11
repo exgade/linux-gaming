@@ -40,6 +40,8 @@ for arg in "$@" ; do
 		mumble_install="false"
 	elif [[ "$arg" = "nodiscord" ]] ; then
 		discord_install="false"
+	elif [[ "$arg" = "nogamemode" ]] ; then
+		gamemode_install="false"
 	elif [[ "$arg" = "nvidia" ]] ; then
 		nvidia_install="true"
 		echo "Debug: Nvidia installation"
@@ -58,6 +60,7 @@ for arg in "$@" ; do
 		echo "nots3         - don't install Teamspeak3"
 		echo "nomumble      - don't install Mumble"
 		echo "nodiscord     - don't install Discord"
+		echo "nogamemode    - don't install Gamemode"
 		echo "nvidia        - force installation of nvidia drivers"
 		echo "amd           - force installation of amd drivers"
 		echo "intel         - force installation of intel drivers"
@@ -177,7 +180,7 @@ fi
 
 # btrfs tuning if possible
 # if you dont want this - just delete the file general/btrfs-tuning.sh
-workdir="$( cd "$(dirname "$0")" >/dev/null 2>&1 ; pwd -P )"
+workdir="$( cd "$(dirname "$0")" >/dev/null 2>&1 || exit ; pwd -P )"
 if [ -d "${workdir}/../general" ] && [ -f "${workdir}/../general/btrfs-tuning.sh" ] ; then
 	echo "### optimizing btrfs, if needed"
 	"${workdir}"/../general/btrfs-tuning.sh

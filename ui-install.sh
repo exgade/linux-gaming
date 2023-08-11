@@ -1,5 +1,5 @@
 #!/bin/bash
-workdir="$( cd "$(dirname "$0")" >/dev/null 2>&1 ; pwd -P )"
+workdir="$( cd "$(dirname "$0")" >/dev/null 2>&1 || exit ; pwd -P )"
 installer_arguments=""
 force_install="false"
 for arg in "$@" ; do
