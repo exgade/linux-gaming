@@ -1,3 +1,4 @@
+[![CI Shellcheck](https://github.com/exgade/linux-gaming/actions/workflows/shellcheck.yml/badge.svg)](https://github.com/exgade/linux-gaming/actions/workflows/shellcheck.yml)
 # Gaming Setup Scripte für Linux Distributionen
 [[English]](README.md) [[German]](README_de.md)
 
