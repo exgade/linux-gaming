@@ -1,5 +1,5 @@
 #!/usr/bin/bash
-echo "Warning: Work in Progress, continue with ENTER, abort with strg+c"; read
+echo "Warning: Work in Progess Script, continue with ENTER, abort with strg+c"; read -r
 killedany="false"
 
 killall CoherentUI_Host.exe 2> /dev/null && echo "killed all CoherentUI_Host Applications" && killedany="true"

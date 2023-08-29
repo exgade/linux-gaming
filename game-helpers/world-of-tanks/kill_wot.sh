@@ -16,7 +16,7 @@ if (pgrep wgc.exe > /dev/null); then
 	kill -9 "$(pgrep wgc.exe)" && echo "killed all applications with wgc.exe in name with -9" && killedany="true"
 fi
 if (pgrep wgc_renderer > /dev/null); then
-	kill -9 $(pgrep wgc_renderer) && echo "killed all applications with wgc_renderer in name with -9)" && killedany="true"
+	kill -9 "$(pgrep wgc_renderer)" && echo "killed all applications with wgc_renderer in name with -9)" && killedany="true"
 fi
 
 if [ "${killedany}" = "true" ] ; then
