@@ -67,7 +67,7 @@ if [ -f /etc/os-release ] ; then
 			distrodetect="Unknown Ubuntu"
 			echo "WARNING: this ubuntu distribution is unknown, you might face a broken system if you continue."
 			echo "To abort press CTRL+C, continue anyway with ENTER"
-			read -r
+			read
 		fi
 		distroinstaller="ubuntu"
 	fi
