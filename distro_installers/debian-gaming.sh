@@ -148,10 +148,10 @@ apt install wget ${installer_addition}
 if [ ! -d ~/.aptkeys ] ; then
 	mkdir ~/.aptkeys
 fi
-if [ ! -f ~/.aptkeys/LutrisDebian10.key ] ; then
+if [[ "${lutris_install}" = "true" && ! -f ~/.aptkeys/LutrisDebian12.key ]] ; then
 	echo "### downloading lutris key"
 	cd ~/.aptkeys || exit
-	wget https://download.opensuse.org/repositories/home:/strycore/Debian_10/Release.key -O ~/.aptkeys/LutrisDebian10.key
+	wget https://download.opensuse.org/repositories/home:/strycore/Debian_12/Release.key -O ~/.aptkeys/LutrisDebian12.key
 fi
 if [ ! -f ~/.aptkeys/winehq.key ] ; then
 	echo "### downloading winehq key"
@@ -168,9 +168,14 @@ else
 	exit
 fi
 # Check sha256 checksum for lutris repo
-if [ "$(sha256sum ~/.aptkeys/LutrisDebian10.key | awk '{print $1}')" = "43fea79b052823e02b9f2d0929ece6f39a10a0b7f1a8377c2e326128fe3604e3" ] ; then
+if [[ "${lutris_install}" = "true" && "$(sha256sum ~/.aptkeys/LutrisDebian12.key | awk '{print $1}')" = "a77a7f3f09d0952d38bcf7178c84bf3eedbcc9b0d30c362b2a93bae6dff578fc" ]] ; then
 	echo "### Checksum of Lutris OK, adding key"
-	cp ~/.aptkeys/LutrisDebian10.key /etc/apt/trusted.gpg.d/LutrisDebian10.asc
+	cd ~/.aptkeys || exit
+	if [ -f ~/.aptkeys/LutrisDebian12.key.gpg ] ; then
+		rm ~/.aptkeys/LutrisDebian12.key.gpg
+	fi
+	gpg --dearmor
+	cp ~/.aptkeys/LutrisDebian12.key.gpg /etc/apt/keyrings/lutris.gpg
 else
 	echo "### Aborting: Checksum of Lutris NOT OK!"
 	exit
@@ -186,9 +191,11 @@ else
 	echo "deb https://dl.winehq.org/wine-builds/debian/ buster main" > /etc/apt/sources.list.d/winehq.list
 fi
 
-#add lutris repo
-echo "### adding lutris repository"
-echo "deb https://download.opensuse.org/repositories/home:/strycore/Debian_10/ /" > /etc/apt/sources.list.d/home:strycore.list
+if [ "${lutris_install}" = "true" ] ; then
+	#add lutris repo
+	echo "### adding lutris repository"
+	echo "deb [signed-by=/etc/apt/keyrings/lutris.gpg] https://download.opensuse.org/repositories/home:/strycore/Debian_12/ ./" > /etc/apt/sources.list.d/lutris.list
+fi
 
 echo "### installing dxvk, vkd3d, corefonts, xboxdrv"
 dpkg --add-architecture i386 && apt update && apt install ttf-mscorefonts-installer dxvk dxvk-wine32-development dxvk-wine64-development libvkd3d1 xboxdrv vulkan-tools ${installer_addition}
