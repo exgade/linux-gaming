@@ -174,7 +174,7 @@ if [[ "${lutris_install}" = "true" && "$(sha256sum ~/.aptkeys/LutrisDebian12.key
 	if [ -f ~/.aptkeys/LutrisDebian12.key.gpg ] ; then
 		rm ~/.aptkeys/LutrisDebian12.key.gpg
 	fi
-	gpg --dearmor
+	gpg --dearmor ~/.aptkeys/LutrisDebian12.key
 	cp ~/.aptkeys/LutrisDebian12.key.gpg /etc/apt/keyrings/lutris.gpg
 else
 	echo "### Aborting: Checksum of Lutris NOT OK!"
