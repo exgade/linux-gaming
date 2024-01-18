@@ -1,5 +1,6 @@
 #!/bin/bash
 workdir="$( cd "$(dirname "$0")" >/dev/null 2>&1 || exit ; pwd -P )"
+available() { command -v "$1" >/dev/null; }
 
 if [ "$(whoami)" = "root" ] ; then
 	echo "this script should NOT be run as root or via sudo"
@@ -11,7 +12,6 @@ steamcompatdir="${HOME}/.steam/steam/compatibilitytools.d"
 if [[ ! -d "${HOME}/.steam/root/compatibilitytools.d" && -d "${HOME}/.local/share/Steam/compatibilitytools.d" ]] ; then
 	steamcompatdir="${HOME}/.local/share/Steam/compatibilitytools.d"
 fi
-
 
 if [ "$1" = "last" ] ; then
 	gerelease="8-22"
@@ -62,7 +62,7 @@ else
 	exit
 fi
 
-if [ "$(whereis wget | grep "/bin" -c)" = "0" ] ; then
+if ! available wget ; then
 	echo "Error: please install wget first"
 	exit
 fi
@@ -73,7 +73,7 @@ fi
 cd "${steamcompatdir}/" || exit
 if [[ ! -d "${steamcompatdir}/Proton-${gerelease}" && ! -f "${steamcompatdir}/Proton-${gerelease}.tar.gz" ]] ; then
 	echo Downloading Glorious Eggroll Proton...
-	if [[ ! -f /usr/local/bin/wget || "$(readlink -f /usr/local/bin/wget)" = "/usr/bin/firejail" ]] ;then
+	if [[ ! -f /usr/local/bin/wget || "$(readlink -f /usr/local/bin/wget)" = "/usr/bin/firejail" && -f /usr/bin/wget ]] ;then
 		cmd_wget="/usr/bin/wget"
 	else
 		cmd_wget="wget"
