@@ -18,6 +18,12 @@ if [ "$(mount | grep ' on / type btrfs' -c)" = "1" ] ; then
 						chown "${loopuser}" "${loopdir}/.local/share/wineprefixes"
 					fi
 					chattr +C -R "${loopdir}/.local/share/wineprefixes"
+					# default ~/.cache directory
+					if [ ! -d "${loopdir}/.cache" ] ; then
+						mkdir "${loopdir}/.cache"
+						chown "${loopuser}" "${loopdir}/.cache"
+					fi
+					chattr +C -R "${loopdir}/.cache"
 					# Lutris default Game Directory
 					if [ ! -d "${loopdir}/Games" ] ; then
 						mkdir "${loopdir}/Games"
@@ -31,6 +37,13 @@ if [ "$(mount | grep ' on / type btrfs' -c)" = "1" ] ; then
 						chown "${loopuser}" "${loopdir}/.nv/GLCache"
 					fi
 					chattr +C -R "${loopdir}/.nv/GLCache"
+					# Flatpak .var/app
+					if [ ! -d "${loopdir}/.var/app" ] ; then
+						mkdir -p "${loopdir}/.var/app"
+						chown "${loopuser}" "${loopdir}/.var"
+						chown "${loopuser}" "${loopdir}/.var/app"
+					fi
+					chattr +C -R "${loopdir}/.var/app"
 					# Steam Default Directory for Downloads, etc.
 					if [ ! -d "${loopdir}/.steam" ] ; then
 						mkdir "${loopdir}/.steam"
