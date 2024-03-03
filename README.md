@@ -35,7 +35,7 @@ Git has to be installed, to clone the repository.
 
 ### 2) Download the scripts
 * This will create the folder linux-gaming and downloads the scripts:  
-    git clone https://github.com/exgade/linux-gaming
+    git clone --filter=tree:0 https://github.com/exgade/linux-gaming
 
 ## Installation
 
