@@ -104,7 +104,7 @@ if [[ "${nvidia_install}" = "true" || "${amd_install}" = "true" || "${intel_inst
 		pkg_graphic="${pkg_graphic}nvidia-driver "
 	fi
 	if [ "${amd_install}" = "true" ] ; then
-		pkg_graphic="${pkg_graphic}libgl1-mesa-dri libgl1-mesa-dri:i386 xserver-xorg-video-ati xserver-xorg-video-amdgpu mesa-vulkan-drivers mesa-vulkan-drivers:i386 "
+		pkg_graphic="${pkg_graphic}libglx-mesa0 libglx-mesa0:i386 xserver-xorg-video-ati xserver-xorg-video-amdgpu mesa-vulkan-drivers mesa-vulkan-drivers:i386 "
 	fi
 fi
 
