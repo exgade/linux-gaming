@@ -14,11 +14,11 @@ if [[ ! -d "${HOME}/.steam/root/compatibilitytools.d" && -d "${HOME}/.local/shar
 fi
 
 if [ "$1" = "last" ] ; then
-	gerelease="9-2"
-	gechecksum="0fb39d59d83421de1039df0381fcd942296414fcd23cde6c37a8827b21af873f5b473b538e7992aca2c6b541f899f89d912a25c53d3c6344bd217984f59f08d9"
-elif [[ "$1" = "" || "$1" = "both" || "$1" = "latest" ]] ; then
 	gerelease="9-5"
 	gechecksum="a1ba336e1bb654c202e07cf4589d6b50f1457c196d56b1ecc2ff62ab08789aaef55fa7b498d5c3b51d4775aa2fd076bfbba4b8d40c67faa2d22433f9379144ee"
+elif [[ "$1" = "" || "$1" = "both" || "$1" = "latest" ]] ; then
+	gerelease="9-7"
+	gechecksum="1cbb4327cc5d901732bff154ac5eb5dce3db7d37bd2e1b04394f6c125efd94856ee95a5b5442cee62e47d43af715a69a0a9e5125f3d0fad65fe9e12d20e6d862"
 #elif [[ "$1" = "dev" ]] ; then
 #	gerelease="5.9-GE-2-MF"
 #	gechecksum="aedeeeeb5435cf7c5e6e062935e1d565562ce7dc34d5dbea8b6db7235fc69391"
@@ -47,7 +47,7 @@ elif [[ "$1" = "--cleanup" ]] ; then
 		delete_proton "${tmpdir}"
 	done
 	oldversions="Proton-6.9-GE-2-github-actions-test Proton-7.0rc2-GE-1 Proton-7.0rc6-GE-1 Proton-7.1-GE-2 Proton-7.2-GE-2"
-	oldversions="${oldversions} GE-Proton8-1 GE-Proton8-3 GE-Proton8-4 GE-Proton8-6 GE-Proton8-9 GE-Proton8-11 GE-Proton8-13 GE-Proton8-15 GE-Proton8-22 GE-Proton8-25 GE-Proton8-32"
+	oldversions="${oldversions} GE-Proton8-1 GE-Proton8-3 GE-Proton8-4 GE-Proton8-6 GE-Proton8-9 GE-Proton8-11 GE-Proton8-13 GE-Proton8-15 GE-Proton8-22 GE-Proton8-25 GE-Proton8-32 GE-Proton9-2"
 	for tmpdir in $oldversions ; do
 		delete_proton "${tmpdir}"
 	done
