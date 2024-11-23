@@ -36,7 +36,7 @@ Um das Repository herunterzuladen muss man zunächst Git installiert haben.
 
 ### 2) Lade die Scripte mit Git herunter
 * Dies wird den Ordner linux-gaming erstellen und die Scripte in den Ordner herunterladen:  
-    git clone https://github.com/exgade/linux-gaming
+    git clone --filter=tree:0 https://github.com/exgade/linux-gaming
 
 ## Installation
 
