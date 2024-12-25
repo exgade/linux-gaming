@@ -13,22 +13,35 @@ if [[ ! -d "${HOME}/.steam/root/compatibilitytools.d" && -d "${HOME}/.local/shar
 	steamcompatdir="${HOME}/.local/share/Steam/compatibilitytools.d"
 fi
 
-if [ "$1" = "last" ] ; then
-	gerelease="9-10"
-	gechecksum="02a4e902aefc448e0bfa340bc2fa6b96a34d25b0b50796b14e80ba31b59d0a7f9751026dec6a8dc150f53117e0fbc4d954bc4457b18802a5b89c4a014176e9f4"
-elif [[ "$1" = "" || "$1" = "both" || "$1" = "latest" ]] ; then
-	gerelease="9-20"
-	gechecksum="dbf6804b566e91c7d792d98101aaf596f89a09fcfd91572944b476376605aa9e6739dd7651a141ca4d03d7876a70975edaa0810651c65040f5bdb4596067d115"
-#elif [[ "$1" = "dev" ]] ; then
-#	gerelease="5.9-GE-2-MF"
-#	gechecksum="aedeeeeb5435cf7c5e6e062935e1d565562ce7dc34d5dbea8b6db7235fc69391"
+if [[ "$1" == "" || "$1" == "last" || "$1" == "latest" ]] ; then
+	gerelease="$(curl https://github.com/GloriousEggroll/proton-ge-custom/releases/latest -I | grep "location:" | sed 's/[^0-9]*//' | sed 's/\".*//' | tr -d '\r' )"
+
+	if [ "${gerelease}" != "" ] ; then
+		echo "Latest Release: ${latest_release}"
+		if [ "$justcheck" != "true" ] ; then
+			cd /tmp || exit
+			releasefolder="GE-Proton${gerelease}"
+			releasehash="GE-Proton${gerelease}.sha512sum"
+			if [ ! -f "/tmp/${releasehash}" ] ; then
+				wget "https://github.com/GloriousEggroll/proton-ge-custom/releases/download/${releasefolder}/${releasehash}"
+			fi
+			gechecksum="$(cat "/tmp/${releasehash}" | awk '{print $1;}')"
+			rm "/tmp/${releasehash}"
+		fi
+	else
+		echo "Error determining last release"
+		exit 100
+	fi
+	if [ "$gechecksum" == "" ]; then
+		echo "Checksum invalid"
+		exit 101
+	fi
+	echo "Checksum found: $gechecksum"
 elif [[ "$1" = "-h" || "$1" = "--help" ]] ; then
 	echo "usage: ./ge-proton.sh <command (optional)>"
 	echo "examples:"
 	echo "./ge-proton.sh            load and install newest ge proton"
-	echo "./ge-proton.sh latest     ~"
-	echo "./ge-proton.sh last       load and install the second latest stable minor version"
-	echo "./ge-proton.sh both       load and install both versions"
+	echo "./ge-proton.sh --help	-h shows this help"
 	echo "./ge-proton.sh --cleanup  delete old proton versions"
 	exit
 elif [[ "$1" = "--cleanup" ]] ; then
@@ -48,8 +61,10 @@ elif [[ "$1" = "--cleanup" ]] ; then
 	done
 	oldversions="Proton-6.9-GE-2-github-actions-test Proton-7.0rc2-GE-1 Proton-7.0rc6-GE-1 Proton-7.1-GE-2 Proton-7.2-GE-2"
 	oldversions="${oldversions} GE-Proton8-1 GE-Proton8-3 GE-Proton8-4 GE-Proton8-6 GE-Proton8-9 GE-Proton8-11 GE-Proton8-13 GE-Proton8-15 GE-Proton8-22 GE-Proton8-25 GE-Proton8-32"
-	oldversions="${oldversions} GE-Proton9-2 GE-Proton9-5 GE-Proton9-7"
-	for tmpdir in $oldversions ; do
+	for tmpdir in GE-Proton9-{1,2,3,4,5,6,7,8,9} ; do
+		delete_proton "${tmpdir}"
+	done
+	for tmpdir in GE-Proton9-1{,1,2,3,4,5,6,7,8,9,0} ; do
 		delete_proton "${tmpdir}"
 	done
 	if [ "${deleted}" = "true" ] ; then
