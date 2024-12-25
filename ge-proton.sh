@@ -17,17 +17,15 @@ if [[ "$1" == "" || "$1" == "last" || "$1" == "latest" ]] ; then
 	gerelease="$(curl https://github.com/GloriousEggroll/proton-ge-custom/releases/latest -I | grep "location:" | sed 's/[^0-9]*//' | sed 's/\".*//' | tr -d '\r' )"
 
 	if [ "${gerelease}" != "" ] ; then
-		echo "Latest Release: ${latest_release}"
-		if [ "$justcheck" != "true" ] ; then
-			cd /tmp || exit
-			releasefolder="GE-Proton${gerelease}"
-			releasehash="GE-Proton${gerelease}.sha512sum"
-			if [ ! -f "/tmp/${releasehash}" ] ; then
-				wget "https://github.com/GloriousEggroll/proton-ge-custom/releases/download/${releasefolder}/${releasehash}"
-			fi
-			gechecksum="$(cat "/tmp/${releasehash}" | awk '{print $1;}')"
-			rm "/tmp/${releasehash}"
+		echo "Latest Release: ${gerelease}"
+		cd /tmp || exit
+		releasefolder="GE-Proton${gerelease}"
+		releasehash="GE-Proton${gerelease}.sha512sum"
+		if [ ! -f "/tmp/${releasehash}" ] ; then
+			wget "https://github.com/GloriousEggroll/proton-ge-custom/releases/download/${releasefolder}/${releasehash}"
 		fi
+		gechecksum="$(awk '{print $1;}' "/tmp/${releasehash}")"
+		rm "/tmp/${releasehash}"
 	else
 		echo "Error determining last release"
 		exit 100
@@ -96,14 +94,14 @@ if [[ ! -d "${steamcompatdir}/GE-Proton${gerelease}" && ! -f "${steamcompatdir}/
 	fi
 	releasefolder="GE-Proton${gerelease}"
 	releasefilename="GE-Proton${gerelease}.tar.gz"
-	${cmd_wget} "https://github.com/GloriousEggroll/proton-ge-custom/releases/download/${releasefolder}/${releasefilename}" -P ~/.steam/root/compatibilitytools.d/ -O Proton-${gerelease}.tar.gz
+	${cmd_wget} "https://github.com/GloriousEggroll/proton-ge-custom/releases/download/${releasefolder}/${releasefilename}" -P ~/.steam/root/compatibilitytools.d/ -O "Proton-${gerelease}.tar.gz"
 
 	echo checksum check...
 	hashtype="sha256sum"
 	if [[ "$gechecksum" =~ ^[0-9a-fA-F]{128}$ ]]; then
 		hashtype="sha512sum"
 	fi
-	if [ "$("${hashtype}" "${steamcompatdir}/Proton-${gerelease}.tar.gz" | grep ${gechecksum} -c)" = "1" ] ; then
+	if [ "$("${hashtype}" "${steamcompatdir}/Proton-${gerelease}.tar.gz" | grep "${gechecksum}" -c)" = "1" ] ; then
 		echo "checksum ok, extracting tar.gz..."
 		tar xzf "Proton-${gerelease}.tar.gz"
 		echo "removing tar.gz file"
