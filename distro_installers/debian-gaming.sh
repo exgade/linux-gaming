@@ -115,7 +115,7 @@ if [ -d "${workdir}/../general" ] && [ -f "${workdir}/../general/btrfs-tuning.sh
 	echo "### if you see one error regarding to a not operation in a steam folder, this can be ignored"
 fi
 
-if [ "$(grep ' main' /etc/apt/sources.list | grep 'contrib' -c)" = "0" ] ; then
+if [[ -f /etc/apt/sources.list && "$(grep ' main' /etc/apt/sources.list | grep 'contrib' -c)" = "0" ]] ; then
 	chk1="$(grep ' main' /etc/apt/sources.list | grep non-free -c)"
 	chk2="$(grep ' main' /etc/apt/sources.list | grep contrib -c)"
 	chk3="$(grep ' main' /etc/apt/sources.list | grep non-free-firmware -c)"
@@ -145,37 +145,42 @@ apt update && apt full-upgrade ${installer_addition}
 apt install wget ${installer_addition}
 
 # Check Checksums for Lutris & Winehq
-if [ ! -d ~/.aptkeys ] ; then
-	mkdir ~/.aptkeys
+if [ ! -d /root/.aptkeys ] ; then
+	mkdir /root/.aptkeys
 fi
-if [[ "${lutris_install}" = "true" && ! -f ~/.aptkeys/LutrisDebian12.key ]] ; then
+if [[ "${lutris_install}" = "true" && ! -f /root/.aptkeys/LutrisDebian12.key ]] ; then
 	echo "### downloading lutris key"
-	cd ~/.aptkeys || exit
-	wget https://download.opensuse.org/repositories/home:/strycore/Debian_12/Release.key -O ~/.aptkeys/LutrisDebian12.key
+	cd /root/.aptkeys || exit
+	wget https://download.opensuse.org/repositories/home:/strycore/Debian_12/Release.key -O /root/.aptkeys/LutrisDebian12.key
 fi
-if [ ! -f ~/.aptkeys/winehq.key ] ; then
-	echo "### downloading winehq key"
-	cd ~/.aptkeys || exit
-	wget https://dl.winehq.org/wine-builds/winehq.key -O ~/.aptkeys/winehq.key
+if [[ ! -f /root/.aptkeys/winehq.key || "$(sha256sum /root/.aptkeys/winehq.key | awk '{print $1}')" = "78b185fabdb323971d13bd329fefc8038e08559aa51c4996de18db0639a51df6" ]] ; then
+	echo "### installing/ updating winehq key"
+	cd /root/.aptkeys || exit
+	wget -O - https://dl.winehq.org/wine-builds/winehq.key -O /root/.aptkeys/winehq.key
 fi
 
 # Check sha256 checksum for winehq repo
-if [ "$(sha256sum ~/.aptkeys/winehq.key | awk '{print $1}')" = "78b185fabdb323971d13bd329fefc8038e08559aa51c4996de18db0639a51df6" ] ; then
+if [ "$(sha256sum /root/.aptkeys/winehq.key | awk '{print $1}')" = "d965d646defe94b3dfba6d5b4406900ac6c81065428bf9d9303ad7a72ee8d1b8" ] ; then
 	echo "### Checksum of WineHQ OK, adding key"
-	cp ~/.aptkeys/winehq.key /etc/apt/trusted.gpg.d/winehq.asc
+	cd /root/.aptkeys || exit
+	if [ -f /root/.aptkeys/winehq.key.gpg ] ; then
+		rm /root/.aptkeys/winehq.key.gpg
+	fi
+	gpg --dearmor /root/.aptkeys/winehq.key
+	cp /root/.aptkeys/winehq.key.gpg /etc/apt/keyrings/winehq.gpg
 else
 	echo "### Aborting: Checksum of WineHQ NOT OK!"
 	exit
 fi
 # Check sha256 checksum for lutris repo
-if [[ "${lutris_install}" = "true" && "$(sha256sum ~/.aptkeys/LutrisDebian12.key | awk '{print $1}')" = "a77a7f3f09d0952d38bcf7178c84bf3eedbcc9b0d30c362b2a93bae6dff578fc" ]] ; then
+if [[ "${lutris_install}" = "true" && "$(sha256sum /root/.aptkeys/LutrisDebian12.key | awk '{print $1}')" = "a77a7f3f09d0952d38bcf7178c84bf3eedbcc9b0d30c362b2a93bae6dff578fc" ]] ; then
 	echo "### Checksum of Lutris OK, adding key"
-	cd ~/.aptkeys || exit
-	if [ -f ~/.aptkeys/LutrisDebian12.key.gpg ] ; then
-		rm ~/.aptkeys/LutrisDebian12.key.gpg
+	cd /root/.aptkeys || exit
+	if [ -f /root/.aptkeys/LutrisDebian12.key.gpg ] ; then
+		rm /root/.aptkeys/LutrisDebian12.key.gpg
 	fi
-	gpg --dearmor ~/.aptkeys/LutrisDebian12.key
-	cp ~/.aptkeys/LutrisDebian12.key.gpg /etc/apt/keyrings/lutris.gpg
+	gpg --dearmor /root/.aptkeys/LutrisDebian12.key
+	cp /root/.aptkeys/LutrisDebian12.key.gpg /etc/apt/keyrings/lutris.gpg
 else
 	echo "### Aborting: Checksum of Lutris NOT OK!"
 	exit
@@ -183,12 +188,14 @@ fi
 
 #add winehq repo
 echo "### adding winehq repository"
-if [ "$(grep bookworm /etc/os-release -c)" != "0" ] ; then
-	echo "deb https://dl.winehq.org/wine-builds/debian/ bookworm main" > /etc/apt/sources.list.d/winehq.list
+if [ "$(grep trixie /etc/os-release -c)" != "0" ] ; then
+	echo "deb [signed-by=/etc/apt/keyrings/winehq.gpg] https://dl.winehq.org/wine-builds/debian/ trixie main" > /etc/apt/sources.list.d/winehq.list
+elif [ "$(grep bookworm /etc/os-release -c)" != "0" ] ; then
+	echo "deb [signed-by=/etc/apt/keyrings/winehq.gpg] https://dl.winehq.org/wine-builds/debian/ bookworm main" > /etc/apt/sources.list.d/winehq.list
 elif [ "$(grep bullseye /etc/os-release -c)" = "1" ] ; then
-	echo "deb https://dl.winehq.org/wine-builds/debian/ bullseye main" > /etc/apt/sources.list.d/winehq.list
+	echo "deb [signed-by=/etc/apt/keyrings/winehq.gpg] https://dl.winehq.org/wine-builds/debian/ bullseye main" > /etc/apt/sources.list.d/winehq.list
 else
-	echo "deb https://dl.winehq.org/wine-builds/debian/ buster main" > /etc/apt/sources.list.d/winehq.list
+	echo "deb [signed-by=/etc/apt/keyrings/winehq.gpg] https://dl.winehq.org/wine-builds/debian/ buster main" > /etc/apt/sources.list.d/winehq.list
 fi
 
 if [ "${lutris_install}" = "true" ] ; then
