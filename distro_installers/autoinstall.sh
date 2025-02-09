@@ -44,7 +44,8 @@ for arg in "$@" ; do
 	fi
 done
 
-if [ -f /etc/os-release ] ; then
+if [ -f /etc/os-release ] ; then 
+	# shellcheck disable=SC1091
 	source /etc/os-release
 	if [ "${ID}" = "manjaro" ] ; then
 		distrodetect="Manjaro"
@@ -71,7 +72,8 @@ if [ -f /etc/os-release ] ; then
 		fi
 		distroinstaller="ubuntu"
 	fi
-elif [ -f /usr/lib/os-release ] ; then
+elif [ -f /usr/lib/os-release ] ; then 
+	# shellcheck disable=SC1091
 	source /usr/lib/os-release
 	if [ "${ID}" = "artix" ] ; then
 		distrodetect="Artix Linux"
@@ -83,6 +85,7 @@ if [ "${distrodetect}" = "" ] ; then
 	echo "No Distribution detected"
 else
 	echo "Detected Distribution ${distrodetect}, using installer ${distroinstaller}-gaming.sh"
+	# shellcheck disable=SC2086
 	cd "${workdir}" && ./${distroinstaller}-gaming.sh $installer_arguments
 fi
 

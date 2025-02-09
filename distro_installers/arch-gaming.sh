@@ -97,7 +97,8 @@ fi
 
 # setting os-release
 ID="unknown"
-if [ -f /etc/os-release ] ; then
+if [ -f /etc/os-release ] ; then 
+	# shellcheck disable=SC1091
 	source /etc/os-release
 fi
 
@@ -129,6 +130,7 @@ if [[ "${nvidia_install}" = "true" || "${amd_install}" = "true" || "${intel_inst
 					manj_nvidia="${i}-nvidia ${manj_nvidia}"
 				done
 				echo "### installing manjaro specific packages for nvidia"
+				# shellcheck disable=SC2086
 				sudo pacman -S ${manj_nvidia} lib32-nvidia-utils --needed ${installer_addition}
 			else
 				echo "### ERROR while autodetecting installed kernels"
@@ -187,6 +189,7 @@ if [ -d "${workdir}/../general" ] && [ -f "${workdir}/../general/btrfs-tuning.sh
 	echo "### if you see one error (per user) regarding to an steam folder, this can be ignored"
 fi
 
+	# shellcheck disable=SC2086
 pacman -Syyu ${installer_addition}
 
 
@@ -205,6 +208,7 @@ if [ "${pkg_graphics_install}" = "" ] ; then
 	echo "no graphic drivers to install"
 else
 	echo "installing graphic drivers ${pkg_graphics_install}"
+	# shellcheck disable=SC2086
 	pacman -S ${pkg_graphics_install} --needed ${installer_addition}
 fi
 
@@ -213,6 +217,7 @@ if [[ "$(pacman -Q wine-staging | wc -l)" = "1" && "$(pacman -Q wine-staging | g
 	#echo "### detected that wine is installed, we need to remove the wine package to install wine-staging"
 	echo "### detected that wine-staging is installed, since it causes some trouble with some games, we roll back to normal wine"
 	echo "### sadly we also need to remove packages depending on wine to avoid conflicts later on"
+	# shellcheck disable=SC2086
 	pacman -Rc wine-staging ${installer_addition}
 fi
 # different libraries and wine-staging (have to be installed before winetricks)
@@ -227,6 +232,7 @@ if [ "${pkg_additional_install}" = "" ] ; then
 	echo "no additional tools to install"
 else
 	echo "installing additional tools ${pkg_additional_install}"
+	# shellcheck disable=SC2086
 	pacman -S ${pkg_additional_install} --needed ${installer_addition}
 fi
 

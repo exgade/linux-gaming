@@ -69,7 +69,8 @@ if [ "$(grep -P '^NAME=\"Pop\!' /etc/os-release -c)" = "1" ] ; then
 	exit
 fi
 
-#load os-release variables
+# load os-release variables 
+# shellcheck disable=SC1091
 source /etc/os-release
 
 if [ "$(whoami)" != "root" ] ; then
@@ -230,6 +231,7 @@ if [ "${pkg_additional_install}" = "" ] ; then
 	echo "no additional tools to install"
 else
 	echo "installing additional tools ${pkg_additional_install}"
+	# shellcheck disable=SC2086
 	apt install ${pkg_additional_install} ${installer_addition}
 fi
 

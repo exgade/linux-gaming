@@ -20,20 +20,14 @@ jobs:
         # not needed in gh actions, but when running locally via act
         run: sudo apt update && sudo apt install shellcheck
 
-      - name: Run shellcheck of ui-install.sh
-        # SC2086 = ignore globbing check
-        run: shellcheck -e SC2086 ui-install.sh
-
-      - name: Run shellcheck of ge-proton.sh
-        run: shellcheck ge-proton.sh
+      - name: Run shellcheck of *.sh in root directory
+        run: shellcheck ui-install.sh
 
       - name: Run shellcheck in ./general directory
         run: shellcheck general/*.sh
 
       - name: Run shellcheck in ./distro_installers directory
-        # SC2086 = ignore globbing check
-        # SC1091 = ignore check for source /etc/os-release
-        run: shellcheck -e SC2086,SC1091 distro_installers/*.sh
+        run: shellcheck distro_installers/*.sh
 
       - name: Run shellcheck in ./.build-helpers directory
         run: shellcheck .build-helpers/*.sh

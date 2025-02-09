@@ -74,4 +74,5 @@ if ! askQuestion "Install Discord?" ; then
 	installer_arguments="${installer_arguments} nodiscord"
 fi
 
+# shellcheck disable=SC2086
 cd "${workdir}" && ./distro_installers/autoinstall.sh $installer_arguments

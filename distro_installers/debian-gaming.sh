@@ -212,6 +212,7 @@ apt install --install-recommends winehq-staging wine32 wine64 ${installer_additi
 
 if [ "${pkg_graphic}" != "" ] ; then
 	echo "### installing proprietary drivers: ${pkg_graphic}"
+	# shellcheck disable=SC2086
 	apt install ${pkg_graphic} ${installer_addition}
 fi
 
@@ -220,6 +221,7 @@ apt install libgnutls30:i386 libldap-2.4-2:i386 libgpg-error0:i386 libsqlite3-0:
 
 if [ "${pkg_extra}" != "" ] ; then
 	echo "### installing winetricks, steam and lutris, depending on configuration"
+	# shellcheck disable=SC2086
 	apt install ${pkg_extra} ${installer_addition}
 fi
 if [[ "${teamspeak_install}" = "true" || "${discord_install}" = "true" ]] ; then
