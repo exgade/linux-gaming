@@ -56,7 +56,7 @@ There is an installer for the newest Glorious Eggroll Version also, which is hav
 This Version will be installed for using in Steam, but you are also able to select it in Lutris.
 
 ### Command for installation of ge-proton
-* linux-gaming/ge-proton.sh
+* linux-gaming/ge-proton.sh -i
 
 ---
 

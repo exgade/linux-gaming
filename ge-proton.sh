@@ -1,122 +1,154 @@
 #!/bin/bash
-workdir="$( cd "$(dirname "$0")" >/dev/null 2>&1 || exit ; pwd -P )"
-available() { command -v "$1" >/dev/null; }
+available() { command -v "$1" &>/dev/null; }
 
-if [ "$(whoami)" = "root" ] ; then
-	echo "this script should NOT be run as root or via sudo"
-	echo "please use this with your user account"
-	exit
+if [[ "$(whoami)" == "root" ]]; then
+	echo "This script should NOT be run as root or via sudo"
+	echo "Please use this with your user account"
+	exit 1
 fi
 
 steamcompatdir="${HOME}/.steam/steam/compatibilitytools.d"
-if [[ ! -d "${HOME}/.steam/root/compatibilitytools.d" && -d "${HOME}/.local/share/Steam/compatibilitytools.d" ]] ; then
-	steamcompatdir="${HOME}/.local/share/Steam/compatibilitytools.d"
+if [[ ! -d "${HOME}/.steam/root/compatibilitytools.d" && -d "${HOME}/.local/share/Steam/compatibilitytools.d" ]]; then
+    steamcompatdir="${HOME}/.local/share/Steam/compatibilitytools.d"
 fi
+versions_deleted=0
 
-if [[ "$1" == "" || "$1" == "last" || "$1" == "latest" ]] ; then
-	gerelease="$(curl https://github.com/GloriousEggroll/proton-ge-custom/releases/latest -I | grep "location:" | sed 's/[^0-9]*//' | sed 's/\".*//' | tr -d '\r' )"
+get_latest_release() {
+    curl -s https://github.com/GloriousEggroll/proton-ge-custom/releases/latest -I | grep "location:" | sed 's/[^0-9]*//' | tr -d '\r'
+}
 
-	if [ "${gerelease}" != "" ] ; then
-		echo "Latest Release: ${gerelease}"
-		cd /tmp || exit
-		releasefolder="GE-Proton${gerelease}"
-		releasehash="GE-Proton${gerelease}.sha512sum"
-		if [ ! -f "/tmp/${releasehash}" ] ; then
-			wget "https://github.com/GloriousEggroll/proton-ge-custom/releases/download/${releasefolder}/${releasehash}"
-		fi
-		gechecksum="$(awk '{print $1;}' "/tmp/${releasehash}")"
-		rm "/tmp/${releasehash}"
-	else
-		echo "Error determining last release"
-		exit 100
-	fi
-	if [ "$gechecksum" == "" ]; then
-		echo "Checksum invalid"
-		exit 101
-	fi
-	echo "Checksum found: $gechecksum"
-elif [[ "$1" = "-h" || "$1" = "--help" ]] ; then
-	echo "usage: ./ge-proton.sh <command (optional)>"
+print_usage() {
+	echo "usage: ./ge-proton.sh command"
 	echo "examples:"
-	echo "./ge-proton.sh            load and install newest ge proton"
-	echo "./ge-proton.sh --help	-h shows this help"
-	echo "./ge-proton.sh --cleanup  delete old proton versions"
-	exit
-elif [[ "$1" = "--cleanup" ]] ; then
-	delete_proton () {
-		if [[ "$1" != "" && -d "${steamcompatdir}/$1" ]] ; then
-			echo "$1 found, deleting..."
-			rm -Rdf "${steamcompatdir:?}/${1:?}"
-			deleted="true"
+	echo "./ge-proton.sh -i --install  download and install newest ge proton"
+	echo "./ge-proton.sh -h --help     shows this help"
+	echo "./ge-proton.sh -c --cleanup  delete old proton versions"
+}
+
+download_proton() {
+    local gerelease="$1"
+    local releasefolder="GE-Proton${gerelease}"
+    local releasehash="GE-Proton${gerelease}.sha512sum"
+    local releasefilename="GE-Proton${gerelease}.tar.gz"
+
+    cd /tmp || exit
+    if [[ ! -f "/tmp/${releasehash}" ]]; then
+        wget "https://github.com/GloriousEggroll/proton-ge-custom/releases/download/${releasefolder}/${releasehash}"
+    fi
+    gechecksum=$(awk '{print $1;}' "/tmp/${releasehash}")
+    rm "/tmp/${releasehash}"
+
+    if [[ -z "$gechecksum" ]]; then
+        echo "Checksum invalid"
+        exit 1
+    fi
+    echo "Checksum found: $gechecksum"
+
+    if ! available wget; then
+        echo "Error: please install wget first"
+        exit 1
+    fi
+
+    if [[ ! -d "${steamcompatdir}/GE-Proton${gerelease}" && ! -f "${steamcompatdir}/Proton-${gerelease}.tar.gz" ]]; then
+        echo "Downloading Glorious Eggroll Proton to ${steamcompatdir}..."
+        cd "${steamcompatdir}" || exit 1
+		local cmd_wget="wget"
+		if [[ ! -f /usr/local/bin/wget || "$(readlink -f /usr/local/bin/wget)" = "/usr/bin/firejail" && -f /usr/bin/wget ]] ;then
+			cmd_wget="/usr/bin/wget"
 		fi
-	}
-	deleted="false"
-	for tmpdir in Proton-{5,6}.{1,2,3,4,5,6,7,8,9}{,1,2,3,4,5,6,7,8,9,0}-GE-{1,2,3,4,5,6,7,8,9}{,-ST,-MF} ; do
-		delete_proton "${tmpdir}"
-	done
-	for tmpdir in GE-Proton7-{1,2,3,4,5,6,7,8,9}{,1,2,3,4,5,6,7,8,9,0} ; do
-		delete_proton "${tmpdir}"
-	done
-	oldversions="Proton-6.9-GE-2-github-actions-test Proton-7.0rc2-GE-1 Proton-7.0rc6-GE-1 Proton-7.1-GE-2 Proton-7.2-GE-2"
-	oldversions="${oldversions} GE-Proton8-1 GE-Proton8-3 GE-Proton8-4 GE-Proton8-6 GE-Proton8-9 GE-Proton8-11 GE-Proton8-13 GE-Proton8-15 GE-Proton8-22 GE-Proton8-25 GE-Proton8-32"
-	for tmpdir in GE-Proton9-{1,2,3,4,5,6,7,8,9} ; do
-		delete_proton "${tmpdir}"
-	done
-	for tmpdir in GE-Proton9-1{,1,2,3,4,5,6,7,8,9,0} ; do
-		delete_proton "${tmpdir}"
-	done
-	if [ "${deleted}" = "true" ] ; then
-		echo "One or more Proton Versions have been deleted"
-	else
-		echo "No old Proton Versions found, no need to delete anything"
-	fi
-	exit
-else
-	echo unknown operation
-	exit
-fi
+		${cmd_wget} "https://github.com/GloriousEggroll/proton-ge-custom/releases/download/${releasefolder}/${releasefilename}" -P "${steamcompatdir}" -O "Proton-${gerelease}.tar.gz"
 
-if ! available wget ; then
-	echo "Error: please install wget first"
-	exit
-fi
+        echo "Checksum check..."
+        local hashtype="sha256sum"
+        if [[ "$gechecksum" =~ ^[0-9a-fA-F]{128}$ ]]; then
+            hashtype="sha512sum"
+        fi
+        if [[ "$("${hashtype}" "${steamcompatdir}/Proton-${gerelease}.tar.gz" | grep "${gechecksum}" -c)" -eq "1" ]]; then
+            echo "Checksum ok, extracting tar.gz..."
+            tar xzf "Proton-${gerelease}.tar.gz" -C "${steamcompatdir}"
+            echo "Removing tar.gz file"
+            rm "Proton-${gerelease}.tar.gz"
+            echo "Installation complete, restart Steam now"
+        else
+            echo "Checksum not ok"
+        fi
+    else
+        echo "Error: Download of Proton ${gerelease} already started or installation already done."
+        if [[ ! -d "${steamcompatdir}/Proton-${gerelease}" ]]; then
+            echo "Delete a broken download with this and restart:"
+            echo "rm ${steamcompatdir}/Proton-${gerelease}.tar.gz"
+        fi
+    fi
+}
 
-if [ ! -d "${steamcompatdir}" ] ; then
-	mkdir -p "${steamcompatdir}"
-fi
-cd "${steamcompatdir}/" || exit
-if [[ ! -d "${steamcompatdir}/GE-Proton${gerelease}" && ! -f "${steamcompatdir}/Proton-${gerelease}.tar.gz" ]] ; then
-	echo Downloading Glorious Eggroll Proton...
-	if [[ ! -f /usr/local/bin/wget || "$(readlink -f /usr/local/bin/wget)" = "/usr/bin/firejail" && -f /usr/bin/wget ]] ;then
-		cmd_wget="/usr/bin/wget"
-	else
-		cmd_wget="wget"
-	fi
-	releasefolder="GE-Proton${gerelease}"
-	releasefilename="GE-Proton${gerelease}.tar.gz"
-	${cmd_wget} "https://github.com/GloriousEggroll/proton-ge-custom/releases/download/${releasefolder}/${releasefilename}" -P ~/.steam/root/compatibilitytools.d/ -O "Proton-${gerelease}.tar.gz"
+cleanup_old_versions() {
+    local versions=("$@")
 
-	echo checksum check...
-	hashtype="sha256sum"
-	if [[ "$gechecksum" =~ ^[0-9a-fA-F]{128}$ ]]; then
-		hashtype="sha512sum"
-	fi
-	if [ "$("${hashtype}" "${steamcompatdir}/Proton-${gerelease}.tar.gz" | grep "${gechecksum}" -c)" = "1" ] ; then
-		echo "checksum ok, extracting tar.gz..."
-		tar xzf "Proton-${gerelease}.tar.gz"
-		echo "removing tar.gz file"
-		rm "Proton-${gerelease}.tar.gz"
-		echo "installation complete, restart steam now"
-	else
-		echo "checksum not ok"
-	fi
-else
-	echo "Error: Download of Proton ${gerelease} already started or installation already done."
-	if [ ! -d "${steamcompatdir}/Proton-${gerelease}" ] ; then
-		echo "Delete an broken Download with this and restart: "
-		echo "rm ${steamcompatdir}/Proton-${gerelease}.tar.gz"
-	fi
-fi
-if [[ "$1" = "both" ]] ; then
-	"${workdir}"/ge-proton.sh last
-fi
+    if [[ "${HOME}/.steam/steam/compatibilitytools.d" != "$steamcompatdir" && "${HOME}/.local/share/Steam/compatibilitytools.d" != "$steamcompatdir" ]]; then
+        echo "invalid steamcompatdir"
+        exit 1
+    fi
+
+    for version in "${versions[@]}"; do
+		# Skip if version is empty or contains '/' or '.'
+		if [[ -z "$version" || "$version" == */* || "$version" == *.* ]]; then
+            continue
+        fi
+        if [[ -d "${steamcompatdir}/${version}" ]]; then
+            echo "${version} found, deleting..."
+            rm -Rdf "${steamcompatdir:?}/${version:?}" && ((versions_deleted++))
+        fi
+    done
+}
+
+main() {
+	case $1 in
+		-i|--install)
+			local gerelease
+			gerelease=$(get_latest_release)
+			if [[ -z "$gerelease" ]]; then
+				echo "Error determining last release"
+				exit 1
+			fi
+			echo "Latest Release: $gerelease"
+			download_proton "$gerelease"
+			;;
+		-c|--cleanup)
+			for tmpProtonVer in Proton-{5,6}.{1,2,3,4,5,6,7,8,9}{,1,2,3,4,5,6,7,8,9,0}-GE-{1,2,3,4,5,6,7,8,9}{,-ST,-MF} ; do
+				cleanup_old_versions "${tmpProtonVer}"
+			done
+			for tmpProtonVer in GE-Proton7-{1,2,3,4,5,6,7,8,9}{,1,2,3,4,5,6,7,8,9,0} ; do
+				cleanup_old_versions "${tmpProtonVer}"
+			done
+			for tmpProtonVer in GE-Proton9-{1,2,3,4,5,6,7,8,9} ; do
+				cleanup_old_versions "${tmpProtonVer}"
+			done
+			for tmpProtonVer in GE-Proton9-1{,1,2,3,4,5,6,7,8,9,0} ; do
+				cleanup_old_versions "${tmpProtonVer}"
+			done
+			local oldversions=(
+				"Proton-6.9-GE-2-github-actions-test" "Proton-7.0rc2-GE-1" "Proton-7.0rc6-GE-1" "Proton-7.1-GE-2" "Proton-7.2-GE-2"
+				"GE-Proton8-1" "GE-Proton8-3" "GE-Proton8-4" "GE-Proton8-6" "GE-Proton8-9" "GE-Proton8-11" "GE-Proton8-13" "GE-Proton8-15"
+				"GE-Proton8-22" "GE-Proton8-25" "GE-Proton8-32" "GE-Proton9-1" "GE-Proton9-2" "GE-Proton9-3" "GE-Proton9-4" "GE-Proton9-5"
+				"GE-Proton9-6" "GE-Proton9-7" "GE-Proton9-8" "GE-Proton9-9" "GE-Proton9-10" "GE-Proton9-11" "GE-Proton9-12"
+			)
+			cleanup_old_versions "${oldversions[@]}"
+			if [ "$versions_deleted" == "0" ]; then
+				echo "no versions found for deletion"
+			else
+				echo "$versions_deleted old versions deleted"
+			fi
+			;;
+		-h|--help)
+			print_usage
+			exit 0
+			;;
+		*)
+			echo "Error: Unknown operation"
+			print_usage
+			exit 1
+			;;
+	esac
+}
+
+main "$@"

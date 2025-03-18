@@ -57,7 +57,7 @@ Für die angepasste Proton Version von Glorious Eggroll ist ein Installer vorhan
 Das Script installiert die angepasste Proton Version für die Nutzung in Steam, die Version ist dann jedoch auch in Lutris verfügbar.
 
 ### Befehl für die Installation von ge-proton:
-* linux-gaming/ge-proton.sh
+* linux-gaming/ge-proton.sh -i
 
 ---
 
