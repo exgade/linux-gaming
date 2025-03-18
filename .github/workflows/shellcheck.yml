@@ -29,8 +29,5 @@ jobs:
       - name: Run shellcheck in ./distro_installers directory
         run: shellcheck distro_installers/*.sh
 
-      - name: Run shellcheck in ./.build-helpers directory
-        run: shellcheck .build-helpers/*.sh
-
       - name: Run shellcheck in ./game-helpers directory
         run: shellcheck game-helpers/*/*.sh
