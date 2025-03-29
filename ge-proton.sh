@@ -123,7 +123,10 @@ main() {
 			for tmpProtonVer in GE-Proton9-{1,2,3,4,5,6,7,8,9} ; do
 				cleanup_old_versions "${tmpProtonVer}"
 			done
-			for tmpProtonVer in GE-Proton9-1{,1,2,3,4,5,6,7,8,9,0} ; do
+			for tmpProtonVer in GE-Proton9-1{1,2,3,4,5,6,7,8,9,0} ; do
+				cleanup_old_versions "${tmpProtonVer}"
+			done
+			for tmpProtonVer in GE-Proton9-2{1,2,3,4,5,0} ; do
 				cleanup_old_versions "${tmpProtonVer}"
 			done
 			local oldversions=(
