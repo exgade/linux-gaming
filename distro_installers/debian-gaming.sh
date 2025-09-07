@@ -178,7 +178,7 @@ fi
 if [[ "${lutris_install}" = "true" && "$(sha256sum /root/.aptkeys/LutrisDebian12.key | awk '{print $1}')" = "a77a7f3f09d0952d38bcf7178c84bf3eedbcc9b0d30c362b2a93bae6dff578fc" ]] ; then
 	echo "### Checksum of Lutris OK, adding key"
 	cd /root/.aptkeys || exit
-	cat /root/.aptkeys/LutrisDebian12.key | gpg --dearmor /etc/apt/keyrings/lutris.gpg
+	< /root/.aptkeys/LutrisDebian12.key gpg --dearmor -o /etc/apt/keyrings/lutris.gpg
 else
 	echo "### Aborting: Checksum of Lutris NOT OK!"
 	exit
