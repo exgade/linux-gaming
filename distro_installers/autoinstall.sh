@@ -20,7 +20,7 @@ for arg in "$@" ; do
 		installer_arguments="${installer_arguments} nodiscord"
 	elif [[ "$arg" = "nogamemode" ]] ; then
 		installer_arguments="${installer_arguments} nogamemode"
-        elif [[ "$arg" = "nvidia" ]] ; then
+	elif [[ "$arg" = "nvidia" ]] ; then
 		installer_arguments="${installer_arguments} nvidia"
 	elif [[ "$arg" = "amd" ]] ; then
 		installer_arguments="${installer_arguments} amd"
@@ -36,7 +36,7 @@ for arg in "$@" ; do
 		echo "nomumble      - don't install Mumble"
 		echo "nodiscord     - don't install Discord"
 		echo "nogamemode    - don't install Gamemode"
-                echo "nvidia        - force installation of nvidia drivers"
+		echo "nvidia        - force installation of nvidia drivers"
 		echo "amd           - force installation of amd drivers"
 		echo "intel         - force installation of intel drivers"
 
@@ -44,7 +44,7 @@ for arg in "$@" ; do
 	fi
 done
 
-if [ -f /etc/os-release ] ; then 
+if [ -f /etc/os-release ] ; then
 	# shellcheck disable=SC1091
 	source /etc/os-release
 	if [ "${ID}" = "manjaro" ] ; then
@@ -72,12 +72,12 @@ if [ -f /etc/os-release ] ; then
 		fi
 		distroinstaller="ubuntu"
 	fi
-elif [ -f /usr/lib/os-release ] ; then 
+elif [ -f /usr/lib/os-release ] ; then
 	# shellcheck disable=SC1091
 	source /usr/lib/os-release
 	if [ "${ID}" = "artix" ] ; then
 		distrodetect="Artix Linux"
-		distroinstaller="arch"	
+		distroinstaller="arch"
 	fi
 fi
 

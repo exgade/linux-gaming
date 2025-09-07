@@ -26,8 +26,8 @@ nvidia_allowupdate="true"
 for arg in "$@" ; do
 	if [[ "$arg" = "--force" || "$arg" = "-f" ]] ; then
 		option_noconfirm="true"
-#	elif [[ "$arg" = "nolutris" ]] ; then
-#		lutris_install="false"
+		# elif [[ "$arg" = "nolutris" ]] ; then
+		#	lutris_install="false"
 	elif [[ "$arg" = "nosteam" ]] ; then
 		steam_install="false"
 	elif [[ "$arg" = "nowinetricks" ]] ; then
@@ -49,7 +49,7 @@ for arg in "$@" ; do
 	elif [[ "$arg" = "--help" || "$arg" = "-h" ]] ; then
 		echo "usage: ./ubuntu-gaming.sh [OPTIONS]"
 		echo "--force       - no questions while installing / uninstalling packages - this might break your system"
-#		echo "nolutris      - don't install Lutris"
+		# echo "nolutris      - don't install Lutris"
 		echo "nosteam       - don't install Steam"
 		echo "nowinetricks  - don't install Winetricks"
 		echo "nots3         - don't install Teamspeak3"
@@ -69,7 +69,7 @@ if [ "$(grep -P '^NAME=\"Pop\!' /etc/os-release -c)" = "1" ] ; then
 	exit
 fi
 
-# load os-release variables 
+# load os-release variables
 # shellcheck disable=SC1091
 source /etc/os-release
 
@@ -113,7 +113,7 @@ if [ "${mumble_install}" = "true" ] ; then
 	pkg_additional_install="${pkg_additional_install}mumble "
 fi
 if [ "${gamemode_install}" = "true" ] ; then
-        pkg_additional_install="${pkg_additional_install}gamemode "
+	pkg_additional_install="${pkg_additional_install}gamemode "
 fi
 
 apt update && apt upgrade ${installer_addition}
@@ -204,9 +204,9 @@ fi
 if [ "${nvidia_install}" = "true" ] ; then
 	if [ ! -f "/etc/apt/sources.list.d/graphics-drivers-ubuntu-ppa-${UBUNTU_CODENAME}.list" ] ; then
 		echo "### adding ubuntu's GPU Drivers PPA, press ENTER to confirm"
-                add-apt-repository ppa:graphics-drivers/ppa ${installer_addition}
-                echo "### updating repositories for the new ppa"
-                apt update
+		add-apt-repository ppa:graphics-drivers/ppa ${installer_addition}
+		echo "### updating repositories for the new ppa"
+		apt update
 	else
 		echo "### graphics-drivers ppa already installed, skipping"
 	fi

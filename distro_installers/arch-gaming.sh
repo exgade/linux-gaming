@@ -97,7 +97,7 @@ fi
 
 # setting os-release
 ID="unknown"
-if [ -f /etc/os-release ] ; then 
+if [ -f /etc/os-release ] ; then
 	# shellcheck disable=SC1091
 	source /etc/os-release
 fi
@@ -189,7 +189,7 @@ if [ -d "${workdir}/../general" ] && [ -f "${workdir}/../general/btrfs-tuning.sh
 	echo "### if you see one error (per user) regarding to an steam folder, this can be ignored"
 fi
 
-	# shellcheck disable=SC2086
+# shellcheck disable=SC2086
 pacman -Syyu ${installer_addition}
 
 
