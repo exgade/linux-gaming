@@ -42,7 +42,7 @@ for arg in "$@" ; do
 		mumble_install="false"
 	elif [[ "$arg" = "nodiscord" ]] ; then
 		discord_install="false"
-        elif [[ "$arg" = "nvidia" ]] ; then
+	elif [[ "$arg" = "nvidia" ]] ; then
 		nvidia_install="true"
 	elif [[ "$arg" = "amd" ]] ; then
 		amd_install="true"
@@ -149,6 +149,8 @@ if [ ! -d /root/.aptkeys ] ; then
 	mkdir /root/.aptkeys
 fi
 if [[ "${lutris_install}" = "true" && ! -f /root/.aptkeys/LutrisDebian12.key ]] ; then
+	# TODO: add new key before February 2026:
+	# Warnung: https://download.opensuse.org/repositories/home:/strycore/Debian_12/./InRelease: Policy will reject signature within a year, see --audit for details
 	echo "### downloading lutris key"
 	cd /root/.aptkeys || exit
 	wget https://download.opensuse.org/repositories/home:/strycore/Debian_12/Release.key -O /root/.aptkeys/LutrisDebian12.key
@@ -176,11 +178,7 @@ fi
 if [[ "${lutris_install}" = "true" && "$(sha256sum /root/.aptkeys/LutrisDebian12.key | awk '{print $1}')" = "a77a7f3f09d0952d38bcf7178c84bf3eedbcc9b0d30c362b2a93bae6dff578fc" ]] ; then
 	echo "### Checksum of Lutris OK, adding key"
 	cd /root/.aptkeys || exit
-	if [ -f /root/.aptkeys/LutrisDebian12.key.gpg ] ; then
-		rm /root/.aptkeys/LutrisDebian12.key.gpg
-	fi
-	gpg --dearmor /root/.aptkeys/LutrisDebian12.key
-	cp /root/.aptkeys/LutrisDebian12.key.gpg /etc/apt/keyrings/lutris.gpg
+	cat /root/.aptkeys/LutrisDebian12.key | gpg --dearmor /etc/apt/keyrings/lutris.gpg
 else
 	echo "### Aborting: Checksum of Lutris NOT OK!"
 	exit
@@ -201,7 +199,10 @@ fi
 if [ "${lutris_install}" = "true" ] ; then
 	#add lutris repo
 	echo "### adding lutris repository"
-	echo "deb [signed-by=/etc/apt/keyrings/lutris.gpg] https://download.opensuse.org/repositories/home:/strycore/Debian_12/ ./" > /etc/apt/sources.list.d/lutris.list
+	if [ -f /etc/apt/sources.list.d/lutris.list ] ; then
+		rm /etc/apt/sources.list.d/lutris.list
+	fi
+	echo -e "Types: deb\nURIs: https://download.opensuse.org/repositories/home:/strycore/Debian_12/\nSuites: ./\nComponents: \nSigned-By: /etc/apt/keyrings/lutris.gpg" > /etc/apt/sources.list.d/lutris.sources
 fi
 
 echo "### installing dxvk, vkd3d, corefonts, xboxdrv"
