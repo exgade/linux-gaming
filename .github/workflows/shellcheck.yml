@@ -1,13 +1,14 @@
+---
 name: CI Shellcheck
 
 on:
   push:
-    branches: [ "master" ]
+    branches: ["master"]
 
   pull_request:
-    branches: [ "master" ]
+    branches: ["master"]
 
-  workflow_dispatch: # manual workflow run from Actions
+  workflow_dispatch:  # manual workflow run from Actions
 
 jobs:
   test:
@@ -17,7 +18,7 @@ jobs:
       - uses: actions/checkout@v3
 
       - name: Install Shellcheck
-        run: sudo apt update && sudo apt install shellcheck # only needed for act
+        run: sudo apt update && sudo apt install shellcheck  # needed for act
 
       - name: Run shellcheck of *.sh in root directory
         run: shellcheck ui-install.sh
