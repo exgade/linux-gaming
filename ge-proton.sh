@@ -117,23 +117,20 @@ main() {
 			for tmpProtonVer in Proton-{5,6}.{1,2,3,4,5,6,7,8,9}{,1,2,3,4,5,6,7,8,9,0}-GE-{1,2,3,4,5,6,7,8,9}{,-ST,-MF} ; do
 				cleanup_old_versions "${tmpProtonVer}"
 			done
-			for tmpProtonVer in GE-Proton7-{1,2,3,4,5,6,7,8,9}{,1,2,3,4,5,6,7,8,9,0} ; do
+			for tmpProtonVer in GE-Proton7-{1..54} ; do
 				cleanup_old_versions "${tmpProtonVer}"
 			done
-			for tmpProtonVer in GE-Proton9-{1,2,3,4,5,6,7,8,9} ; do
+			for tmpProtonVer in GE-Proton8-{1..32} ; do
 				cleanup_old_versions "${tmpProtonVer}"
 			done
-			for tmpProtonVer in GE-Proton9-1{1,2,3,4,5,6,7,8,9,0} ; do
+			for tmpProtonVer in GE-Proton9-{1..25} ; do
 				cleanup_old_versions "${tmpProtonVer}"
 			done
-			for tmpProtonVer in GE-Proton9-2{1,2,3,4,5,0} ; do
+			for tmpProtonVer in GE-Proton10-{1..23} ; do
 				cleanup_old_versions "${tmpProtonVer}"
 			done
 			local oldversions=(
 				"Proton-6.9-GE-2-github-actions-test" "Proton-7.0rc2-GE-1" "Proton-7.0rc6-GE-1" "Proton-7.1-GE-2" "Proton-7.2-GE-2"
-				"GE-Proton8-1" "GE-Proton8-3" "GE-Proton8-4" "GE-Proton8-6" "GE-Proton8-9" "GE-Proton8-11" "GE-Proton8-13" "GE-Proton8-15"
-				"GE-Proton8-22" "GE-Proton8-25" "GE-Proton8-32" "GE-Proton9-1" "GE-Proton9-2" "GE-Proton9-3" "GE-Proton9-4" "GE-Proton9-5"
-				"GE-Proton9-6" "GE-Proton9-7" "GE-Proton9-8" "GE-Proton9-9" "GE-Proton9-10" "GE-Proton9-11" "GE-Proton9-12"
 			)
 			cleanup_old_versions "${oldversions[@]}"
 			if [ "$versions_deleted" == "0" ]; then
