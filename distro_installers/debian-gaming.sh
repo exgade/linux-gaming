@@ -148,19 +148,18 @@ apt install wget ${installer_addition}
 if [ ! -d /root/.aptkeys ] ; then
 	mkdir /root/.aptkeys
 fi
-if [[ "${lutris_install}" = "true" && ! -f /root/.aptkeys/LutrisDebian12.key ]] ; then
-	echo "### downloading lutris key"
-	cd /root/.aptkeys || exit
-	wget https://download.opensuse.org/repositories/home:/strycore/Debian_12/Release.key -O /root/.aptkeys/LutrisDebian12.key
+winehq_key_hash=""
+if [ -f /root/.aptkeys/winehq.key ] ; then
+	winehq_key_hash=$(sha256sum /root/.aptkeys/winehq.key | cut -d' ' -f1)
 fi
-if [[ ! -f /root/.aptkeys/winehq.key || ! "$(sha256sum /root/.aptkeys/winehq.key | cut -d' ' -f1)" = "d965d646defe94b3dfba6d5b4406900ac6c81065428bf9d9303ad7a72ee8d1b8" ]] ; then
-	echo "### installing/ updating winehq key"
+if [[ ! "${winehq_key_hash}" = "d965d646defe94b3dfba6d5b4406900ac6c81065428bf9d9303ad7a72ee8d1b8" ]] ; then
+	echo "### downloading winehq key"
 	cd /root/.aptkeys || exit
 	wget -O - https://dl.winehq.org/wine-builds/winehq.key -O /root/.aptkeys/winehq.key
+	winehq_key_hash=$(sha256sum /root/.aptkeys/winehq.key | cut -d' ' -f1)
 fi
 
-# Check sha256 checksum for winehq repo
-if [ "$(sha256sum /root/.aptkeys/winehq.key | cut -d' ' -f1)" = "d965d646defe94b3dfba6d5b4406900ac6c81065428bf9d9303ad7a72ee8d1b8" ] ; then
+if [[ "${winehq_key_hash}" = "d965d646defe94b3dfba6d5b4406900ac6c81065428bf9d9303ad7a72ee8d1b8" ]] ; then
 	echo "### Checksum of WineHQ OK, adding key"
 	cd /root/.aptkeys || exit
 	if [ -f /root/.aptkeys/winehq.key.gpg ] ; then
@@ -173,9 +172,13 @@ else
 	exit
 fi
 
-lutris_key_hash=$(sha256sum /root/.aptkeys/LutrisDebian12.key | cut -d' ' -f1)
-if [[ "${lutris_install}" = "true" && "${lutris_key_hash}" = "a77a7f3f09d0952d38bcf7178c84bf3eedbcc9b0d30c362b2a93bae6dff578fc" ]] ; then
-	echo "### found old lutris key, updating to new lutris key"
+lutris_key_hash=""
+if [[ -f /root/.aptkeys/LutrisDebian12.key ]] ; then
+	lutris_key_hash=$(sha256sum /root/.aptkeys/LutrisDebian12.key | cut -d' ' -f1)
+fi
+if [[ "${lutris_install}" = "true" && ! "${lutris_key_hash}" = "1cca73fb50c063378533b84101ad0f371f41b1a0497e4cfe64ee8eaef547c503" ]] ; then
+	echo "### downloading lutris key"
+	cd /root/.aptkeys || exit
 	wget https://download.opensuse.org/repositories/home:/strycore/Debian_12/Release.key -O /root/.aptkeys/LutrisDebian12.key
 	lutris_key_hash=$(sha256sum /root/.aptkeys/LutrisDebian12.key | cut -d' ' -f1)
 fi
