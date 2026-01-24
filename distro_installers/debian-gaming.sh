@@ -174,6 +174,11 @@ else
 fi
 # Check sha256 checksum for lutris repo
 lutrisKeySha256="$(sha256sum /root/.aptkeys/LutrisDebian12.key | awk '{print $1}')"
+if [[ "${lutris_install}" = "true" && "${lutrisKeySha256}" = "a77a7f3f09d0952d38bcf7178c84bf3eedbcc9b0d30c362b2a93bae6dff578fc" ]] ; then
+	echo "### found old lutris key, updating to new lutris key"
+	wget https://download.opensuse.org/repositories/home:/strycore/Debian_12/Release.key -O /root/.aptkeys/LutrisDebian12.key
+	lutrisKeySha256="$(sha256sum /root/.aptkeys/LutrisDebian12.key | awk '{print $1}')"
+fi
 if [[ "${lutris_install}" = "true" && "${lutrisKeySha256}" = "1cca73fb50c063378533b84101ad0f371f41b1a0497e4cfe64ee8eaef547c503" ]] ; then
 	echo "### Checksum of Lutris OK, adding key"
 	cd /root/.aptkeys || exit
