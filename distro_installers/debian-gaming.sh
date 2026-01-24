@@ -153,14 +153,14 @@ if [[ "${lutris_install}" = "true" && ! -f /root/.aptkeys/LutrisDebian12.key ]] 
 	cd /root/.aptkeys || exit
 	wget https://download.opensuse.org/repositories/home:/strycore/Debian_12/Release.key -O /root/.aptkeys/LutrisDebian12.key
 fi
-if [[ ! -f /root/.aptkeys/winehq.key || "$(sha256sum /root/.aptkeys/winehq.key | awk '{print $1}')" = "78b185fabdb323971d13bd329fefc8038e08559aa51c4996de18db0639a51df6" ]] ; then
+if [[ ! -f /root/.aptkeys/winehq.key || ! "$(sha256sum /root/.aptkeys/winehq.key | cut -d' ' -f1)" = "d965d646defe94b3dfba6d5b4406900ac6c81065428bf9d9303ad7a72ee8d1b8" ]] ; then
 	echo "### installing/ updating winehq key"
 	cd /root/.aptkeys || exit
 	wget -O - https://dl.winehq.org/wine-builds/winehq.key -O /root/.aptkeys/winehq.key
 fi
 
 # Check sha256 checksum for winehq repo
-if [ "$(sha256sum /root/.aptkeys/winehq.key | awk '{print $1}')" = "d965d646defe94b3dfba6d5b4406900ac6c81065428bf9d9303ad7a72ee8d1b8" ] ; then
+if [ "$(sha256sum /root/.aptkeys/winehq.key | cut -d' ' -f1)" = "d965d646defe94b3dfba6d5b4406900ac6c81065428bf9d9303ad7a72ee8d1b8" ] ; then
 	echo "### Checksum of WineHQ OK, adding key"
 	cd /root/.aptkeys || exit
 	if [ -f /root/.aptkeys/winehq.key.gpg ] ; then
@@ -172,14 +172,14 @@ else
 	echo "### Aborting: Checksum of WineHQ NOT OK!"
 	exit
 fi
-# Check sha256 checksum for lutris repo
-lutrisKeySha256="$(sha256sum /root/.aptkeys/LutrisDebian12.key | awk '{print $1}')"
-if [[ "${lutris_install}" = "true" && "${lutrisKeySha256}" = "a77a7f3f09d0952d38bcf7178c84bf3eedbcc9b0d30c362b2a93bae6dff578fc" ]] ; then
+
+lutris_key_hash=$(sha256sum /root/.aptkeys/LutrisDebian12.key | cut -d' ' -f1)
+if [[ "${lutris_install}" = "true" && "${lutris_key_hash}" = "a77a7f3f09d0952d38bcf7178c84bf3eedbcc9b0d30c362b2a93bae6dff578fc" ]] ; then
 	echo "### found old lutris key, updating to new lutris key"
 	wget https://download.opensuse.org/repositories/home:/strycore/Debian_12/Release.key -O /root/.aptkeys/LutrisDebian12.key
-	lutrisKeySha256="$(sha256sum /root/.aptkeys/LutrisDebian12.key | awk '{print $1}')"
+	lutris_key_hash=$(sha256sum /root/.aptkeys/LutrisDebian12.key | cut -d' ' -f1)
 fi
-if [[ "${lutris_install}" = "true" && "${lutrisKeySha256}" = "1cca73fb50c063378533b84101ad0f371f41b1a0497e4cfe64ee8eaef547c503" ]] ; then
+if [[ "${lutris_install}" = "true" && "${lutris_key_hash}" = "1cca73fb50c063378533b84101ad0f371f41b1a0497e4cfe64ee8eaef547c503" ]] ; then
 	echo "### Checksum of Lutris OK, adding key"
 	cd /root/.aptkeys || exit
 	< /root/.aptkeys/LutrisDebian12.key gpg --dearmor > /etc/apt/keyrings/lutris.gpg
